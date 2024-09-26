@@ -1,7 +1,14 @@
 import React from 'react'
+import routes from './routes.jsx'
+import { useRoutes } from 'react-router-dom'
 
 export default function App() {
+
+  const router = useRoutes(routes)
+
   return (
-    <div className='font-montserrat'>App</div>
+    <>
+    {router}
+    </>
   )
 }

@@ -5,6 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      ms: "576px",
+      sm: "768px",
+      md: "992px",
+      lg: "1200px",
+      xl: "1486px",
+    },
     extend: {
       fontFamily: {
         opensans: ['Open Sans', 'sans-serif'],
