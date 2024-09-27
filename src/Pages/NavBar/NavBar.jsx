@@ -6,7 +6,7 @@ export default function NavBar() {
     <>
       <div className="w-full relative bg-[#0c0e17] ">
         <div className=" flex items-center justify-between container font-montserrat text-white px-4 mx-auto">
-          <div className="flex items-center justify-between space-x-6">
+          <div className="flex items-center justify-between md:space-x-0 space-x-4 py-3 md:py-0">
             {/* Hamburger Icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -156,8 +156,8 @@ export default function NavBar() {
         </div>
 
         {/* Browse */}
-        <div className="w-full top-16 py-4 bg-[#f6f7f9] absolute font-opensans">
-          <div className="container mx-auto flex space-x-4">
+        <div className="w-full shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden">
+          <div className="container mx-auto flex space-x-4 px-2">
             {/* Most Popular Movie */}
             <div className="border-r-2 py-2">
               <h3 className="font-semibold pb-2">Most Popular Movies</h3>
@@ -241,6 +241,168 @@ export default function NavBar() {
                         />
                       </svg>
                     </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className=" flex-1">
+              {/* Now Playing */}
+              <div className="py-2">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">Movies In Theatres</h3>
+                  <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                    More
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="12"
+                      className="scale-50 -rotate-90 relative top-[1px]"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="3"
+                        d="M1 1l8 8 8-8"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="flex items-center py-3 space-x-4">
+                  <div className="flex space-x-2">
+                    <img src="/img/popular-movie.jpg" alt="" className="h-16" />
+                    <div className="max-w-32">
+                      <h3 className="font-semibold text-xs">The Big Sick</h3>
+                      <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Repellat ad nihil ut consequatur accusamus consequuntur?
+                        Similique, nulla animi! Facilis, impedit laboriosam
+                        aliquid possimus tempore ipsam nam est perspiciatis
+                        distinctio dicta!
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex space-x-2">
+                    <img src="/img/popular-movie.jpg" alt="" className="h-16" />
+                    <div className="max-w-32">
+                      <h3 className="font-semibold text-xs">The Big Sick</h3>
+                      <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Repellat ad nihil ut consequatur accusamus consequuntur?
+                        Similique, nulla animi! Facilis, impedit laboriosam
+                        aliquid possimus tempore ipsam nam est perspiciatis
+                        distinctio dicta!
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="lg:flex hidden space-x-2">
+                    <img src="/img/popular-movie.jpg" alt="" className="h-16" />
+                    <div className="max-w-32">
+                      <h3 className="font-semibold text-xs">The Big Sick</h3>
+                      <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Repellat ad nihil ut consequatur accusamus consequuntur?
+                        Similique, nulla animi! Facilis, impedit laboriosam
+                        aliquid possimus tempore ipsam nam est perspiciatis
+                        distinctio dicta!
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="xl:flex hidden space-x-2">
+                    <img src="/img/popular-movie.jpg" alt="" className="h-16" />
+                    <div className="max-w-32">
+                      <h3 className="font-semibold text-xs">The Big Sick</h3>
+                      <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Repellat ad nihil ut consequatur accusamus consequuntur?
+                        Similique, nulla animi! Facilis, impedit laboriosam
+                        aliquid possimus tempore ipsam nam est perspiciatis
+                        distinctio dicta!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Upcomming */}
+              <div className="">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">Movies In Theatres</h3>
+                  <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                    More
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="12"
+                      className="scale-50 -rotate-90 relative top-[1px]"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="3"
+                        d="M1 1l8 8 8-8"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="flex items-center py-3 space-x-4">
+                  <div className="flex space-x-2">
+                    <img src="/img/popular-movie.jpg" alt="" className="h-16" />
+                    <div className="max-w-32">
+                      <h3 className="font-semibold text-xs">The Big Sick</h3>
+                      <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Repellat ad nihil ut consequatur accusamus consequuntur?
+                        Similique, nulla animi! Facilis, impedit laboriosam
+                        aliquid possimus tempore ipsam nam est perspiciatis
+                        distinctio dicta!
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex space-x-2">
+                    <img src="/img/popular-movie.jpg" alt="" className="h-16" />
+                    <div className="max-w-32">
+                      <h3 className="font-semibold text-xs">The Big Sick</h3>
+                      <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Repellat ad nihil ut consequatur accusamus consequuntur?
+                        Similique, nulla animi! Facilis, impedit laboriosam
+                        aliquid possimus tempore ipsam nam est perspiciatis
+                        distinctio dicta!
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="lg:flex hidden space-x-2">
+                    <img src="/img/popular-movie.jpg" alt="" className="h-16" />
+                    <div className="max-w-32">
+                      <h3 className="font-semibold text-xs">The Big Sick</h3>
+                      <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Repellat ad nihil ut consequatur accusamus consequuntur?
+                        Similique, nulla animi! Facilis, impedit laboriosam
+                        aliquid possimus tempore ipsam nam est perspiciatis
+                        distinctio dicta!
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="xl:flex hidden space-x-2">
+                    <img src="/img/popular-movie.jpg" alt="" className="h-16" />
+                    <div className="max-w-32">
+                      <h3 className="font-semibold text-xs">The Big Sick</h3>
+                      <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Repellat ad nihil ut consequatur accusamus consequuntur?
+                        Similique, nulla animi! Facilis, impedit laboriosam
+                        aliquid possimus tempore ipsam nam est perspiciatis
+                        distinctio dicta!
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
