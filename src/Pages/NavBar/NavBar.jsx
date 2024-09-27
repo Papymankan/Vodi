@@ -4,8 +4,8 @@ import React from "react";
 export default function NavBar() {
   return (
     <>
-      <div className="w-full relative bg-[#0c0e17] py-4 text-white font-montserrat">
-        <div className=" flex items-center justify-between container px-4 mx-auto">
+      <div className="w-full relative bg-[#0c0e17] ">
+        <div className=" flex items-center justify-between container font-montserrat text-white px-4 mx-auto">
           <div className="flex items-center justify-between space-x-6">
             {/* Hamburger Icon */}
             <svg
@@ -47,7 +47,7 @@ export default function NavBar() {
 
             {/* Links */}
             <div className="md:flex hidden items-center space-x-5 pl-8">
-              <div className="flex items-center space-x-1 text-sm cursor-pointer">
+              <div className="flex py-6 items-center space-x-1 text-sm cursor-pointer">
                 <span>Browse</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@ export default function NavBar() {
                 </svg>
               </div>
 
-              <div className="flex items-center space-x-1 text-sm cursor-pointer">
+              <div className="flex py-6 items-center space-x-1 text-sm cursor-pointer">
                 <span>Movies</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +81,7 @@ export default function NavBar() {
                 </svg>
               </div>
 
-              <div className="flex items-center space-x-1 text-sm cursor-pointer">
+              <div className="flex py-6 items-center space-x-1 text-sm cursor-pointer">
                 <span>Series</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ export default function NavBar() {
                 </svg>
               </div>
 
-              <div className="flex items-center space-x-1 text-sm cursor-pointer">
+              <div className="flex py-6 items-center space-x-1 text-sm cursor-pointer">
                 <span>TV Shows</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -151,6 +151,99 @@ export default function NavBar() {
                   d="M1 1l8 8 8-8"
                 />
               </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Browse */}
+        <div className="w-full top-16 py-4 bg-[#f6f7f9] absolute font-opensans">
+          <div className="container mx-auto flex space-x-4">
+            {/* Most Popular Movie */}
+            <div className="border-r-2 py-2">
+              <h3 className="font-semibold pb-2">Most Popular Movies</h3>
+              <div className="flex mt-3 space-x-4">
+                <img src="/img/popular-movie.jpg" alt="" className="h-44" />
+                <div className="max-w-52">
+                  <p className="text-slate-700 text-sm line-clamp-1">
+                    2017, Advanture, Comedy, Romance
+                  </p>
+                  <h3 className="font-semibold pb-1 line-clamp-1">
+                    The Big Sick
+                  </h3>
+                  <p className="line-clamp-5 text-xs">
+                    "Pakistan-born comedian Kumail Nanjiani and grad student
+                    Emily Gardner fall in love but struggle as their cultures
+                    clash. When Emily contracts a mysterious illness, Kumail
+                    finds himself forced to face her feisty parents, his
+                    family’s expectations, and his true feelings"
+                  </p>
+                  <div className="flex items-center justify-between pr-6">
+                    <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
+                      Watch Now
+                    </button>
+                    <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                      More
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="12"
+                        className="scale-50 -rotate-90 relative top-[1px]"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="3"
+                          d="M1 1l8 8 8-8"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Top Rated Movie */}
+            <div className="border-r-2 py-2">
+              <h3 className="font-semibold pb-2">Top Rated Movies</h3>
+              <div className="flex mt-3 space-x-4">
+                <img src="/img/popular-movie.jpg" alt="" className="h-44" />
+                <div className="max-w-52">
+                  <p className="text-slate-700 text-sm line-clamp-1">
+                    2017, Advanture, Comedy, Romance
+                  </p>
+                  <h3 className="font-semibold pb-1 line-clamp-1">
+                    The Big Sick
+                  </h3>
+                  <p className="line-clamp-5 text-xs">
+                    "Pakistan-born comedian Kumail Nanjiani and grad student
+                    Emily Gardner fall in love but struggle as their cultures
+                    clash. When Emily contracts a mysterious illness, Kumail
+                    finds himself forced to face her feisty parents, his
+                    family’s expectations, and his true feelings"
+                  </p>
+                  <div className="flex items-center justify-between pr-6">
+                    <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
+                      Watch Now
+                    </button>
+                    <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                      More
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="12"
+                        className="scale-50 -rotate-90 relative top-[1px]"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="3"
+                          d="M1 1l8 8 8-8"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
