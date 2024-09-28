@@ -466,7 +466,7 @@ export default function NavBar() {
 
         {/* Movies */}
         <div
-          className="w-full shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
+          className="w-full overflow-hidden shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
           onMouseEnter={() => {
             setSubMenu("movies");
           }}
@@ -474,9 +474,9 @@ export default function NavBar() {
             setSubMenu("");
           }}
         >
-          <div className="container mx-auto flex space-x-4 px-2">
+          <div className="container mx-auto flex space-x-4 px-4 justify-between">
             {/* Latest Movie */}
-            <div className="border-r-2 py-2 pr-8">
+            <div className="border-r-2 py-2 pr-2">
               <h3 className="font-semibold pb-2">The Latest Movie</h3>
               <div className="flex mt-3 space-x-4">
                 <img src="/img/popular-movie.jpg" alt="" className="h-44" />
@@ -495,7 +495,7 @@ export default function NavBar() {
                     family’s expectations, and his true feelings"
                   </p>
                   <div className="flex items-center justify-between pr-6">
-                    <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
+                    <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-xs lg:text-sm font-bold">
                       Watch Now
                     </button>
                   </div>
@@ -506,7 +506,7 @@ export default function NavBar() {
             {/* Movie Genres */}
             <div className="border-r-2 py-2 pr-8">
               <h3 className="font-semibold pb-2">Movie Genres</h3>
-              <div className="grid grid-cols-3 max-w-72 gap-x-12 gap-y-2">
+              <div className="grid grid-cols-3 max-w-96 gap-x-10 gap-y-2">
                 <a
                   href="#"
                   className="py-1 text-sm hover:text-[#24baef] duration-200"
@@ -624,8 +624,8 @@ export default function NavBar() {
               </div>
             </div>
 
-            {/* Latest Movie */}
-            <div className="border-r-2 py-2 pl-4">
+            {/* Latest TV */}
+            <div className="border-r-2 py-2 pr-2">
               <h3 className="font-semibold pb-2">The Latest TV Show</h3>
               <div className="flex mt-3 space-x-4">
                 <img src="/img/popular-movie.jpg" alt="" className="h-44" />
@@ -644,7 +644,7 @@ export default function NavBar() {
                     family’s expectations, and his true feelings"
                   </p>
                   <div className="flex items-center justify-between pr-6">
-                    <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
+                    <button className="text-[#24baef]  py-5 hover:scale-105 duration-200  text-xs lg:text-sm font-bold">
                       Watch Now
                     </button>
                   </div>
@@ -655,30 +655,12 @@ export default function NavBar() {
             {/* TY Genres */}
             <div className="py-2">
               <h3 className="font-semibold pb-2">TV Genres</h3>
-              <div className="grid grid-cols-3 max-w-72 gap-x-12 gap-y-2">
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
+              <div className="grid grid-cols-2 max-w-72 gap-x-9 gap-y-2">
                 <a
                   href="#"
                   className="py-1 text-sm hover:text-[#24baef] duration-200"
                 >
                   Architucture
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
                 </a>
                 <a
                   href="#"
