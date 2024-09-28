@@ -126,7 +126,7 @@ export default function NavBar() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between space-x-8">
+          <div className="relative flex items-center justify-between space-x-8">
             {/* Search */}
             <div className="sm:flex hidden items-center bg-white px-4 py-1 rounded-full">
               <input
@@ -168,28 +168,33 @@ export default function NavBar() {
                   d="M1 1l8 8 8-8"
                 />
               </svg>
-              {/* Profile DropDown */}
-              {subMenu == "profile" && (
-                <div
-                  className="rounded-b-lg w-40 shadow-xl top-16 right-0 py-4 bg-[#f6f7f9] absolute font-opensans cursor-default"
-                  onMouseEnter={() => {
-                    setSubMenu("profile");
-                  }}
-                  onMouseLeave={() => {
-                    setSubMenu("");
-                  }}
-                >
-                  {/* <div className="profile-dropdown rotate-45 absolute w-4 h-4 border-2 border-[#f6f7f9] bg-[#f6f7f9] right-1 -top-2"></div> */}
-                  <div className="w-full text-black p-2">Watchlist</div>
-                  <div className="w-full text-black p-2">Watchlist</div>
-                </div>
-              )}
             </div>
 
             {/* Login */}
             <button className="hidden p-2 hover:opacity-50 duration-200">
               Login
             </button>
+
+            {/* Profile DropDown */}
+            {subMenu == "profile" && (
+              <div
+                className="z-20 rounded-b-lg w-40 shadow-xl top-16 right-0 py-4 bg-[#f6f7f9] absolute font-opensans cursor-default"
+                onMouseEnter={() => {
+                  setSubMenu("profile");
+                }}
+                onMouseLeave={() => {
+                  setSubMenu("");
+                }}
+              >
+                <div className="profile-dropdown rotate-45 absolute w-4 h-4 border-2 border-[#f6f7f9] bg-[#f6f7f9] right-1 -top-2"></div>
+                <button className="w-full text-black text-left hover:bg-slate-200 duration-200 p-2">
+                  Watchlist
+                </button>
+                <button className="w-full text-black text-left hover:bg-slate-200 duration-200 p-2">
+                  Watchlist
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
