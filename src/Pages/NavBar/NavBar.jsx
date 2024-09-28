@@ -74,7 +74,15 @@ export default function NavBar() {
                 </svg>
               </div>
 
-              <div className="flex py-6 items-center space-x-1 text-sm cursor-pointer">
+              <div
+                className="flex py-6 items-center space-x-1 text-sm cursor-pointer"
+                onMouseEnter={() => {
+                  setSubMenu("movies");
+                }}
+                onMouseLeave={() => {
+                  setSubMenu("");
+                }}
+              >
                 <span>Movies</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -170,9 +178,304 @@ export default function NavBar() {
         {/* Browse */}
         {subMenu == "browse" && (
           <div
-            className="w-full shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
+            className="w-full overflow-hidden shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
             onMouseEnter={() => {
               setSubMenu("browse");
+            }}
+            onMouseLeave={() => {
+              setSubMenu("");
+            }}
+          >
+            <div className="container mx-auto flex space-x-4 px-4 justify-between">
+              {/* Latest Movie */}
+              <div className="border-r-2 py-2 pr-2">
+                <h3 className="font-semibold pb-2">The Latest Movie</h3>
+                <div className="flex mt-3 space-x-4">
+                  <img src="/img/popular-movie.jpg" alt="" className="h-44" />
+                  <div className="max-w-52">
+                    <p className="text-slate-700 text-sm line-clamp-1">
+                      2017, Advanture, Comedy, Romance
+                    </p>
+                    <h3 className="font-semibold pb-1 line-clamp-1">
+                      The Big Sick
+                    </h3>
+                    <p className="line-clamp-5 text-xs">
+                      "Pakistan-born comedian Kumail Nanjiani and grad student
+                      Emily Gardner fall in love but struggle as their cultures
+                      clash. When Emily contracts a mysterious illness, Kumail
+                      finds himself forced to face her feisty parents, his
+                      family’s expectations, and his true feelings"
+                    </p>
+                    <div className="flex items-center justify-between pr-6">
+                      <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-xs lg:text-sm font-bold">
+                        Watch Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Movie Genres */}
+              <div className="border-r-2 py-2 pr-8">
+                <h3 className="font-semibold pb-2">Movie Genres</h3>
+                <div className="grid grid-cols-3 max-w-96 gap-x-10 gap-y-2">
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Architucture
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    ActionComedy
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Biography
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                </div>
+              </div>
+
+              {/* Latest TV */}
+              <div className="border-r-2 py-2 pr-2">
+                <h3 className="font-semibold pb-2">The Latest TV Show</h3>
+                <div className="flex mt-3 space-x-4">
+                  <img src="/img/popular-movie.jpg" alt="" className="h-44" />
+                  <div className="max-w-52">
+                    <p className="text-slate-700 text-sm line-clamp-1">
+                      2017, Advanture, Comedy, Romance
+                    </p>
+                    <h3 className="font-semibold pb-1 line-clamp-1">
+                      The Big Sick
+                    </h3>
+                    <p className="line-clamp-5 text-xs">
+                      "Pakistan-born comedian Kumail Nanjiani and grad student
+                      Emily Gardner fall in love but struggle as their cultures
+                      clash. When Emily contracts a mysterious illness, Kumail
+                      finds himself forced to face her feisty parents, his
+                      family’s expectations, and his true feelings"
+                    </p>
+                    <div className="flex items-center justify-between pr-6">
+                      <button className="text-[#24baef]  py-5 hover:scale-105 duration-200  text-xs lg:text-sm font-bold">
+                        Watch Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* TY Genres */}
+              <div className="py-2">
+                <h3 className="font-semibold pb-2">TV Genres</h3>
+                <div className="grid grid-cols-2 max-w-72 gap-x-9 gap-y-2">
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Architucture
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    ActionComedy
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Biography
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                  <a
+                    href="#"
+                    className="py-1 text-sm hover:text-[#24baef] duration-200"
+                  >
+                    Action
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Movies */}
+        {subMenu == "movies" && (
+          <div
+            className="w-full shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
+            onMouseEnter={() => {
+              setSubMenu("movies");
             }}
             onMouseLeave={() => {
               setSubMenu("");
@@ -367,7 +670,7 @@ export default function NavBar() {
                 {/* Upcomming */}
                 <div className="">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">Movies In Theatres</h3>
+                    <h3 className="font-semibold">Upcomming Movies</h3>
                     <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
                       More
                       <svg
@@ -463,299 +766,6 @@ export default function NavBar() {
             </div>
           </div>
         )}
-
-        {/* Movies */}
-        <div
-          className="w-full overflow-hidden shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
-          onMouseEnter={() => {
-            setSubMenu("movies");
-          }}
-          onMouseLeave={() => {
-            setSubMenu("");
-          }}
-        >
-          <div className="container mx-auto flex space-x-4 px-4 justify-between">
-            {/* Latest Movie */}
-            <div className="border-r-2 py-2 pr-2">
-              <h3 className="font-semibold pb-2">The Latest Movie</h3>
-              <div className="flex mt-3 space-x-4">
-                <img src="/img/popular-movie.jpg" alt="" className="h-44" />
-                <div className="max-w-52">
-                  <p className="text-slate-700 text-sm line-clamp-1">
-                    2017, Advanture, Comedy, Romance
-                  </p>
-                  <h3 className="font-semibold pb-1 line-clamp-1">
-                    The Big Sick
-                  </h3>
-                  <p className="line-clamp-5 text-xs">
-                    "Pakistan-born comedian Kumail Nanjiani and grad student
-                    Emily Gardner fall in love but struggle as their cultures
-                    clash. When Emily contracts a mysterious illness, Kumail
-                    finds himself forced to face her feisty parents, his
-                    family’s expectations, and his true feelings"
-                  </p>
-                  <div className="flex items-center justify-between pr-6">
-                    <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-xs lg:text-sm font-bold">
-                      Watch Now
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Movie Genres */}
-            <div className="border-r-2 py-2 pr-8">
-              <h3 className="font-semibold pb-2">Movie Genres</h3>
-              <div className="grid grid-cols-3 max-w-96 gap-x-10 gap-y-2">
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Architucture
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  ActionComedy
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Biography
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-              </div>
-            </div>
-
-            {/* Latest TV */}
-            <div className="border-r-2 py-2 pr-2">
-              <h3 className="font-semibold pb-2">The Latest TV Show</h3>
-              <div className="flex mt-3 space-x-4">
-                <img src="/img/popular-movie.jpg" alt="" className="h-44" />
-                <div className="max-w-52">
-                  <p className="text-slate-700 text-sm line-clamp-1">
-                    2017, Advanture, Comedy, Romance
-                  </p>
-                  <h3 className="font-semibold pb-1 line-clamp-1">
-                    The Big Sick
-                  </h3>
-                  <p className="line-clamp-5 text-xs">
-                    "Pakistan-born comedian Kumail Nanjiani and grad student
-                    Emily Gardner fall in love but struggle as their cultures
-                    clash. When Emily contracts a mysterious illness, Kumail
-                    finds himself forced to face her feisty parents, his
-                    family’s expectations, and his true feelings"
-                  </p>
-                  <div className="flex items-center justify-between pr-6">
-                    <button className="text-[#24baef]  py-5 hover:scale-105 duration-200  text-xs lg:text-sm font-bold">
-                      Watch Now
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* TY Genres */}
-            <div className="py-2">
-              <h3 className="font-semibold pb-2">TV Genres</h3>
-              <div className="grid grid-cols-2 max-w-72 gap-x-9 gap-y-2">
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Architucture
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  ActionComedy
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Biography
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-                <a
-                  href="#"
-                  className="py-1 text-sm hover:text-[#24baef] duration-200"
-                >
-                  Action
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </>
   );
