@@ -48,9 +48,9 @@ export default function NavBar() {
             </svg>
 
             {/* Links */}
-            <div className="md:flex hidden items-center space-x-5 pl-8">
+            <div className="md:flex hidden items-center pl-8">
               <div
-                className="flex py-6 items-center space-x-1 text-sm cursor-pointer"
+                className={`flex py-6 items-center space-x-1 text-sm cursor-pointer px-2`}
                 onMouseEnter={() => {
                   setSubMenu("browse");
                 }}
@@ -75,7 +75,7 @@ export default function NavBar() {
               </div>
 
               <div
-                className="flex py-6 items-center space-x-1 text-sm cursor-pointer"
+                className={`flex py-6 items-center space-x-1 text-sm cursor-pointer px-2`}
                 onMouseEnter={() => {
                   setSubMenu("movies");
                 }}
@@ -99,24 +99,15 @@ export default function NavBar() {
                 </svg>
               </div>
 
-              <div className="flex py-6 items-center space-x-1 text-sm cursor-pointer">
-                <span>Series</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="12"
-                  className="scale-50"
-                >
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="3"
-                    d="M1 1l8 8 8-8"
-                  />
-                </svg>
-              </div>
-
-              <div className="flex py-6 items-center space-x-1 text-sm cursor-pointer">
+              <div
+                className={`flex py-6 items-center space-x-1 text-sm cursor-pointer px-2`}
+                onMouseEnter={() => {
+                  setSubMenu("tv");
+                }}
+                onMouseLeave={() => {
+                  setSubMenu("");
+                }}
+              >
                 <span>TV Shows</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -671,6 +662,303 @@ export default function NavBar() {
                 <div className="">
                   <div className="flex items-center justify-between">
                     <h3 className="font-semibold">Upcomming Movies</h3>
+                    <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      More
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="12"
+                        className="scale-50 -rotate-90 relative top-[1px]"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="3"
+                          d="M1 1l8 8 8-8"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="flex items-center py-3 space-x-4">
+                    <div className="flex space-x-2">
+                      <img
+                        src="/img/popular-movie.jpg"
+                        alt=""
+                        className="h-16"
+                      />
+                      <div className="max-w-32">
+                        <h3 className="font-semibold text-xs">The Big Sick</h3>
+                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Repellat ad nihil ut consequatur accusamus
+                          consequuntur? Similique, nulla animi! Facilis, impedit
+                          laboriosam aliquid possimus tempore ipsam nam est
+                          perspiciatis distinctio dicta!
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex space-x-2">
+                      <img
+                        src="/img/popular-movie.jpg"
+                        alt=""
+                        className="h-16"
+                      />
+                      <div className="max-w-32">
+                        <h3 className="font-semibold text-xs">The Big Sick</h3>
+                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Repellat ad nihil ut consequatur accusamus
+                          consequuntur? Similique, nulla animi! Facilis, impedit
+                          laboriosam aliquid possimus tempore ipsam nam est
+                          perspiciatis distinctio dicta!
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="lg:flex hidden space-x-2">
+                      <img
+                        src="/img/popular-movie.jpg"
+                        alt=""
+                        className="h-16"
+                      />
+                      <div className="max-w-32">
+                        <h3 className="font-semibold text-xs">The Big Sick</h3>
+                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Repellat ad nihil ut consequatur accusamus
+                          consequuntur? Similique, nulla animi! Facilis, impedit
+                          laboriosam aliquid possimus tempore ipsam nam est
+                          perspiciatis distinctio dicta!
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="xl:flex hidden space-x-2">
+                      <img
+                        src="/img/popular-movie.jpg"
+                        alt=""
+                        className="h-16"
+                      />
+                      <div className="max-w-32">
+                        <h3 className="font-semibold text-xs">The Big Sick</h3>
+                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Repellat ad nihil ut consequatur accusamus
+                          consequuntur? Similique, nulla animi! Facilis, impedit
+                          laboriosam aliquid possimus tempore ipsam nam est
+                          perspiciatis distinctio dicta!
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TV */}
+        {subMenu == "tv" && (
+          <div
+            className="w-full shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
+            onMouseEnter={() => {
+              setSubMenu("tv");
+            }}
+            onMouseLeave={() => {
+              setSubMenu("");
+            }}
+          >
+            <div className="container mx-auto flex space-x-4 px-2">
+              {/* Most Popular TV Shows */}
+              <div className="border-r-2 py-2">
+                <h3 className="font-semibold pb-2">Most Popular TV Shows</h3>
+                <div className="flex mt-3 space-x-4">
+                  <img src="/img/popular-movie.jpg" alt="" className="h-44" />
+                  <div className="max-w-52">
+                    <p className="text-slate-700 text-sm line-clamp-1">
+                      2017, Advanture, Comedy, Romance
+                    </p>
+                    <h3 className="font-semibold pb-1 line-clamp-1">
+                      The Big Sick
+                    </h3>
+                    <p className="line-clamp-5 text-xs">
+                      "Pakistan-born comedian Kumail Nanjiani and grad student
+                      Emily Gardner fall in love but struggle as their cultures
+                      clash. When Emily contracts a mysterious illness, Kumail
+                      finds himself forced to face her feisty parents, his
+                      family’s expectations, and his true feelings"
+                    </p>
+                    <div className="flex items-center justify-between pr-6">
+                      <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
+                        Watch Now
+                      </button>
+                      <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                        More
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="12"
+                          className="scale-50 -rotate-90 relative top-[1px]"
+                        >
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="3"
+                            d="M1 1l8 8 8-8"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Top Rated TV Shows*/}
+              <div className="border-r-2 py-2">
+                <h3 className="font-semibold pb-2">Top Rated TV Shows</h3>
+                <div className="flex mt-3 space-x-4">
+                  <img src="/img/popular-movie.jpg" alt="" className="h-44" />
+                  <div className="max-w-52">
+                    <p className="text-slate-700 text-sm line-clamp-1">
+                      2017, Advanture, Comedy, Romance
+                    </p>
+                    <h3 className="font-semibold pb-1 line-clamp-1">
+                      The Big Sick
+                    </h3>
+                    <p className="line-clamp-5 text-xs">
+                      "Pakistan-born comedian Kumail Nanjiani and grad student
+                      Emily Gardner fall in love but struggle as their cultures
+                      clash. When Emily contracts a mysterious illness, Kumail
+                      finds himself forced to face her feisty parents, his
+                      family’s expectations, and his true feelings"
+                    </p>
+                    <div className="flex items-center justify-between pr-6">
+                      <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
+                        Watch Now
+                      </button>
+                      <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                        More
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="12"
+                          className="scale-50 -rotate-90 relative top-[1px]"
+                        >
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="3"
+                            d="M1 1l8 8 8-8"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className=" flex-1">
+                {/* Airing today */}
+                <div className="py-2">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold">Airing Today</h3>
+                    <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      More
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="12"
+                        className="scale-50 -rotate-90 relative top-[1px]"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="3"
+                          d="M1 1l8 8 8-8"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="flex items-center py-3 space-x-4">
+                    <div className="flex space-x-2">
+                      <img
+                        src="/img/popular-movie.jpg"
+                        alt=""
+                        className="h-16"
+                      />
+                      <div className="max-w-32">
+                        <h3 className="font-semibold text-xs">The Big Sick</h3>
+                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Repellat ad nihil ut consequatur accusamus
+                          consequuntur? Similique, nulla animi! Facilis, impedit
+                          laboriosam aliquid possimus tempore ipsam nam est
+                          perspiciatis distinctio dicta!
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex space-x-2">
+                      <img
+                        src="/img/popular-movie.jpg"
+                        alt=""
+                        className="h-16"
+                      />
+                      <div className="max-w-32">
+                        <h3 className="font-semibold text-xs">The Big Sick</h3>
+                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Repellat ad nihil ut consequatur accusamus
+                          consequuntur? Similique, nulla animi! Facilis, impedit
+                          laboriosam aliquid possimus tempore ipsam nam est
+                          perspiciatis distinctio dicta!
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="lg:flex hidden space-x-2">
+                      <img
+                        src="/img/popular-movie.jpg"
+                        alt=""
+                        className="h-16"
+                      />
+                      <div className="max-w-32">
+                        <h3 className="font-semibold text-xs">The Big Sick</h3>
+                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Repellat ad nihil ut consequatur accusamus
+                          consequuntur? Similique, nulla animi! Facilis, impedit
+                          laboriosam aliquid possimus tempore ipsam nam est
+                          perspiciatis distinctio dicta!
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="xl:flex hidden space-x-2">
+                      <img
+                        src="/img/popular-movie.jpg"
+                        alt=""
+                        className="h-16"
+                      />
+                      <div className="max-w-32">
+                        <h3 className="font-semibold text-xs">The Big Sick</h3>
+                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Repellat ad nihil ut consequatur accusamus
+                          consequuntur? Similique, nulla animi! Facilis, impedit
+                          laboriosam aliquid possimus tempore ipsam nam est
+                          perspiciatis distinctio dicta!
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* On the air */}
+                <div className="">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold">On the Air</h3>
                     <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
                       More
                       <svg
