@@ -145,7 +145,15 @@ export default function NavBar() {
             </div>
 
             {/* Profile */}
-            <div className="flex items-center space-x-1 cursor-pointer">
+            <div
+              className="flex items-center space-x-1 cursor-pointer relative py-4"
+              onMouseEnter={() => {
+                setSubMenu("profile");
+              }}
+              onMouseLeave={() => {
+                setSubMenu("");
+              }}
+            >
               <Avatar sx={{ width: 32, height: 32 }}>H</Avatar>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +168,28 @@ export default function NavBar() {
                   d="M1 1l8 8 8-8"
                 />
               </svg>
+              {/* Profile DropDown */}
+              {subMenu == "profile" && (
+                <div
+                  className="rounded-b-lg w-40 shadow-xl top-16 right-0 py-4 bg-[#f6f7f9] absolute font-opensans cursor-default"
+                  onMouseEnter={() => {
+                    setSubMenu("profile");
+                  }}
+                  onMouseLeave={() => {
+                    setSubMenu("");
+                  }}
+                >
+                  {/* <div className="profile-dropdown rotate-45 absolute w-4 h-4 border-2 border-[#f6f7f9] bg-[#f6f7f9] right-1 -top-2"></div> */}
+                  <div className="w-full text-black p-2">Watchlist</div>
+                  <div className="w-full text-black p-2">Watchlist</div>
+                </div>
+              )}
             </div>
+
+            {/* Login */}
+            <button className="hidden p-2 hover:opacity-50 duration-200">
+              Login
+            </button>
           </div>
         </div>
 
