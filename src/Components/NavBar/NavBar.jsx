@@ -203,7 +203,7 @@ export default function NavBar() {
         {/* Browse */}
         {subMenu == "browse" && (
           <div
-            className="w-full overflow-hidden shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
+            className="w-full overflow-hidden shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden z-20"
             onMouseEnter={() => {
               setSubMenu("browse");
             }}
@@ -498,7 +498,7 @@ export default function NavBar() {
         {/* Movies */}
         {subMenu == "movies" && (
           <div
-            className="w-full shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
+            className=" z-20 w-full shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
             onMouseEnter={() => {
               setSubMenu("movies");
             }}
@@ -795,7 +795,7 @@ export default function NavBar() {
         {/* TV */}
         {subMenu == "tv" && (
           <div
-            className="w-full shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
+            className="w-full z-20 shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden"
             onMouseEnter={() => {
               setSubMenu("tv");
             }}

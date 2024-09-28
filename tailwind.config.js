@@ -6,7 +6,7 @@ export default {
   ],
   theme: {
     screens: {
-      ms: "576px",
+      xs: "576px",
       sm: "768px",
       md: "992px",
       lg: "1200px",
@@ -17,6 +17,9 @@ export default {
         opensans: ['Open Sans', 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
       },
+      colors:{
+        cyan : '#24baef'
+      }
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],
