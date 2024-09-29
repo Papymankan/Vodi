@@ -4,26 +4,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 export default function Home() {
+  const [LandingSlides, setLandingSlides] = useState(5);
 
-  const [LandingSlides , setLandingSlides] = useState(5)
-
-  const CheckWidth = ()=>{
-    if(window.innerWidth < 630){
-      if(LandingSlides == 5){
-        setLandingSlides(4)
+  const CheckWidth = () => {
+    if (window.innerWidth < 630) {
+      if (LandingSlides == 5) {
+        setLandingSlides(4);
       }
-    }else{
-      if(LandingSlides == 4){
-        setLandingSlides(5)
+    } else {
+      if (LandingSlides == 4) {
+        setLandingSlides(5);
       }
     }
- }
+  };
 
- useEffect(()=>{
-  setLandingSlides(4)
- } , [window.innerWidth < 630])
+  useEffect(() => {
+    setLandingSlides(4);
+  }, [window.innerWidth < 630]);
 
-  window.addEventListener('resize' , CheckWidth)
+  window.addEventListener("resize", CheckWidth);
 
   return (
     <>
@@ -36,7 +35,7 @@ export default function Home() {
               style={{ backgroundImage: "url(/img/swiperLanding.jpg)" }}
             >
               <div className="container mx-auto h-full">
-                <div className="md:w-1/2 w-full px-3 flex flex-col md:justify-end h-full text-white md:text-left text-center">
+                <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 justify-end h-full text-white md:text-left text-center">
                   <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
                     2016 | Action, Animation, Family | 2hr 13 mins
                   </p>
@@ -64,7 +63,7 @@ export default function Home() {
               }}
             >
               <div className="container mx-auto h-full">
-                <div className="md:w-1/2 w-full px-3 flex flex-col md:justify-end h-full text-white md:text-left text-center">
+                <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 justify-end h-full text-white md:text-left text-center">
                   <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
                     2016 | Action, Animation, Family | 2hr 13 mins
                   </p>
@@ -92,7 +91,7 @@ export default function Home() {
               }}
             >
               <div className="container mx-auto h-full">
-                <div className="md:w-1/2 w-full px-3 flex flex-col md:justify-end h-full text-white md:text-left text-center">
+                <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 justify-end h-full text-white md:text-left text-center">
                   <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
                     2016 | Action, Animation, Family | 2hr 13 mins
                   </p>
@@ -119,7 +118,6 @@ export default function Home() {
             threshold={0}
             slidesPerView={LandingSlides}
             spaceBetween={10}
-            
           >
             <SwiperSlide className="swiper-slide2">
               <div
@@ -176,8 +174,6 @@ export default function Home() {
                 <div className="w-full h-full bg-[#00000066] absolute top-0 right-0 z-20"></div>
               </div>
             </SwiperSlide>
-           
-
           </Swiper>
         </div>
       </div>
