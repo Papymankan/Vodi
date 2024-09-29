@@ -27,6 +27,8 @@ export default function Home() {
   return (
     <>
       <NavBar />
+
+      {/* Landing */}
       <div className="w-full relative">
         <Swiper className="mySwiper" threshold={0}>
           <SwiperSlide>
@@ -35,7 +37,7 @@ export default function Home() {
               style={{ backgroundImage: "url(/img/swiperLanding.jpg)" }}
             >
               <div className="container mx-auto h-full">
-                <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 justify-end h-full text-white md:text-left text-center">
+                <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 md:pb-0 justify-end h-full text-white md:text-left text-center">
                   <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
                     2016 | Action, Animation, Family | 2hr 13 mins
                   </p>
@@ -63,7 +65,7 @@ export default function Home() {
               }}
             >
               <div className="container mx-auto h-full">
-                <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 justify-end h-full text-white md:text-left text-center">
+                <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 md:pb-0 justify-end h-full text-white md:text-left text-center">
                   <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
                     2016 | Action, Animation, Family | 2hr 13 mins
                   </p>
@@ -91,7 +93,7 @@ export default function Home() {
               }}
             >
               <div className="container mx-auto h-full">
-                <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 justify-end h-full text-white md:text-left text-center">
+                <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 md:pb-0 justify-end h-full text-white md:text-left text-center">
                   <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
                     2016 | Action, Animation, Family | 2hr 13 mins
                   </p>
@@ -177,6 +179,81 @@ export default function Home() {
           </Swiper>
         </div>
       </div>
+
+      {/* Trending TY */}
+
+      <div className="w-full bg-[#131722] md:pt-7 pt-24 pb-7">
+        <div className="container mx-auto font-montserrat text-white">
+          <div className="w-full flex items-center justify-between px-4">
+            <h2 className="text-2xl py-7 font-semibold">Trending TV Shows</h2>
+            <div className="flex-1 border-t-2 mx-4"></div>
+            <div className="flex items-center justify-between space-x-12">
+              <a
+                href="#"
+                className="text-sm text-cyan hover:text-cyan duration-200"
+              >
+                Today
+              </a>
+              <a href="#" className="text-sm  hover:text-cyan duration-200">
+                This Week
+              </a>
+            </div>
+          </div>
+
+          <div className="w-full grid lg:grid-cols-5 lg:grid-rows-2 md:grid-cols-3 grid-rows-5 grid-cols-2 gap-4 px-4">
+            <div
+              className="lg:h-96 sm:h-[500px] xs:h-[380px] h-[280px] bg-cover bg-center cursor-pointer lg:col-span-2 lg:row-span-2 md:col-span-3 md:row-span-3 col-span-2 row-span-2"
+              style={{
+                backgroundImage:
+                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
+              }}
+            ></div>
+            <div
+              className="bg-cover bg-center cursor-pointer"
+              style={{
+                backgroundImage:
+                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
+              }}
+            ></div>
+             <div
+              className="bg-cover bg-center cursor-pointer"
+              style={{
+                backgroundImage:
+                  "url(/img/swiperLanding.jpg)",
+              }}
+            ></div>
+             <div
+              className="bg-cover bg-center cursor-pointer"
+              style={{
+                backgroundImage:
+                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
+              }}
+            ></div>
+             <div
+              className="bg-cover bg-center cursor-pointer"
+              style={{
+                backgroundImage:
+                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
+              }}
+            ></div>
+             <div
+              className="bg-cover bg-center cursor-pointer"
+              style={{
+                backgroundImage:
+                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
+              }}
+            ></div>
+             <div
+              className="bg-cover bg-center cursor-pointer"
+              style={{
+                backgroundImage:
+                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
+              }}
+            ></div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
+// https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg
