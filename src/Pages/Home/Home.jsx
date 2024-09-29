@@ -182,12 +182,12 @@ export default function Home() {
 
       {/* Trending TY */}
 
-      <div className="w-full bg-[#131722] md:pt-7 pt-24 pb-7">
+      <div className="w-full bg-[#131722] md:pt-7 pt-32 pb-7">
         <div className="container mx-auto font-montserrat text-white">
-          <div className="w-full flex items-center justify-between px-4">
-            <h2 className="text-2xl py-7 font-semibold">Trending TV Shows</h2>
-            <div className="flex-1 border-t-2 mx-4"></div>
-            <div className="flex items-center justify-between space-x-12">
+          <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4">
+            <h2 className="text-2xl xs:py-7 font-semibold">Trending TV Shows</h2>
+            <div className="flex-1 border-t-2 mx-4 hidden xs:block"></div>
+            <div className="flexitems-center justify-between space-x-12 py-6">
               <a
                 href="#"
                 className="text-sm text-cyan hover:text-cyan duration-200"
@@ -207,49 +207,89 @@ export default function Home() {
                 backgroundImage:
                   "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
               }}
-            ></div>
+            >
+              <div className="w-full h-full TV-trendings flex justify-end p-3 flex-col group transition-all">
+                <p className="text-sm text-slate-300">S01E12</p>
+                <p className="group-hover:text-cyan duration-200">Amarillo</p>
+              </div>
+            </div>
+
             <div
               className="bg-cover bg-center cursor-pointer"
               style={{
                 backgroundImage:
                   "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
               }}
-            ></div>
-             <div
+            >
+              <div className="w-full h-full TV-trendings flex justify-end p-3 flex-col group transition-all">
+                <p className="text-sm text-slate-300">S01E12</p>
+                <p className="group-hover:text-cyan duration-200">Amarillo</p>
+              </div>
+            </div>
+
+            <div
               className="bg-cover bg-center cursor-pointer"
               style={{
-                backgroundImage:
-                  "url(/img/swiperLanding.jpg)",
+                backgroundImage: "url(/img/swiperLanding.jpg)",
               }}
-            ></div>
-             <div
+            >
+              <div className="w-full h-full TV-trendings flex justify-end p-3 flex-col group transition-all">
+                <p className="text-sm text-slate-300">S01E12</p>
+                <p className="group-hover:text-cyan duration-200">Amarillo</p>
+              </div>
+            </div>
+
+            <div
               className="bg-cover bg-center cursor-pointer"
               style={{
                 backgroundImage:
                   "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
               }}
-            ></div>
-             <div
+            >
+              <div className="w-full h-full TV-trendings flex justify-end p-3 flex-col group transition-all">
+                <p className="text-sm text-slate-300">S01E12</p>
+                <p className="group-hover:text-cyan duration-200">Amarillo</p>
+              </div>
+            </div>
+
+            <div
               className="bg-cover bg-center cursor-pointer"
               style={{
                 backgroundImage:
                   "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
               }}
-            ></div>
-             <div
+            >
+              <div className="w-full h-full TV-trendings flex justify-end p-3 flex-col group transition-all">
+                <p className="text-sm text-slate-300">S01E12</p>
+                <p className="group-hover:text-cyan duration-200">Amarillo</p>
+              </div>
+            </div>
+
+            <div
               className="bg-cover bg-center cursor-pointer"
               style={{
                 backgroundImage:
                   "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
               }}
-            ></div>
-             <div
+            >
+              <div className="w-full h-full TV-trendings flex justify-end p-3 flex-col group transition-all">
+                <p className="text-sm text-slate-300">S01E12</p>
+                <p className="group-hover:text-cyan duration-200">Amarillo</p>
+              </div>
+            </div>
+
+            <div
               className="bg-cover bg-center cursor-pointer"
               style={{
                 backgroundImage:
                   "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
               }}
-            ></div>
+            >
+              <div className="w-full h-full TV-trendings flex justify-end p-3 flex-col group transition-all">
+                <p className="text-sm text-slate-300">S01E12</p>
+                <p className="group-hover:text-cyan duration-200">Amarillo</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
