@@ -2,9 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.profile-dropdown {
-}
-
+/* Swiper */
 .swiper {
   /* width: 100%; */
   height: 100%;
@@ -41,8 +39,21 @@
 .swiper-wrapper {
   width: auto !important;
 }
+.swiper-button-next {
+  right: 0;
+  color: white;
+}
+.swiper-button-prev {
+  left: 0;
+  color: white;
+}
+.swiper-button-prev.swiper-button-disabled,
+.swiper-button-next.swiper-button-disabled {
+  pointer-events: visible;
+}
+/* Swiper */
 
-.TV-trendings {
+.poster-cover {
   background-image: linear-gradient(
     to bottom,
     rgba(240, 47, 23, 0) 0%,
