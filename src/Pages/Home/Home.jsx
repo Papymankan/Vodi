@@ -316,14 +316,14 @@ export default function Home() {
               spaceBetween={20}
               slidesPerGroup={1}
               breakpoints={{
-                1200 : {
-                  slidesPerView:6,
-                  slidesPerGroup:3
+                1200: {
+                  slidesPerView: 6,
+                  slidesPerGroup: 3,
                 },
-                768 : {
-                  slidesPerView:4,
-                  slidesPerGroup:2
-                }
+                768: {
+                  slidesPerView: 4,
+                  slidesPerGroup: 2,
+                },
               }}
             >
               <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
@@ -492,6 +492,10 @@ export default function Home() {
                 </a>
               </SwiperSlide>
             </Swiper>
+          </div>
+
+          <div className="border-t-2 text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+            <a href="#" className="hover:text-cyan duration-200">VIEW ALL</a>
           </div>
         </div>
       </div>
