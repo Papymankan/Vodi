@@ -6,7 +6,11 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import Footer from "../../Components/Footer/Footer";
 import Store from "../../Redux/Store";
-import { fetchMovies, fetchTopYearMovies } from "../../Redux/Reducers/Movies";
+import {
+  fetchMovieGenres,
+  fetchMovies,
+  fetchTopYearMovies,
+} from "../../Redux/Reducers/Movies";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 
@@ -26,15 +30,18 @@ export default function Home() {
   };
 
   const TopYearMovies = useSelector((state) => state.Movies.TopYearMovies);
-  console.log(TopYearMovies);
-  
+  // console.log(TopYearMovies);
+
+  const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
+  // console.log(MovieGenres);
 
   useEffect(() => {
     setLandingSlides(3);
   }, [window.innerWidth < 630]);
-  // include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc
+
   useEffect(() => {
     Store.dispatch(fetchTopYearMovies({ url: "discover/movie", filters: [] }));
+    Store.dispatch(fetchMovieGenres({ url: "genre/movie/list", filters: [] }));
   }, []);
   window.addEventListener("resize", CheckWidth);
 
@@ -1146,13 +1153,19 @@ export default function Home() {
                   <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
                     <a href="#" className="relative w-full h-full">
                       <img
-                        src={ImageBaseUrl+movie.poster_path}
+                        src={ImageBaseUrl + movie.poster_path}
                         alt=""
                         className="h-full w-full"
                       />
                       <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                        <p className="text-slate-300 font-light">
-                          action, sport
+                        <p className="text-slate-300 font-light line-clamp-1 text-start w-full">
+                          {
+                            MovieGenres &&
+                            movie.genre_ids.map(id => {
+                              let genre = MovieGenres.find(genre => genre.id == id)
+                              return <span>{genre.name}, </span>
+                            })
+                          }
                         </p>
                         <p className="group-hover:text-cyan duration-200">
                           {movie.title}
