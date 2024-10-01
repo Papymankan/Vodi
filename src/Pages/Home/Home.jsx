@@ -5,6 +5,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import Footer from "../../Components/Footer/Footer";
+import Store from "../../Redux/Store";
+import { fetchMovies } from "../../Redux/Reducers/Movies";
 
 export default function Home() {
   const [LandingSlides, setLandingSlides] = useState(5);
@@ -24,6 +26,10 @@ export default function Home() {
   useEffect(() => {
     setLandingSlides(3);
   }, [window.innerWidth < 630]);
+  // include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc
+  useEffect(()=>{
+    Store.dispatch(fetchMovies({url:'discover/movie' , filters:['include_adult=false','include_video=false','language=en-US','page=1','sort_by=popularity.desc']}))
+  } , [])
 
   window.addEventListener("resize", CheckWidth);
 
