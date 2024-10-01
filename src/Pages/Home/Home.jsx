@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
+import Footer from "../../Components/Footer/Footer";
 
 export default function Home() {
   const [LandingSlides, setLandingSlides] = useState(5);
@@ -1303,6 +1304,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <Footer/>
     </>
   );
 }

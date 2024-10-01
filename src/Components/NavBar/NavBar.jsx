@@ -26,7 +26,7 @@ export default function NavBar() {
                 <stop offset="0" stop-color="#2A4999" />
                 <stop offset="1" stop-color="#2C9CD4" />
               </linearGradient>
-              <g class="vodi-gr" fill="white">
+              <g class="vodi-gr" fill="url(#vodi-gr)">
                 <path
                   class="vodi-svg0"
                   d="M72.8,12.7c0-2.7,0-1.8,0-4.4c0-0.9,0-1.8,0-2.8C73,3,74.7,1.4,77,1.4c2.3,0,4.1,1.8,4.2,4.2c0,1,0,2.1,0,3.1
