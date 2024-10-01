@@ -72,6 +72,30 @@ export const fetchTrendingMovies = createAsyncThunk(
   }
 );
 
+export const fetchTopRatedMovie = createAsyncThunk(
+    "Movies/fetchTopRatedMovie",
+    async () => {
+      return fetch(BaseUrl + "movie/top_rated" + "?" + ApiKey, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          
+          if (res.ok) {
+            return res.json();
+          }
+        })
+        .then((data) => {
+          console.log(data);
+  
+          return data.results[0];
+        });
+    }
+  );
+
 export const fetchMovieGenres = createAsyncThunk(
   "Movies/fetchMovieGenres",
   async () => {
@@ -109,6 +133,9 @@ const slice = createSlice({
       })
       .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
         return { ...state, TrendingMovies: action.payload };
+      })
+      .addCase(fetchTopRatedMovie.fulfilled, (state, action) => {
+        return { ...state, TopRatedMovie: action.payload };
       });
   },
 });

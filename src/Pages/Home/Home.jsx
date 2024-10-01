@@ -9,6 +9,7 @@ import Store from "../../Redux/Store";
 import {
   fetchMovieGenres,
   fetchMovies,
+  fetchTopRatedMovie,
   fetchTopYearMovies,
   fetchTrendingMovies,
 } from "../../Redux/Reducers/Movies";
@@ -58,6 +59,9 @@ export default function Home() {
     }
   }, [TrendingMovies]);
 
+  const TopRatedMovie = useSelector((state) => state.Movies.TopRatedMovie);
+  console.log(TopRatedMovie);
+
   useEffect(() => {
     setLandingSlides(3);
   }, [window.innerWidth < 630]);
@@ -66,6 +70,7 @@ export default function Home() {
     Store.dispatch(fetchTopYearMovies());
     Store.dispatch(fetchMovieGenres());
     Store.dispatch(fetchTrendingMovies());
+    Store.dispatch(fetchTopRatedMovie());
   }, []);
   window.addEventListener("resize", CheckWidth);
 
@@ -818,8 +823,14 @@ export default function Home() {
                 <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
                   <p className="text-sm text-slate-300">
                     {MovieGenres &&
-                      TrendingMoviesRandom[0].genre_ids.map((id) => {
+                      TrendingMoviesRandom[0].genre_ids.map((id, index) => {
                         let genre = MovieGenres.find((genre) => genre.id == id);
+                        if (
+                          TrendingMoviesRandom[0].genre_ids.length ==
+                          index + 1
+                        ) {
+                          return <span>{genre.name}</span>;
+                        }
                         return <span>{genre.name}, </span>;
                       })}
                   </p>
@@ -848,10 +859,13 @@ export default function Home() {
                     <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
                       <p className="text-sm text-slate-300 line-clamp-1">
                         {MovieGenres &&
-                          movie.genre_ids.map((id) => {
+                          movie.genre_ids.map((id, index) => {
                             let genre = MovieGenres.find(
                               (genre) => genre.id == id
                             );
+                            if (movie.genre_ids.length == index + 1) {
+                              return <span>{genre.name}</span>;
+                            }
                             return <span>{genre.name}, </span>;
                           })}
                       </p>
@@ -1084,29 +1098,42 @@ export default function Home() {
           </div>
         </div>
 
-        <div
-          className="w-full md:h-[500px] sm:h-[420px] ms:h-[380px] h-[320px] bg-cover bg-center"
-          style={{ backgroundImage: "url(/img/swiperLanding.jpg)" }}
-        >
-          <div className="container mx-auto h-full">
-            <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 md:pb-0 justify-end h-full text-white md:text-left text-center">
-              <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
-                2016 | Action, Animation, Family | 2hr 13 mins
-              </p>
-              <h1 className="md:text-7xl sm:text-5xl text-3xl font-bold max-w-md sm:max-w-2xl md:max-w-lg mx-auto md:mx-0 max-h-96 line-clamp-4">
-                Fantastic Beasts and Where to Find Them
-              </h1>
-              <div className="w-full flex items-center md:justify-start justify-center space-x-8 md:my-8 my-4">
-                <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200">
-                  Explore
-                </button>
-                <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:opacity-60 duration-200">
-                  + PlayList
-                </button>
+        {TopRatedMovie && (
+          <div
+            className="w-full md:h-[500px] sm:h-[420px] ms:h-[380px] h-[320px] bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${
+                ImageBaseUrl + TopRatedMovie.backdrop_path
+              })`,
+            }}
+          >
+            <div className="container mx-auto h-full">
+              <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 md:pb-0 justify-end h-full text-white md:text-left text-center">
+                <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
+                  {MovieGenres &&
+                    TopRatedMovie.genre_ids.map((id, index) => {
+                      let genre = MovieGenres.find((genre) => genre.id == id);
+                      if (TopRatedMovie.genre_ids.length == index + 1) {
+                        return <span>{genre.name}</span>;
+                      }
+                      return <span>{genre.name}, </span>;
+                    })}
+                </p>
+                <h1 className="md:text-7xl sm:text-5xl text-3xl font-bold max-w-md sm:max-w-2xl md:max-w-lg mx-auto md:mx-0 max-h-96 line-clamp-4">
+                  {TopRatedMovie.title}
+                </h1>
+                <div className="w-full flex items-center md:justify-start justify-center space-x-8 md:my-8 my-4">
+                  <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200">
+                    Explore
+                  </button>
+                  <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:opacity-60 duration-200">
+                    + PlayList
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* 2024 Top Movies */}
