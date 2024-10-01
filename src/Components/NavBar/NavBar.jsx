@@ -108,7 +108,7 @@ export default function NavBar() {
                   setSubMenu("");
                 }}
               >
-                <span>TV Shows</span>
+                <span>Series</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -804,9 +804,9 @@ export default function NavBar() {
             }}
           >
             <div className="container mx-auto flex space-x-4 px-2">
-              {/* Most Popular TV Shows */}
+              {/* Most Popular Series */}
               <div className="border-r-2 py-2">
-                <h3 className="font-semibold pb-2">Most Popular TV Shows</h3>
+                <h3 className="font-semibold pb-2">Most Popular Series</h3>
                 <div className="flex mt-3 space-x-4">
                   <img src="/img/popular-movie.jpg" alt="" className="h-44" />
                   <div className="max-w-52">
@@ -848,9 +848,9 @@ export default function NavBar() {
                 </div>
               </div>
 
-              {/* Top Rated TV Shows*/}
+              {/* Top Rated Series*/}
               <div className="border-r-2 py-2">
-                <h3 className="font-semibold pb-2">Top Rated TV Shows</h3>
+                <h3 className="font-semibold pb-2">Top Rated Series</h3>
                 <div className="flex mt-3 space-x-4">
                   <img src="/img/popular-movie.jpg" alt="" className="h-44" />
                   <div className="max-w-52">

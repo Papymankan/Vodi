@@ -182,16 +182,14 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Trending TV */}
+      {/* Trending TVSeries */}
 
       <div className="w-full bg-[#131722] md:pt-7 pt-32 pb-7">
         <div className="container mx-auto font-montserrat text-white">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4">
-            <h2 className="text-2xl xs:py-7 font-semibold">
-              Trending TV Shows
-            </h2>
-            <div className="flex-1 border-t-2 mx-4 hidden xs:block"></div>
-            <div className="flexitems-center justify-between space-x-12 py-6">
+            <h2 className="text-2xl xs:py-7 font-semibold">Trending Series</h2>
+            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+            <div className="flex items-center justify-between space-x-12 py-6">
               <a
                 href="#"
                 className="text-sm text-cyan hover:text-cyan duration-200"
@@ -298,15 +296,15 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 2024 Top TV Shows */}
+      {/* 2024 Top Series */}
 
       <div className="w-full bg-[#0e0d12] py-8">
         <div className="container mx-auto">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
             <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
-              2024 Top TV Shows
+              2024 Top Series
             </h2>
-            <div className="flex-1 border-t-2 mx-4 hidden xs:block"></div>
+            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
           </div>
 
           <div className="w-full">
@@ -496,7 +494,7 @@ export default function Home() {
             </Swiper>
           </div>
 
-          <div className="border-t-2 text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+          <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
             <a href="#" className="hover:text-cyan duration-200">
               VIEW ALL
             </a>
@@ -504,15 +502,48 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Trending TV */}
+      {/* Top Reated Serie */}
+      <div className="w-full relative bg-[#0e0d12]">
+        <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+          <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+            Top Reated Serie
+            <span className="font-light text-base"> on vodi</span>
+          </h2>
+          <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+        </div>
+
+        <div
+          className="w-full md:h-[500px] sm:h-[420px] ms:h-[380px] h-[320px] bg-cover bg-center"
+          style={{ backgroundImage: "url(/img/swiperLanding.jpg)" }}
+        >
+          <div className="container mx-auto h-full">
+            <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 md:pb-0 justify-end h-full text-white md:text-left text-center">
+              <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
+                2016 | Action, Animation, Family | 2hr 13 mins
+              </p>
+              <h1 className="md:text-7xl sm:text-5xl text-3xl font-bold max-w-md sm:max-w-2xl md:max-w-lg mx-auto md:mx-0 max-h-96 line-clamp-4">
+                Fantastic Beasts and Where to Find Them
+              </h1>
+              <div className="w-full flex items-center md:justify-start justify-center space-x-8 md:my-8 my-4">
+                <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200">
+                  Explore
+                </button>
+                <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:opacity-60 duration-200">
+                  + PlayList
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Trending Movies */}
 
       <div className="w-full bg-[#131722] md:pt-7 pt-12 pb-7">
         <div className="container mx-auto font-montserrat text-white">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4">
-            <h2 className="text-2xl xs:py-7 font-semibold">
-              Trending Movies
-            </h2>
-            <div className="flex-1 border-t-2 mx-4 hidden xs:block"></div>
+            <h2 className="text-2xl xs:py-7 font-semibold">Trending Movies</h2>
+            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
             <div className="flexitems-center justify-between space-x-12 py-6">
               <a
                 href="#"
@@ -625,8 +656,10 @@ export default function Home() {
       <div className="w-full bg-[#0e0d12] py-8">
         <div className="container mx-auto">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
-            <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">2024 Top Movies</h2>
-            <div className="flex-1 border-t-2 mx-4 hidden xs:block"></div>
+            <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+              2024 Top Movies
+            </h2>
+            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
           </div>
 
           <div className="w-full">
@@ -816,14 +849,48 @@ export default function Home() {
             </Swiper>
           </div>
 
-          <div className="border-t-2 text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+          <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
             <a href="#" className="hover:text-cyan duration-200">
               VIEW ALL
             </a>
           </div>
         </div>
       </div>
+
+      {/* Top Rated Movie */}
+      <div className="w-full relative bg-[#0e0d12]">
+        <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+          <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+            Top Rated Movie
+            <span className="font-light text-base"> on vodi</span>
+          </h2>
+          <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+        </div>
+
+        <div
+          className="w-full md:h-[500px] sm:h-[420px] ms:h-[380px] h-[320px] bg-cover bg-center"
+          style={{ backgroundImage: "url(/img/swiperLanding.jpg)" }}
+        >
+          <div className="container mx-auto h-full">
+            <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 md:pb-0 justify-end h-full text-white md:text-left text-center">
+              <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
+                2016 | Action, Animation, Family | 2hr 13 mins
+              </p>
+              <h1 className="md:text-7xl sm:text-5xl text-3xl font-bold max-w-md sm:max-w-2xl md:max-w-lg mx-auto md:mx-0 max-h-96 line-clamp-4">
+                Fantastic Beasts and Where to Find Them
+              </h1>
+              <div className="w-full flex items-center md:justify-start justify-center space-x-8 md:my-8 my-4">
+                <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200">
+                  Explore
+                </button>
+                <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:opacity-60 duration-200">
+                  + PlayList
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
-// https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg
