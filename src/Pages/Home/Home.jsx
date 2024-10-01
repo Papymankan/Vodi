@@ -10,12 +10,14 @@ import {
   fetchMovieGenres,
   fetchMovies,
   fetchTopYearMovies,
+  fetchTrendingMovies,
 } from "../../Redux/Reducers/Movies";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 
 export default function Home() {
   const [LandingSlides, setLandingSlides] = useState(5);
+  const [TrendingMoviesRandom, setTrendingMoviesRandom] = useState([]);
 
   const CheckWidth = () => {
     if (window.innerWidth < 630) {
@@ -35,13 +37,35 @@ export default function Home() {
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
   // console.log(MovieGenres);
 
+  const TrendingMovies = useSelector((state) => state.Movies.TrendingMovies);
+  console.log(TrendingMovies);
+
+  // Choose 7 random trending movies
+  useEffect(() => {
+    if (TrendingMovies) {
+      let movies = [...TrendingMovies];
+      let arr = [];
+      if (TrendingMovies.length) {
+        for (let index = 0; index < 7; index++) {
+          let randomNum = Math.floor(Math.random() * (20 - index));
+          console.log(randomNum);
+
+          arr.push(movies[randomNum]);
+          movies.splice(randomNum, 1);
+        }
+      }
+      setTrendingMoviesRandom(arr);
+    }
+  }, [TrendingMovies]);
+
   useEffect(() => {
     setLandingSlides(3);
   }, [window.innerWidth < 630]);
 
   useEffect(() => {
-    Store.dispatch(fetchTopYearMovies({ url: "discover/movie", filters: [] }));
-    Store.dispatch(fetchMovieGenres({ url: "genre/movie/list", filters: [] }));
+    Store.dispatch(fetchTopYearMovies());
+    Store.dispatch(fetchMovieGenres());
+    Store.dispatch(fetchTrendingMovies());
   }, []);
   window.addEventListener("resize", CheckWidth);
 
@@ -782,95 +806,62 @@ export default function Home() {
           </div>
 
           <div className="w-full grid lg:grid-cols-5 lg:grid-rows-2 md:grid-cols-3 grid-rows-5 grid-cols-2 gap-4 px-4">
-            <div
-              className="lg:h-96 sm:h-[500px] xs:h-[380px] h-[280px] bg-cover bg-center cursor-pointer lg:col-span-2 lg:row-span-2 md:col-span-3 md:row-span-3 col-span-2 row-span-2"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
+            {TrendingMoviesRandom && TrendingMoviesRandom.length > 0 && (
+              <div
+                className="lg:h-96 lg:w-572 sm:h-[500px] xs:h-[380px] h-[280px] bg-cover bg-center cursor-pointer lg:col-span-2 lg:row-span-2 md:col-span-3 md:row-span-3 col-span-2 row-span-2"
+                style={{
+                  backgroundImage: `url(${
+                    ImageBaseUrl + TrendingMoviesRandom[0].backdrop_path
+                  })`,
+                }}
+              >
+                <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
+                  <p className="text-sm text-slate-300">
+                    {MovieGenres &&
+                      TrendingMoviesRandom[0].genre_ids.map((id) => {
+                        let genre = MovieGenres.find((genre) => genre.id == id);
+                        return <span>{genre.name}, </span>;
+                      })}
+                  </p>
+                  <p className="group-hover:text-cyan duration-200">
+                    {TrendingMoviesRandom[0].title}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
 
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
-
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage: "url(/img/swiperLanding.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
-
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
-
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
-
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
-
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
+            {TrendingMoviesRandom &&
+              TrendingMoviesRandom.length > 0 &&
+              TrendingMoviesRandom.map((movie, index) => {
+                if (index == 0) {
+                  return true;
+                }
+                return (
+                  <div
+                    className="bg-cover bg-center cursor-pointer"
+                    style={{
+                      backgroundImage: `url(${
+                        ImageBaseUrl + movie.backdrop_path
+                      })`,
+                    }}
+                  >
+                    <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
+                      <p className="text-sm text-slate-300 line-clamp-1">
+                        {MovieGenres &&
+                          movie.genre_ids.map((id) => {
+                            let genre = MovieGenres.find(
+                              (genre) => genre.id == id
+                            );
+                            return <span>{genre.name}, </span>;
+                          })}
+                      </p>
+                      <p className="group-hover:text-cyan duration-200">
+                        {movie.title}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
@@ -1158,173 +1149,22 @@ export default function Home() {
                         className="h-full w-full"
                       />
                       <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                        <p className="text-slate-300 font-light line-clamp-1 text-start w-full">
-                          {
-                            MovieGenres &&
-                            movie.genre_ids.map(id => {
-                              let genre = MovieGenres.find(genre => genre.id == id)
-                              return <span>{genre.name}, </span>
-                            })
-                          }
+                        <p className="text-slate-300 text-sm font-light line-clamp-1 text-start w-full">
+                          {MovieGenres &&
+                            movie.genre_ids.map((id) => {
+                              let genre = MovieGenres.find(
+                                (genre) => genre.id == id
+                              );
+                              return <span>{genre.name}, </span>;
+                            })}
                         </p>
-                        <p className="group-hover:text-cyan duration-200">
+                        <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
                           {movie.title}
                         </p>
                       </div>
                     </a>
                   </SwiperSlide>
                 ))}
-
-              {/* <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/46-she-is-funny-that-way-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide> */}
             </Swiper>
           </div>
 

@@ -27,13 +27,16 @@ export const fetchMovies = createAsyncThunk(
 
 export const fetchTopYearMovies = createAsyncThunk(
   "Movies/fetchTopYearMovies",
-  async ({ url }) => {
-    return fetch(BaseUrl + url + "?" + ApiKey + "&" + "year=2024", {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    })
+  async () => {
+    return fetch(
+      BaseUrl + "discover/movie" + "?" + ApiKey + "&" + "year=2024",
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -45,10 +48,34 @@ export const fetchTopYearMovies = createAsyncThunk(
   }
 );
 
+export const fetchTrendingMovies = createAsyncThunk(
+  "Movies/fetchTrendingMovies",
+  async () => {
+    return fetch(BaseUrl + "trending/movie/day" + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data.results;
+      });
+  }
+);
+
 export const fetchMovieGenres = createAsyncThunk(
   "Movies/fetchMovieGenres",
-  async ({ url }) => {
-    return fetch(BaseUrl + url + "?" + ApiKey, {
+  async () => {
+    return fetch(BaseUrl + "genre/movie/list" + "?" + ApiKey, {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -78,9 +105,10 @@ const slice = createSlice({
         return { ...state, TopYearMovies: action.payload };
       })
       .addCase(fetchMovieGenres.fulfilled, (state, action) => {
-        console.log(state, action);
-        
         return { ...state, MovieGenres: action.payload };
+      })
+      .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
+        return { ...state, TrendingMovies: action.payload };
       });
   },
 });
