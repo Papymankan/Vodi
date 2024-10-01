@@ -3,7 +3,7 @@ import MoviesReducer from "./Reducers/Movies";
 
 export default configureStore({
     reducer:{
-        MoviesReducer
+        Movies:MoviesReducer
     }
 })
 

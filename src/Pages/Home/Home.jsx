@@ -6,7 +6,9 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import Footer from "../../Components/Footer/Footer";
 import Store from "../../Redux/Store";
-import { fetchMovies } from "../../Redux/Reducers/Movies";
+import { fetchMovies, fetchTopYearMovies } from "../../Redux/Reducers/Movies";
+import { useSelector } from "react-redux";
+import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 
 export default function Home() {
   const [LandingSlides, setLandingSlides] = useState(5);
@@ -23,14 +25,17 @@ export default function Home() {
     }
   };
 
+  const TopYearMovies = useSelector((state) => state.Movies.TopYearMovies);
+  console.log(TopYearMovies);
+  
+
   useEffect(() => {
     setLandingSlides(3);
   }, [window.innerWidth < 630]);
   // include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc
-  useEffect(()=>{
-    Store.dispatch(fetchMovies({url:'discover/movie' , filters:['include_adult=false','include_video=false','language=en-US','page=1','sort_by=popularity.desc']}))
-  } , [])
-
+  useEffect(() => {
+    Store.dispatch(fetchTopYearMovies({ url: "discover/movie", filters: [] }));
+  }, []);
   window.addEventListener("resize", CheckWidth);
 
   return (
@@ -1135,22 +1140,29 @@ export default function Home() {
                 },
               }}
             >
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+              {TopYearMovies &&
+                TopYearMovies.length > 0 &&
+                TopYearMovies.map((movie) => (
+                  <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                    <a href="#" className="relative w-full h-full">
+                      <img
+                        src={ImageBaseUrl+movie.poster_path}
+                        alt=""
+                        className="h-full w-full"
+                      />
+                      <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                        <p className="text-slate-300 font-light">
+                          action, sport
+                        </p>
+                        <p className="group-hover:text-cyan duration-200">
+                          {movie.title}
+                        </p>
+                      </div>
+                    </a>
+                  </SwiperSlide>
+                ))}
+
+              {/* <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
                 <a href="#" className="relative w-full h-full">
                   <img
                     src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
@@ -1299,7 +1311,7 @@ export default function Home() {
                     </p>
                   </div>
                 </a>
-              </SwiperSlide>
+              </SwiperSlide> */}
             </Swiper>
           </div>
 
@@ -1311,7 +1323,7 @@ export default function Home() {
         </div>
       </div>
 
-      <Footer/>
+      <Footer />
     </>
   );
 }
