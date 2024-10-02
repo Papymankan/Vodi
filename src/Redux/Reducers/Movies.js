@@ -123,8 +123,6 @@ export const fetchPopularMovies = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
-
         return data.results;
       });
   }
@@ -145,8 +143,6 @@ export const fetchTheaterMovies = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data.results);
-
         return data.results;
       });
   }
@@ -167,8 +163,6 @@ export const fetchUpcomingMovies = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data.results);
-
         return data.results;
       });
   }

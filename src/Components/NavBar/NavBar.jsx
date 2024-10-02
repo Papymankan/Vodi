@@ -16,6 +16,7 @@ export default function NavBar() {
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
   const PopularSeries = useSelector((state) => state.Series.PopularSeries);
   const AirTodaySeries = useSelector((state) => state.Series.AirTodaySeries);
+  const OnAirSeries = useSelector((state) => state.Series.OnAirSeries);
 
   return (
     <>
@@ -879,7 +880,7 @@ export default function NavBar() {
                             className="h-16"
                           />
                           <div className="max-w-32">
-                            <h3 className="font-semibold text-xs">
+                            <h3 className="font-semibold text-xs line-clamp-1">
                               {serie.name}
                             </h3>
                             <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
@@ -913,8 +914,8 @@ export default function NavBar() {
                     </button>
                   </div>
                   <div className="flex items-center py-3 space-x-4">
-                  {/* {AirTodaySeries &&
-                      AirTodaySeries.slice(0, 4).map((serie, index) => (
+                    {OnAirSeries &&
+                      OnAirSeries.slice(0, 4).map((serie, index) => (
                         <div
                           className={`flex space-x-2 ${
                             index == 2 && "lg:flex hidden"
@@ -926,7 +927,7 @@ export default function NavBar() {
                             className="h-16"
                           />
                           <div className="max-w-32">
-                            <h3 className="font-semibold text-xs">
+                            <h3 className="font-semibold text-xs line-clamp-1">
                               {serie.name}
                             </h3>
                             <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
@@ -934,7 +935,7 @@ export default function NavBar() {
                             </p>
                           </div>
                         </div>
-                      ))} */}
+                      ))}
                   </div>
                 </div>
               </div>

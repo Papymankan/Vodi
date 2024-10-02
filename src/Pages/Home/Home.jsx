@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import {
   fetchAirTodaySeries,
+  fetchOnAirSeries,
   fetchPopularSeries,
   fetchSerieGenres,
   fetchTopRatedSerie,
@@ -118,6 +119,7 @@ export default function Home() {
     Store.dispatch(fetchTopRatedSerie());
     Store.dispatch(fetchPopularSeries());
     Store.dispatch(fetchAirTodaySeries());
+    Store.dispatch(fetchOnAirSeries());
 
   }, []);
   window.addEventListener("resize", CheckWidth);

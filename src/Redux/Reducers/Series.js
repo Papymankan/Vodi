@@ -25,7 +25,6 @@ import { BaseUrl, ApiKey } from "../FetchConfigs";
 //   }
 // );
 
-
 export const fetchTopYearSeries = createAsyncThunk(
   "Series/fetchTopYearSeries",
   async () => {
@@ -58,7 +57,7 @@ export const fetchTrendingSeries = createAsyncThunk(
         accept: "application/json",
       },
     })
-      .then((res) => {       
+      .then((res) => {
         if (res.ok) {
           return res.json();
         }
@@ -70,25 +69,24 @@ export const fetchTrendingSeries = createAsyncThunk(
 );
 
 export const fetchTopRatedSerie = createAsyncThunk(
-    "Series/fetchTopRatedSerie",
-    async () => {
-      return fetch(BaseUrl + "tv/top_rated" + "?" + ApiKey, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
+  "Series/fetchTopRatedSerie",
+  async () => {
+    return fetch(BaseUrl + "tv/top_rated" + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
       })
-        .then((res) => {
-          
-          if (res.ok) {
-            return res.json();
-          }
-        })
-        .then((data) => {
-          return data.results[0];
-        });
-    }
-  );
+      .then((data) => {
+        return data.results[0];
+      });
+  }
+);
 
 export const fetchSerieGenres = createAsyncThunk(
   "Series/fetchSerieGenres",
@@ -111,7 +109,7 @@ export const fetchSerieGenres = createAsyncThunk(
 );
 
 export const fetchPopularSeries = createAsyncThunk(
-  "Movies/fetchPopularSeries",
+  "Series/fetchPopularSeries",
   async () => {
     return fetch(BaseUrl + "discover/tv" + "?" + ApiKey, {
       method: "GET",
@@ -125,15 +123,13 @@ export const fetchPopularSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data.results);
-        
         return data.results;
       });
   }
 );
 
 export const fetchAirTodaySeries = createAsyncThunk(
-  "Movies/fetchAirTodaySeries",
+  "Series/fetchAirTodaySeries",
   async () => {
     return fetch(BaseUrl + "tv/airing_today" + "?" + ApiKey, {
       method: "GET",
@@ -146,7 +142,29 @@ export const fetchAirTodaySeries = createAsyncThunk(
           return res.json();
         }
       })
-      .then((data) => {       
+      .then((data) => {
+        return data.results;
+      });
+  }
+);
+
+export const fetchOnAirSeries = createAsyncThunk(
+  "Series/fetchOnAirSeries",
+  async () => {
+    return fetch(BaseUrl + "tv/on_the_air" + "?" + ApiKey +"&page=2", {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data.results);
+
         return data.results;
       });
   }
@@ -158,9 +176,9 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-    //   .addCase(fetchMovies.fulfilled, (state, action) => {
-    //     console.log(state, action);
-    //   })
+      //   .addCase(fetchMovies.fulfilled, (state, action) => {
+      //     console.log(state, action);
+      //   })
       .addCase(fetchTopYearSeries.fulfilled, (state, action) => {
         return { ...state, TopYearSeries: action.payload };
       })
@@ -179,6 +197,9 @@ const slice = createSlice({
       .addCase(fetchAirTodaySeries.fulfilled, (state, action) => {
         return { ...state, AirTodaySeries: action.payload };
       })
+      .addCase(fetchOnAirSeries.fulfilled, (state, action) => {
+        return { ...state, OnAirSeries: action.payload };
+      });
   },
 });
 
