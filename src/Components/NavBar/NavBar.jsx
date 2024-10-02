@@ -9,6 +9,7 @@ export default function NavBar() {
   const TopRatedMovie = useSelector((state) => state.Movies.TopRatedMovie);
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
   const PopularMovies = useSelector((state) => state.Movies.PopularMovies);
+  const TheaterMovies = useSelector((state) => state.Movies.TheaterMovies);
 
   return (
     <>
@@ -642,77 +643,28 @@ export default function NavBar() {
                     </button>
                   </div>
                   <div className="flex items-center py-3 space-x-4">
-                    <div className="flex space-x-2">
-                      <img
-                        src="/img/popular-movie.jpg"
-                        alt=""
-                        className="h-16"
-                      />
-                      <div className="max-w-32">
-                        <h3 className="font-semibold text-xs">The Big Sick</h3>
-                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Repellat ad nihil ut consequatur accusamus
-                          consequuntur? Similique, nulla animi! Facilis, impedit
-                          laboriosam aliquid possimus tempore ipsam nam est
-                          perspiciatis distinctio dicta!
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex space-x-2">
-                      <img
-                        src="/img/popular-movie.jpg"
-                        alt=""
-                        className="h-16"
-                      />
-                      <div className="max-w-32">
-                        <h3 className="font-semibold text-xs">The Big Sick</h3>
-                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Repellat ad nihil ut consequatur accusamus
-                          consequuntur? Similique, nulla animi! Facilis, impedit
-                          laboriosam aliquid possimus tempore ipsam nam est
-                          perspiciatis distinctio dicta!
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="lg:flex hidden space-x-2">
-                      <img
-                        src="/img/popular-movie.jpg"
-                        alt=""
-                        className="h-16"
-                      />
-                      <div className="max-w-32">
-                        <h3 className="font-semibold text-xs">The Big Sick</h3>
-                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Repellat ad nihil ut consequatur accusamus
-                          consequuntur? Similique, nulla animi! Facilis, impedit
-                          laboriosam aliquid possimus tempore ipsam nam est
-                          perspiciatis distinctio dicta!
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="xl:flex hidden space-x-2">
-                      <img
-                        src="/img/popular-movie.jpg"
-                        alt=""
-                        className="h-16"
-                      />
-                      <div className="max-w-32">
-                        <h3 className="font-semibold text-xs">The Big Sick</h3>
-                        <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Repellat ad nihil ut consequatur accusamus
-                          consequuntur? Similique, nulla animi! Facilis, impedit
-                          laboriosam aliquid possimus tempore ipsam nam est
-                          perspiciatis distinctio dicta!
-                        </p>
-                      </div>
-                    </div>
+                    {TheaterMovies &&
+                      TheaterMovies.slice(0, 4).map((movie, index) => (
+                        <div
+                          className={`flex space-x-2 ${
+                            index == 2 && "lg:flex hidden"
+                          } ${index == 3 && "xl:flex hidden"}`}
+                        >
+                          <img
+                            src={ImageBaseUrl + movie.poster_path}
+                            alt=""
+                            className="h-16"
+                          />
+                          <div className="max-w-32">
+                            <h3 className="font-semibold text-xs">
+                              {movie.title}
+                            </h3>
+                            <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                              {movie.overview}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                   </div>
                 </div>
 

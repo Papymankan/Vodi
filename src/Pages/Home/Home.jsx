@@ -10,6 +10,7 @@ import {
   fetchMovieGenres,
   fetchMovies,
   fetchPopularMovies,
+  fetchTheaterMovies,
   fetchTopRatedMovie,
   fetchTopYearMovies,
   fetchTrendingMovies,
@@ -105,6 +106,7 @@ export default function Home() {
     Store.dispatch(fetchTrendingMovies());
     Store.dispatch(fetchTopRatedMovie());
     Store.dispatch(fetchPopularMovies());
+    Store.dispatch(fetchTheaterMovies());
 
     Store.dispatch(fetchTopYearSeries());
     Store.dispatch(fetchSerieGenres());

@@ -130,6 +130,26 @@ export const fetchPopularMovies = createAsyncThunk(
   }
 );
 
+export const fetchTheaterMovies = createAsyncThunk(
+  "Movies/fetchTheaterMovies",
+  async () => {
+    return fetch(BaseUrl + "movie/now_playing" + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data.results;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {},
@@ -153,7 +173,10 @@ const slice = createSlice({
       })
       .addCase(fetchPopularMovies.fulfilled, (state, action) => {
         return { ...state, PopularMovies: action.payload };
-      });
+      })
+      .addCase(fetchTheaterMovies.fulfilled, (state, action) => {
+        return { ...state, TheaterMovies: action.payload };
+      })
   },
 });
 
