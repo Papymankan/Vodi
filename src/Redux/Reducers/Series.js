@@ -132,6 +132,26 @@ export const fetchPopularSeries = createAsyncThunk(
   }
 );
 
+export const fetchAirTodaySeries = createAsyncThunk(
+  "Movies/fetchAirTodaySeries",
+  async () => {
+    return fetch(BaseUrl + "tv/airing_today" + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {       
+        return data.results;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {},
@@ -155,6 +175,9 @@ const slice = createSlice({
       })
       .addCase(fetchPopularSeries.fulfilled, (state, action) => {
         return { ...state, PopularSeries: action.payload };
+      })
+      .addCase(fetchAirTodaySeries.fulfilled, (state, action) => {
+        return { ...state, AirTodaySeries: action.payload };
       })
   },
 });
