@@ -49,29 +49,25 @@ export const fetchTopYearSeries = createAsyncThunk(
   }
 );
 
-// export const fetchTrendingMovies = createAsyncThunk(
-//   "Movies/fetchTrendingMovies",
-//   async () => {
-//     return fetch(BaseUrl + "trending/movie/day" + "?" + ApiKey, {
-//       method: "GET",
-//       headers: {
-//         accept: "application/json",
-//       },
-//     })
-//       .then((res) => {
-//         console.log(res);
-        
-//         if (res.ok) {
-//           return res.json();
-//         }
-//       })
-//       .then((data) => {
-//         console.log(data);
-
-//         return data.results;
-//       });
-//   }
-// );
+export const fetchTrendingSeries = createAsyncThunk(
+  "Series/fetchTrendingSeries",
+  async () => {
+    return fetch(BaseUrl + "trending/tv/day" + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {       
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data.results;
+      });
+  }
+);
 
 // export const fetchTopRatedMovie = createAsyncThunk(
 //     "Movies/fetchTopRatedMovie",
@@ -132,9 +128,9 @@ const slice = createSlice({
       .addCase(fetchSerieGenres.fulfilled, (state, action) => {
         return { ...state, SerieGenres: action.payload };
       })
-    //   .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
-    //     return { ...state, TrendingMovies: action.payload };
-    //   })
+      .addCase(fetchTrendingSeries.fulfilled, (state, action) => {
+        return { ...state, TrendingSeries: action.payload };
+      })
     //   .addCase(fetchTopRatedMovie.fulfilled, (state, action) => {
     //     return { ...state, TopRatedMovie: action.payload };
     //   });

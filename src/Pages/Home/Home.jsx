@@ -18,11 +18,13 @@ import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import {
   fetchSerieGenres,
   fetchTopYearSeries,
+  fetchTrendingSeries,
 } from "../../Redux/Reducers/Series";
 
 export default function Home() {
   const [LandingSlides, setLandingSlides] = useState(5);
   const [TrendingMoviesRandom, setTrendingMoviesRandom] = useState([]);
+  const [TrendingSeriesRandom, setTrendingSeriesRandom] = useState([]);
 
   const CheckWidth = () => {
     if (window.innerWidth < 630) {
@@ -68,6 +70,8 @@ export default function Home() {
   // console.log(TopRatedMovie);
 
   // Movies ----------------------------------
+
+
   // Series ----------------------------------
 
   const TopYearSeries = useSelector((state) => state.Series.TopYearSeries);
@@ -75,6 +79,26 @@ export default function Home() {
 
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
   // console.log(SerieGenres);
+
+  const TrendingSeries = useSelector((state) => state.Series.TrendingSeries);
+  console.log(TrendingSeries);
+
+  // Choose 7 random trending movies
+  useEffect(() => {
+    if (TrendingSeries) {
+      let series = [...TrendingSeries];
+      let arr = [];
+      if (TrendingSeries.length) {
+        for (let index = 0; index < 7; index++) {
+          let randomNum = Math.floor(Math.random() * (20 - index));
+
+          arr.push(series[randomNum]);
+          series.splice(randomNum, 1);
+        }
+      }
+      setTrendingSeriesRandom(arr);
+    }
+  }, [TrendingSeries]);
 
   // Series ----------------------------------
   useEffect(() => {
@@ -89,6 +113,7 @@ export default function Home() {
 
     Store.dispatch(fetchTopYearSeries());
     Store.dispatch(fetchSerieGenres());
+    Store.dispatch(fetchTrendingSeries());
   }, []);
   window.addEventListener("resize", CheckWidth);
 
@@ -268,95 +293,71 @@ export default function Home() {
           </div>
 
           <div className="w-full grid lg:grid-cols-5 lg:grid-rows-2 md:grid-cols-3 grid-rows-5 grid-cols-2 gap-4 px-4">
-            <div
-              className="lg:h-96 sm:h-[500px] xs:h-[380px] h-[280px] bg-cover bg-center cursor-pointer lg:col-span-2 lg:row-span-2 md:col-span-3 md:row-span-3 col-span-2 row-span-2"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
+            {TrendingSeriesRandom && TrendingSeriesRandom.length > 0 && (
+              <div
+                className="lg:h-96 lg:w-572 sm:h-[500px] xs:h-[380px] h-[280px] bg-cover bg-center cursor-pointer lg:col-span-2 lg:row-span-2 md:col-span-3 md:row-span-3 col-span-2 row-span-2"
+                style={{
+                  backgroundImage: `url(${
+                    ImageBaseUrl + TrendingSeriesRandom[0].backdrop_path
+                  })`,
+                }}
+              >
+                <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
+                  <p className="text-sm text-slate-300">
+                    {SerieGenres &&
+                      TrendingSeriesRandom[0].genre_ids.map((id, index) => {
+                        let genre = SerieGenres.find((genre) => genre.id == id);
+                        if (
+                          TrendingSeriesRandom[0].genre_ids.length ==
+                          index + 1
+                        ) {
+                          return <span>{genre.name}</span>;
+                        }
+                        return <span>{genre.name}, </span>;
+                      })}
+                  </p>
+                  <p className="group-hover:text-cyan duration-200">
+                    {TrendingSeriesRandom[0].name}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
 
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
-
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage: "url(/img/swiperLanding.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
-
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
-
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
-
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
-
-            <div
-              className="bg-cover bg-center cursor-pointer"
-              style={{
-                backgroundImage:
-                  "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/24-city-lights.jpg)",
-              }}
-            >
-              <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                <p className="text-sm text-slate-300">S01E12</p>
-                <p className="group-hover:text-cyan duration-200">Amarillo</p>
-              </div>
-            </div>
+            {TrendingSeriesRandom &&
+              TrendingSeriesRandom.length > 0 &&
+              TrendingSeriesRandom.map((serie, index) => {
+                if (index == 0) {
+                  return true;
+                }
+                return (
+                  <div
+                    className="bg-cover bg-center cursor-pointer"
+                    style={{
+                      backgroundImage: `url(${
+                        ImageBaseUrl + serie.backdrop_path
+                      })`,
+                    }}
+                  >
+                    <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
+                      <p className="text-sm text-slate-300 line-clamp-1">
+                        {SerieGenres &&
+                          serie.genre_ids.map((id, index) => {
+                            let genre = SerieGenres.find(
+                              (genre) => genre.id == id
+                            );
+                            if (serie.genre_ids.length == index + 1) {
+                              return <span>{genre.name}</span>;
+                            }
+                            return <span>{genre.name}, </span>;
+                          })}
+                      </p>
+                      <p className="group-hover:text-cyan duration-200 line-clamp-2">
+                        {serie.name}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
