@@ -66,31 +66,6 @@ export default function NavBar() {
               <div
                 className={`flex py-6 items-center space-x-1 text-sm cursor-pointer px-2`}
                 onMouseEnter={() => {
-                  setSubMenu("browse");
-                }}
-                onMouseLeave={() => {
-                  setSubMenu("");
-                }}
-              >
-                <span>Browse</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="12"
-                  className="scale-50"
-                >
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="3"
-                    d="M1 1l8 8 8-8"
-                  />
-                </svg>
-              </div>
-
-              <div
-                className={`flex py-6 items-center space-x-1 text-sm cursor-pointer px-2`}
-                onMouseEnter={() => {
                   setSubMenu("movies");
                 }}
                 onMouseLeave={() => {
@@ -123,6 +98,31 @@ export default function NavBar() {
                 }}
               >
                 <span>Series</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="12"
+                  className="scale-50"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    d="M1 1l8 8 8-8"
+                  />
+                </svg>
+              </div>
+
+              <div
+                className={`flex py-6 items-center space-x-1 text-sm cursor-pointer px-2`}
+                onMouseEnter={() => {
+                  setSubMenu("genres");
+                }}
+                onMouseLeave={() => {
+                  setSubMenu("");
+                }}
+              >
+                <span>Genres</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -215,294 +215,46 @@ export default function NavBar() {
         {/* SunMenus */}
 
         {/* Browse */}
-        {subMenu == "browse" && (
+        {subMenu == "genres" && (
           <div
             className="w-full overflow-hidden shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden z-20"
             onMouseEnter={() => {
-              setSubMenu("browse");
+              setSubMenu("genres");
             }}
             onMouseLeave={() => {
               setSubMenu("");
             }}
           >
             <div className="container mx-auto flex space-x-4 px-4 justify-between">
-              {/* Latest Movie */}
-              <div className="border-r-2 py-2 pr-2">
-                <h3 className="font-semibold pb-2">The Latest Movie</h3>
-                <div className="flex mt-3 space-x-4">
-                  <img src="/img/popular-movie.jpg" alt="" className="h-44" />
-                  <div className="max-w-52">
-                    <p className="text-slate-700 text-sm line-clamp-1">
-                      2017, Advanture, Comedy, Romance
-                    </p>
-                    <h3 className="font-semibold pb-1 line-clamp-1">
-                      The Big Sick
-                    </h3>
-                    <p className="line-clamp-5 text-xs">
-                      "Pakistan-born comedian Kumail Nanjiani and grad student
-                      Emily Gardner fall in love but struggle as their cultures
-                      clash. When Emily contracts a mysterious illness, Kumail
-                      finds himself forced to face her feisty parents, his
-                      family’s expectations, and his true feelings"
-                    </p>
-                    <div className="flex items-center justify-between pr-6">
-                      <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-xs lg:text-sm font-bold">
-                        Watch Now
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               {/* Movie Genres */}
-              <div className="border-r-2 py-2 pr-8">
+              <div className="flex-1 border-r-2 py-2 pr-1">
                 <h3 className="font-semibold pb-2">Movie Genres</h3>
-                <div className="grid grid-cols-3 max-w-96 gap-x-10 gap-y-2">
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Architucture
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    ActionComedy
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Biography
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                </div>
-              </div>
-
-              {/* Latest TV */}
-              <div className="border-r-2 py-2 pr-2">
-                <h3 className="font-semibold pb-2">The Latest TV Show</h3>
-                <div className="flex mt-3 space-x-4">
-                  <img src="/img/popular-movie.jpg" alt="" className="h-44" />
-                  <div className="max-w-52">
-                    <p className="text-slate-700 text-sm line-clamp-1">
-                      2017, Advanture, Comedy, Romance
-                    </p>
-                    <h3 className="font-semibold pb-1 line-clamp-1">
-                      The Big Sick
-                    </h3>
-                    <p className="line-clamp-5 text-xs">
-                      "Pakistan-born comedian Kumail Nanjiani and grad student
-                      Emily Gardner fall in love but struggle as their cultures
-                      clash. When Emily contracts a mysterious illness, Kumail
-                      finds himself forced to face her feisty parents, his
-                      family’s expectations, and his true feelings"
-                    </p>
-                    <div className="flex items-center justify-between pr-6">
-                      <button className="text-[#24baef]  py-5 hover:scale-105 duration-200  text-xs lg:text-sm font-bold">
-                        Watch Now
-                      </button>
-                    </div>
-                  </div>
+                <div className="grid grid-cols-5 w-full  gap-x-4 lg:gap-x-9 gap-y-2">
+                  {MovieGenres &&
+                    MovieGenres.map((genre) => (
+                      <a
+                        href="#"
+                        className="py-1 text-sm hover:text-[#24baef] duration-200 tracking-tight line-clamp-1"
+                      >
+                        {genre.name}
+                      </a>
+                    ))}
                 </div>
               </div>
 
               {/* TY Genres */}
-              <div className="py-2">
+              <div className="flex-1 py-2 pl-1">
                 <h3 className="font-semibold pb-2">TV Genres</h3>
-                <div className="grid grid-cols-2 max-w-72 gap-x-9 gap-y-2">
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Architucture
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    ActionComedy
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Biography
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
-                  <a
-                    href="#"
-                    className="py-1 text-sm hover:text-[#24baef] duration-200"
-                  >
-                    Action
-                  </a>
+                <div className="grid grid-cols-4 w-full gap-x-0 lg:gap-x-9 gap-y-2">
+                  {SerieGenres &&
+                    SerieGenres.map((genre) => (
+                      <a
+                        href="#"
+                        className="py-1 text-sm hover:text-[#24baef] duration-200 line-clamp-1  tracking-tight"
+                      >
+                        {genre.name}
+                      </a>
+                    ))}
                 </div>
               </div>
             </div>
