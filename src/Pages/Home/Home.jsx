@@ -19,6 +19,7 @@ import {
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import {
+  fetchPopularSeries,
   fetchSerieGenres,
   fetchTopRatedSerie,
   fetchTopYearSeries,
@@ -114,6 +115,8 @@ export default function Home() {
     Store.dispatch(fetchSerieGenres());
     Store.dispatch(fetchTrendingSeries());
     Store.dispatch(fetchTopRatedSerie());
+    Store.dispatch(fetchPopularSeries());
+
   }, []);
   window.addEventListener("resize", CheckWidth);
 

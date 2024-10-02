@@ -110,6 +110,28 @@ export const fetchSerieGenres = createAsyncThunk(
   }
 );
 
+export const fetchPopularSeries = createAsyncThunk(
+  "Movies/fetchPopularSeries",
+  async () => {
+    return fetch(BaseUrl + "discover/tv" + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data.results);
+        
+        return data.results;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {},
@@ -130,7 +152,10 @@ const slice = createSlice({
       })
       .addCase(fetchTopRatedSerie.fulfilled, (state, action) => {
         return { ...state, TopRatedSerie: action.payload };
-      });
+      })
+      .addCase(fetchPopularSeries.fulfilled, (state, action) => {
+        return { ...state, PopularSeries: action.payload };
+      })
   },
 });
 

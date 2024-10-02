@@ -12,6 +12,11 @@ export default function NavBar() {
   const TheaterMovies = useSelector((state) => state.Movies.TheaterMovies);
   const UpcomingMovies = useSelector((state) => state.Movies.UpcomingMovies);
 
+  const TopRatedSerie = useSelector((state) => state.Series.TopRatedSerie);
+  const SerieGenres = useSelector((state) => state.Series.SerieGenres);
+  const PopularSeries = useSelector((state) => state.Series.PopularSeries);
+
+
   return (
     <>
       <div className="w-full relative bg-[#0c0e17] ">
@@ -524,7 +529,7 @@ export default function NavBar() {
                     alt=""
                     className="h-44"
                   />
-                  <div className="max-w-52">
+                  <div className="max-w-52 pr-4">
                     <p className="text-slate-700 text-sm line-clamp-1">
                       {MovieGenres &&
                         PopularMovies[0].genre_ids.map((id, index) => {
@@ -577,7 +582,7 @@ export default function NavBar() {
                     alt=""
                     className="h-44"
                   />
-                  <div className="max-w-52">
+                  <div className="max-w-52 pr-4">
                     <p className="text-slate-700 text-sm line-clamp-1">
                       {MovieGenres &&
                         TopRatedMovie.genre_ids.map((id, index) => {
@@ -736,20 +741,29 @@ export default function NavBar() {
               <div className="border-r-2 py-2">
                 <h3 className="font-semibold pb-2">Most Popular Series</h3>
                 <div className="flex mt-3 space-x-4">
-                  <img src="/img/popular-movie.jpg" alt="" className="h-44" />
-                  <div className="max-w-52">
+                  <img
+                    src={ImageBaseUrl + PopularSeries[0].poster_path}
+                    alt=""
+                    className="h-44"
+                  />
+                  <div className="max-w-52  pr-4">
                     <p className="text-slate-700 text-sm line-clamp-1">
-                      2017, Advanture, Comedy, Romance
+                      {SerieGenres &&
+                        PopularSeries[0].genre_ids.map((id, index) => {
+                          let genre = SerieGenres.find(
+                            (genre) => genre.id == id
+                          );
+                          if (PopularSeries[0].genre_ids.length == index + 1) {
+                            return <span>{genre.name}</span>;
+                          }
+                          return <span>{genre.name}, </span>;
+                        })}
                     </p>
                     <h3 className="font-semibold pb-1 line-clamp-1">
-                      The Big Sick
+                      {PopularSeries[0].name}
                     </h3>
                     <p className="line-clamp-5 text-xs">
-                      "Pakistan-born comedian Kumail Nanjiani and grad student
-                      Emily Gardner fall in love but struggle as their cultures
-                      clash. When Emily contracts a mysterious illness, Kumail
-                      finds himself forced to face her feisty parents, his
-                      family’s expectations, and his true feelings"
+                      "{PopularSeries[0].overview}"
                     </p>
                     <div className="flex items-center justify-between pr-6">
                       <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
@@ -780,20 +794,29 @@ export default function NavBar() {
               <div className="border-r-2 py-2">
                 <h3 className="font-semibold pb-2">Top Rated Series</h3>
                 <div className="flex mt-3 space-x-4">
-                  <img src="/img/popular-movie.jpg" alt="" className="h-44" />
-                  <div className="max-w-52">
+                  <img
+                    src={ImageBaseUrl + TopRatedSerie.poster_path}
+                    alt=""
+                    className="h-44"
+                  />
+                  <div className="max-w-52  pr-4">
                     <p className="text-slate-700 text-sm line-clamp-1">
-                      2017, Advanture, Comedy, Romance
+                      {SerieGenres &&
+                        TopRatedSerie.genre_ids.map((id, index) => {
+                          let genre = SerieGenres.find(
+                            (genre) => genre.id == id
+                          );
+                          if (TopRatedSerie.genre_ids.length == index + 1) {
+                            return <span>{genre.name}</span>;
+                          }
+                          return <span>{genre.name}, </span>;
+                        })}
                     </p>
                     <h3 className="font-semibold pb-1 line-clamp-1">
-                      The Big Sick
+                      {TopRatedSerie.name}
                     </h3>
                     <p className="line-clamp-5 text-xs">
-                      "Pakistan-born comedian Kumail Nanjiani and grad student
-                      Emily Gardner fall in love but struggle as their cultures
-                      clash. When Emily contracts a mysterious illness, Kumail
-                      finds himself forced to face her feisty parents, his
-                      family’s expectations, and his true feelings"
+                      "{TopRatedSerie.overview}"
                     </p>
                     <div className="flex items-center justify-between pr-6">
                       <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
