@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import {
   fetchSerieGenres,
+  fetchTopRatedSerie,
   fetchTopYearSeries,
   fetchTrendingSeries,
 } from "../../Redux/Reducers/Series";
@@ -40,13 +41,10 @@ export default function Home() {
 
   // Movies ----------------------------------
   const TopYearMovies = useSelector((state) => state.Movies.TopYearMovies);
-  // console.log(TopYearMovies);
 
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
-  // console.log(MovieGenres);
 
   const TrendingMovies = useSelector((state) => state.Movies.TrendingMovies);
-  console.log(TrendingMovies);
 
   // Choose 7 random trending movies
   useEffect(() => {
@@ -67,21 +65,18 @@ export default function Home() {
   }, [TrendingMovies]);
 
   const TopRatedMovie = useSelector((state) => state.Movies.TopRatedMovie);
-  // console.log(TopRatedMovie);
 
   // Movies ----------------------------------
-
 
   // Series ----------------------------------
 
   const TopYearSeries = useSelector((state) => state.Series.TopYearSeries);
-  console.log(TopYearSeries);
 
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
-  // console.log(SerieGenres);
 
   const TrendingSeries = useSelector((state) => state.Series.TrendingSeries);
-  console.log(TrendingSeries);
+
+  const TopRatedSerie = useSelector((state) => state.Series.TopRatedSerie);
 
   // Choose 7 random trending movies
   useEffect(() => {
@@ -114,6 +109,7 @@ export default function Home() {
     Store.dispatch(fetchTopYearSeries());
     Store.dispatch(fetchSerieGenres());
     Store.dispatch(fetchTrendingSeries());
+    Store.dispatch(fetchTopRatedSerie());
   }, []);
   window.addEventListener("resize", CheckWidth);
 
@@ -270,408 +266,6 @@ export default function Home() {
               </div>
             </SwiperSlide>
           </Swiper>
-        </div>
-      </div>
-
-      {/* Trending Series */}
-      <div className="w-full bg-[#131722] md:pt-7 pt-32 pb-7">
-        <div className="container mx-auto font-montserrat text-white">
-          <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4">
-            <h2 className="text-2xl xs:py-7 font-semibold">Trending Series</h2>
-            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
-            <div className="flex items-center justify-between space-x-12 py-6">
-              <a
-                href="#"
-                className="text-sm text-cyan hover:text-cyan duration-200"
-              >
-                Today
-              </a>
-              <a href="#" className="text-sm  hover:text-cyan duration-200">
-                This Week
-              </a>
-            </div>
-          </div>
-
-          <div className="w-full grid lg:grid-cols-5 lg:grid-rows-2 md:grid-cols-3 grid-rows-5 grid-cols-2 gap-4 px-4">
-            {TrendingSeriesRandom && TrendingSeriesRandom.length > 0 && (
-              <div
-                className="lg:h-96 lg:w-572 sm:h-[500px] xs:h-[380px] h-[280px] bg-cover bg-center cursor-pointer lg:col-span-2 lg:row-span-2 md:col-span-3 md:row-span-3 col-span-2 row-span-2"
-                style={{
-                  backgroundImage: `url(${
-                    ImageBaseUrl + TrendingSeriesRandom[0].backdrop_path
-                  })`,
-                }}
-              >
-                <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                  <p className="text-sm text-slate-300">
-                    {SerieGenres &&
-                      TrendingSeriesRandom[0].genre_ids.map((id, index) => {
-                        let genre = SerieGenres.find((genre) => genre.id == id);
-                        if (
-                          TrendingSeriesRandom[0].genre_ids.length ==
-                          index + 1
-                        ) {
-                          return <span>{genre.name}</span>;
-                        }
-                        return <span>{genre.name}, </span>;
-                      })}
-                  </p>
-                  <p className="group-hover:text-cyan duration-200">
-                    {TrendingSeriesRandom[0].name}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {TrendingSeriesRandom &&
-              TrendingSeriesRandom.length > 0 &&
-              TrendingSeriesRandom.map((serie, index) => {
-                if (index == 0) {
-                  return true;
-                }
-                return (
-                  <div
-                    className="bg-cover bg-center cursor-pointer"
-                    style={{
-                      backgroundImage: `url(${
-                        ImageBaseUrl + serie.backdrop_path
-                      })`,
-                    }}
-                  >
-                    <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                      <p className="text-sm text-slate-300 line-clamp-1">
-                        {SerieGenres &&
-                          serie.genre_ids.map((id, index) => {
-                            let genre = SerieGenres.find(
-                              (genre) => genre.id == id
-                            );
-                            if (serie.genre_ids.length == index + 1) {
-                              return <span>{genre.name}</span>;
-                            }
-                            return <span>{genre.name}, </span>;
-                          })}
-                      </p>
-                      <p className="group-hover:text-cyan duration-200 line-clamp-2">
-                        {serie.name}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-      </div>
-
-      {/* Recommanded Series */}
-      <div className="w-full bg-[#0e0d12]">
-        <div className="container mx-auto">
-          <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
-            <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
-              Recommanded Series
-              <span className="font-light text-base"> for you</span>
-            </h2>
-            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
-          </div>
-
-          <div className="w-full">
-            <Swiper
-              navigation={true}
-              modules={[Navigation]}
-              className="mySwiper text-white px-4"
-              slidesPerView={2}
-              spaceBetween={20}
-              slidesPerGroup={1}
-              breakpoints={{
-                1200: {
-                  slidesPerView: 6,
-                  slidesPerGroup: 3,
-                },
-                768: {
-                  slidesPerView: 4,
-                  slidesPerGroup: 2,
-                },
-              }}
-            >
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/46-she-is-funny-that-way-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                <a href="#" className="relative w-full h-full">
-                  <img
-                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
-                    alt=""
-                    className="h-full w-full"
-                  />
-                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                    <p className="text-slate-300 font-light">action, sport</p>
-                    <p className="group-hover:text-cyan duration-200">
-                      Amarillo
-                    </p>
-                  </div>
-                </a>
-              </SwiperSlide>
-            </Swiper>
-          </div>
-
-          <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
-            <a href="#" className="hover:text-cyan duration-200">
-              VIEW ALL
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Top Reated Serie */}
-      <div className="w-full relative bg-[#0e0d12]">
-        <div className="container mx-auto">
-          <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
-            <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
-              Top Reated Serie
-              <span className="font-light text-base"> on vodi</span>
-            </h2>
-            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
-          </div>
-        </div>
-
-        <div
-          className="w-full md:h-[500px] sm:h-[420px] ms:h-[380px] h-[320px] bg-cover bg-center"
-          style={{ backgroundImage: "url(/img/swiperLanding.jpg)" }}
-        >
-          <div className="container mx-auto h-full">
-            <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 md:pb-0 justify-end h-full text-white md:text-left text-center">
-              <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
-                2016 | Action, Animation, Family | 2hr 13 mins
-              </p>
-              <h1 className="md:text-7xl sm:text-5xl text-3xl font-bold max-w-md sm:max-w-2xl md:max-w-lg mx-auto md:mx-0 max-h-96 line-clamp-4">
-                Fantastic Beasts and Where to Find Them
-              </h1>
-              <div className="w-full flex items-center md:justify-start justify-center space-x-8 md:my-8 my-4">
-                <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200">
-                  Explore
-                </button>
-                <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:opacity-60 duration-200">
-                  + PlayList
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 2024 Top Series */}
-      <div className="w-full bg-[#0e0d12] py-8">
-        <div className="container mx-auto">
-          <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
-            <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
-              2024 Top Series
-            </h2>
-            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
-          </div>
-
-          <div className="w-full">
-            <Swiper
-              navigation={true}
-              modules={[Navigation]}
-              className="mySwiper text-white px-4"
-              slidesPerView={2}
-              spaceBetween={20}
-              slidesPerGroup={1}
-              breakpoints={{
-                1200: {
-                  slidesPerView: 6,
-                  slidesPerGroup: 3,
-                },
-                768: {
-                  slidesPerView: 4,
-                  slidesPerGroup: 2,
-                },
-              }}
-            >
-              {TopYearSeries &&
-                TopYearSeries.length > 0 &&
-                TopYearSeries.map((serie) => (
-                  <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                    <a href="#" className="relative w-full h-full">
-                      <img
-                        src={ImageBaseUrl + serie.poster_path}
-                        alt=""
-                        className="h-full w-full"
-                      />
-                      <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                        <p className="text-slate-300 text-sm font-light line-clamp-1 text-start w-full">
-                          {SerieGenres &&
-                            serie.genre_ids.map((id, index) => {
-                              let genre = SerieGenres.find(
-                                (genre) => genre.id == id
-                              );
-                              if (serie.genre_ids.length == index + 1) {
-                                return <span>{genre.name}</span>;
-                              }
-                              return <span>{genre.name}, </span>;
-                            })}
-                        </p>
-                        <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
-                          {serie.name}
-                        </p>
-                      </div>
-                    </a>
-                  </SwiperSlide>
-                ))}
-            </Swiper>
-          </div>
-
-          <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
-            <a href="#" className="hover:text-cyan duration-200">
-              VIEW ALL
-            </a>
-          </div>
         </div>
       </div>
 
@@ -1071,6 +665,421 @@ export default function Home() {
                         </p>
                         <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
                           {movie.title}
+                        </p>
+                      </div>
+                    </a>
+                  </SwiperSlide>
+                ))}
+            </Swiper>
+          </div>
+
+          <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+            <a href="#" className="hover:text-cyan duration-200">
+              VIEW ALL
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Trending Series */}
+      <div className="w-full bg-[#131722] md:pt-7 pt-32 pb-7">
+        <div className="container mx-auto font-montserrat text-white">
+          <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4">
+            <h2 className="text-2xl xs:py-7 font-semibold">Trending Series</h2>
+            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+            <div className="flex items-center justify-between space-x-12 py-6">
+              <a
+                href="#"
+                className="text-sm text-cyan hover:text-cyan duration-200"
+              >
+                Today
+              </a>
+              <a href="#" className="text-sm  hover:text-cyan duration-200">
+                This Week
+              </a>
+            </div>
+          </div>
+
+          <div className="w-full grid lg:grid-cols-5 lg:grid-rows-2 md:grid-cols-3 grid-rows-5 grid-cols-2 gap-4 px-4">
+            {TrendingSeriesRandom && TrendingSeriesRandom.length > 0 && (
+              <div
+                className="lg:h-96 lg:w-572 sm:h-[500px] xs:h-[380px] h-[280px] bg-cover bg-center cursor-pointer lg:col-span-2 lg:row-span-2 md:col-span-3 md:row-span-3 col-span-2 row-span-2"
+                style={{
+                  backgroundImage: `url(${
+                    ImageBaseUrl + TrendingSeriesRandom[0].backdrop_path
+                  })`,
+                }}
+              >
+                <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
+                  <p className="text-sm text-slate-300">
+                    {SerieGenres &&
+                      TrendingSeriesRandom[0].genre_ids.map((id, index) => {
+                        let genre = SerieGenres.find((genre) => genre.id == id);
+                        if (
+                          TrendingSeriesRandom[0].genre_ids.length ==
+                          index + 1
+                        ) {
+                          return <span>{genre.name}</span>;
+                        }
+                        return <span>{genre.name}, </span>;
+                      })}
+                  </p>
+                  <p className="group-hover:text-cyan duration-200">
+                    {TrendingSeriesRandom[0].name}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {TrendingSeriesRandom &&
+              TrendingSeriesRandom.length > 0 &&
+              TrendingSeriesRandom.map((serie, index) => {
+                if (index == 0) {
+                  return true;
+                }
+                return (
+                  <div
+                    className="bg-cover bg-center cursor-pointer"
+                    style={{
+                      backgroundImage: `url(${
+                        ImageBaseUrl + serie.backdrop_path
+                      })`,
+                    }}
+                  >
+                    <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
+                      <p className="text-sm text-slate-300 line-clamp-1">
+                        {SerieGenres &&
+                          serie.genre_ids.map((id, index) => {
+                            let genre = SerieGenres.find(
+                              (genre) => genre.id == id
+                            );
+                            if (serie.genre_ids.length == index + 1) {
+                              return <span>{genre.name}</span>;
+                            }
+                            return <span>{genre.name}, </span>;
+                          })}
+                      </p>
+                      <p className="group-hover:text-cyan duration-200 line-clamp-2">
+                        {serie.name}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </div>
+
+      {/* Recommanded Series */}
+      <div className="w-full bg-[#0e0d12]">
+        <div className="container mx-auto">
+          <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+            <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+              Recommanded Series
+              <span className="font-light text-base"> for you</span>
+            </h2>
+            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+          </div>
+
+          <div className="w-full">
+            <Swiper
+              navigation={true}
+              modules={[Navigation]}
+              className="mySwiper text-white px-4"
+              slidesPerView={2}
+              spaceBetween={20}
+              slidesPerGroup={1}
+              breakpoints={{
+                1200: {
+                  slidesPerView: 6,
+                  slidesPerGroup: 3,
+                },
+                768: {
+                  slidesPerView: 4,
+                  slidesPerGroup: 2,
+                },
+              }}
+            >
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/51-walk-hard-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/46-she-is-funny-that-way-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+              <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                <a href="#" className="relative w-full h-full">
+                  <img
+                    src="https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/04/50-the-300x450.jpg"
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                    <p className="text-slate-300 font-light">action, sport</p>
+                    <p className="group-hover:text-cyan duration-200">
+                      Amarillo
+                    </p>
+                  </div>
+                </a>
+              </SwiperSlide>
+            </Swiper>
+          </div>
+
+          <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+            <a href="#" className="hover:text-cyan duration-200">
+              VIEW ALL
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Top Reated Serie */}
+      <div className="w-full relative bg-[#0e0d12]">
+        <div className="container mx-auto">
+          <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+            <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+              Top Reated Serie
+              <span className="font-light text-base"> on vodi</span>
+            </h2>
+            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+          </div>
+        </div>
+
+        {TopRatedSerie && (
+          <div
+            className="w-full md:h-[500px] sm:h-[420px] ms:h-[380px] h-[320px] bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${
+                ImageBaseUrl + TopRatedSerie.backdrop_path
+              })`,
+            }}
+          >
+            <div className="container mx-auto h-full">
+              <div className="md:w-1/2 w-full px-3 flex flex-col pb-24 md:pb-0 justify-end h-full text-white md:text-left text-center">
+                <p className="text-xs md:text-sm tracking-wider py-2 mt-3">
+                  {SerieGenres &&
+                    TopRatedSerie.genre_ids.map((id, index) => {
+                      let genre = SerieGenres.find((genre) => genre.id == id);
+                      if (TopRatedSerie.genre_ids.length == index + 1) {
+                        return <span>{genre.name}</span>;
+                      }
+                      return <span>{genre.name}, </span>;
+                    })}
+                </p>
+                <h1 className="md:text-7xl sm:text-5xl text-3xl font-bold max-w-md sm:max-w-2xl md:max-w-lg mx-auto md:mx-0 max-h-96 line-clamp-4">
+                  {TopRatedSerie.name}
+                </h1>
+                <div className="w-full flex items-center md:justify-start justify-center space-x-8 md:my-8 my-4">
+                  <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200">
+                    Explore
+                  </button>
+                  <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:opacity-60 duration-200">
+                    + PlayList
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 2024 Top Series */}
+      <div className="w-full bg-[#0e0d12] py-8">
+        <div className="container mx-auto">
+          <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+            <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+              2024 Top Series
+            </h2>
+            <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+          </div>
+
+          <div className="w-full">
+            <Swiper
+              navigation={true}
+              modules={[Navigation]}
+              className="mySwiper text-white px-4"
+              slidesPerView={2}
+              spaceBetween={20}
+              slidesPerGroup={1}
+              breakpoints={{
+                1200: {
+                  slidesPerView: 6,
+                  slidesPerGroup: 3,
+                },
+                768: {
+                  slidesPerView: 4,
+                  slidesPerGroup: 2,
+                },
+              }}
+            >
+              {TopYearSeries &&
+                TopYearSeries.length > 0 &&
+                TopYearSeries.map((serie) => (
+                  <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                    <a href="#" className="relative w-full h-full">
+                      <img
+                        src={ImageBaseUrl + serie.poster_path}
+                        alt=""
+                        className="h-full w-full"
+                      />
+                      <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                        <p className="text-slate-300 text-sm font-light line-clamp-1 text-start w-full">
+                          {SerieGenres &&
+                            serie.genre_ids.map((id, index) => {
+                              let genre = SerieGenres.find(
+                                (genre) => genre.id == id
+                              );
+                              if (serie.genre_ids.length == index + 1) {
+                                return <span>{genre.name}</span>;
+                              }
+                              return <span>{genre.name}, </span>;
+                            })}
+                        </p>
+                        <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
+                          {serie.name}
                         </p>
                       </div>
                     </a>
