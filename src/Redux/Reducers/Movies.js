@@ -58,43 +58,35 @@ export const fetchTrendingMovies = createAsyncThunk(
       },
     })
       .then((res) => {
-        console.log(res);
-        
         if (res.ok) {
           return res.json();
         }
       })
       .then((data) => {
-        console.log(data);
-
         return data.results;
       });
   }
 );
 
 export const fetchTopRatedMovie = createAsyncThunk(
-    "Movies/fetchTopRatedMovie",
-    async () => {
-      return fetch(BaseUrl + "movie/top_rated" + "?" + ApiKey, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
+  "Movies/fetchTopRatedMovie",
+  async () => {
+    return fetch(BaseUrl + "movie/top_rated" + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
       })
-        .then((res) => {
-          console.log(res);
-          
-          if (res.ok) {
-            return res.json();
-          }
-        })
-        .then((data) => {
-          console.log(data);
-  
-          return data.results[0];
-        });
-    }
-  );
+      .then((data) => {
+        return data.results[0];
+      });
+  }
+);
 
 export const fetchMovieGenres = createAsyncThunk(
   "Movies/fetchMovieGenres",
@@ -112,6 +104,28 @@ export const fetchMovieGenres = createAsyncThunk(
       })
       .then((data) => {
         return data.genres;
+      });
+  }
+);
+
+export const fetchPopularMovies = createAsyncThunk(
+  "Movies/fetchPopularMovies",
+  async () => {
+    return fetch(BaseUrl + "discover/movie" + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data.results;
       });
   }
 );
@@ -136,6 +150,9 @@ const slice = createSlice({
       })
       .addCase(fetchTopRatedMovie.fulfilled, (state, action) => {
         return { ...state, TopRatedMovie: action.payload };
+      })
+      .addCase(fetchPopularMovies.fulfilled, (state, action) => {
+        return { ...state, PopularMovies: action.payload };
       });
   },
 });

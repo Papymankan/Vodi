@@ -9,6 +9,7 @@ import Store from "../../Redux/Store";
 import {
   fetchMovieGenres,
   fetchMovies,
+  fetchPopularMovies,
   fetchTopRatedMovie,
   fetchTopYearMovies,
   fetchTrendingMovies,
@@ -54,7 +55,6 @@ export default function Home() {
       if (TrendingMovies.length) {
         for (let index = 0; index < 7; index++) {
           let randomNum = Math.floor(Math.random() * (20 - index));
-          console.log(randomNum);
 
           arr.push(movies[randomNum]);
           movies.splice(randomNum, 1);
@@ -75,9 +75,6 @@ export default function Home() {
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
 
   const TrendingSeries = useSelector((state) => state.Series.TrendingSeries);
-
-  const TopRatedSerie = useSelector((state) => state.Series.TopRatedSerie);
-
   // Choose 7 random trending movies
   useEffect(() => {
     if (TrendingSeries) {
@@ -95,6 +92,8 @@ export default function Home() {
     }
   }, [TrendingSeries]);
 
+  const TopRatedSerie = useSelector((state) => state.Series.TopRatedSerie);
+
   // Series ----------------------------------
   useEffect(() => {
     setLandingSlides(3);
@@ -105,6 +104,7 @@ export default function Home() {
     Store.dispatch(fetchMovieGenres());
     Store.dispatch(fetchTrendingMovies());
     Store.dispatch(fetchTopRatedMovie());
+    Store.dispatch(fetchPopularMovies());
 
     Store.dispatch(fetchTopYearSeries());
     Store.dispatch(fetchSerieGenres());

@@ -1,8 +1,14 @@
 import { Avatar } from "@mui/material";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 
 export default function NavBar() {
   const [subMenu, setSubMenu] = useState("");
+
+  const TopRatedMovie = useSelector((state) => state.Movies.TopRatedMovie);
+  const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
+  const PopularMovies = useSelector((state) => state.Movies.PopularMovies);
 
   return (
     <>
@@ -511,20 +517,29 @@ export default function NavBar() {
               <div className="border-r-2 py-2">
                 <h3 className="font-semibold pb-2">Most Popular Movies</h3>
                 <div className="flex mt-3 space-x-4">
-                  <img src="/img/popular-movie.jpg" alt="" className="h-44" />
+                  <img
+                    src={ImageBaseUrl + PopularMovies[0].poster_path}
+                    alt=""
+                    className="h-44"
+                  />
                   <div className="max-w-52">
                     <p className="text-slate-700 text-sm line-clamp-1">
-                      2017, Advanture, Comedy, Romance
+                      {MovieGenres &&
+                        PopularMovies[0].genre_ids.map((id, index) => {
+                          let genre = MovieGenres.find(
+                            (genre) => genre.id == id
+                          );
+                          if (PopularMovies[0].genre_ids.length == index + 1) {
+                            return <span>{genre.name}</span>;
+                          }
+                          return <span>{genre.name}, </span>;
+                        })}
                     </p>
                     <h3 className="font-semibold pb-1 line-clamp-1">
-                      The Big Sick
+                      {PopularMovies[0].title}
                     </h3>
                     <p className="line-clamp-5 text-xs">
-                      "Pakistan-born comedian Kumail Nanjiani and grad student
-                      Emily Gardner fall in love but struggle as their cultures
-                      clash. When Emily contracts a mysterious illness, Kumail
-                      finds himself forced to face her feisty parents, his
-                      family’s expectations, and his true feelings"
+                      "{PopularMovies[0].overview}"
                     </p>
                     <div className="flex items-center justify-between pr-6">
                       <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
@@ -555,20 +570,29 @@ export default function NavBar() {
               <div className="border-r-2 py-2">
                 <h3 className="font-semibold pb-2">Top Rated Movies</h3>
                 <div className="flex mt-3 space-x-4">
-                  <img src="/img/popular-movie.jpg" alt="" className="h-44" />
+                  <img
+                    src={ImageBaseUrl + TopRatedMovie.poster_path}
+                    alt=""
+                    className="h-44"
+                  />
                   <div className="max-w-52">
                     <p className="text-slate-700 text-sm line-clamp-1">
-                      2017, Advanture, Comedy, Romance
+                      {MovieGenres &&
+                        TopRatedMovie.genre_ids.map((id, index) => {
+                          let genre = MovieGenres.find(
+                            (genre) => genre.id == id
+                          );
+                          if (TopRatedMovie.genre_ids.length == index + 1) {
+                            return <span>{genre.name}</span>;
+                          }
+                          return <span>{genre.name}, </span>;
+                        })}
                     </p>
                     <h3 className="font-semibold pb-1 line-clamp-1">
-                      The Big Sick
+                      {TopRatedMovie.title}
                     </h3>
                     <p className="line-clamp-5 text-xs">
-                      "Pakistan-born comedian Kumail Nanjiani and grad student
-                      Emily Gardner fall in love but struggle as their cultures
-                      clash. When Emily contracts a mysterious illness, Kumail
-                      finds himself forced to face her feisty parents, his
-                      family’s expectations, and his true feelings"
+                      "{TopRatedMovie.overview}"
                     </p>
                     <div className="flex items-center justify-between pr-6">
                       <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
