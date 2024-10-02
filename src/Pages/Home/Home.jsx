@@ -14,6 +14,7 @@ import {
   fetchTopRatedMovie,
   fetchTopYearMovies,
   fetchTrendingMovies,
+  fetchUpcomingMovies,
 } from "../../Redux/Reducers/Movies";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
@@ -107,6 +108,7 @@ export default function Home() {
     Store.dispatch(fetchTopRatedMovie());
     Store.dispatch(fetchPopularMovies());
     Store.dispatch(fetchTheaterMovies());
+    Store.dispatch(fetchUpcomingMovies());
 
     Store.dispatch(fetchTopYearSeries());
     Store.dispatch(fetchSerieGenres());

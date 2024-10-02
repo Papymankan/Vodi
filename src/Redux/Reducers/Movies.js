@@ -145,6 +145,30 @@ export const fetchTheaterMovies = createAsyncThunk(
         }
       })
       .then((data) => {
+        console.log(data.results);
+
+        return data.results;
+      });
+  }
+);
+
+export const fetchUpcomingMovies = createAsyncThunk(
+  "Movies/fetchUpcomingMovies",
+  async () => {
+    return fetch(BaseUrl + "movie/upcoming" + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data.results);
+
         return data.results;
       });
   }
@@ -177,6 +201,9 @@ const slice = createSlice({
       .addCase(fetchTheaterMovies.fulfilled, (state, action) => {
         return { ...state, TheaterMovies: action.payload };
       })
+      .addCase(fetchUpcomingMovies.fulfilled, (state, action) => {
+        return { ...state, UpcomingMovies: action.payload };
+      });
   },
 });
 
