@@ -15,7 +15,10 @@ import {
 } from "../../Redux/Reducers/Movies";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
-import { fetchTopYearSeries } from "../../Redux/Reducers/Series";
+import {
+  fetchSerieGenres,
+  fetchTopYearSeries,
+} from "../../Redux/Reducers/Series";
 
 export default function Home() {
   const [LandingSlides, setLandingSlides] = useState(5);
@@ -33,6 +36,7 @@ export default function Home() {
     }
   };
 
+  // Movies ----------------------------------
   const TopYearMovies = useSelector((state) => state.Movies.TopYearMovies);
   // console.log(TopYearMovies);
 
@@ -61,11 +65,18 @@ export default function Home() {
   }, [TrendingMovies]);
 
   const TopRatedMovie = useSelector((state) => state.Movies.TopRatedMovie);
-  console.log(TopRatedMovie);
+  // console.log(TopRatedMovie);
+
+  // Movies ----------------------------------
+  // Series ----------------------------------
 
   const TopYearSeries = useSelector((state) => state.Series.TopYearSeries);
   console.log(TopYearSeries);
 
+  const SerieGenres = useSelector((state) => state.Series.SerieGenres);
+  // console.log(SerieGenres);
+
+  // Series ----------------------------------
   useEffect(() => {
     setLandingSlides(3);
   }, [window.innerWidth < 630]);
@@ -77,6 +88,7 @@ export default function Home() {
     Store.dispatch(fetchTopRatedMovie());
 
     Store.dispatch(fetchTopYearSeries());
+    Store.dispatch(fetchSerieGenres());
   }, []);
   window.addEventListener("resize", CheckWidth);
 
@@ -633,13 +645,16 @@ export default function Home() {
                       />
                       <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
                         <p className="text-slate-300 text-sm font-light line-clamp-1 text-start w-full">
-                          {/* {MovieGenres &&
-                            serie.genre_ids.map((id) => {
-                              let genre = MovieGenres.find(
+                          {SerieGenres &&
+                            serie.genre_ids.map((id, index) => {
+                              let genre = SerieGenres.find(
                                 (genre) => genre.id == id
                               );
+                              if (serie.genre_ids.length == index + 1) {
+                                return <span>{genre.name}</span>;
+                              }
                               return <span>{genre.name}, </span>;
-                            })} */}
+                            })}
                         </p>
                         <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
                           {serie.name}
