@@ -227,36 +227,40 @@ export default function NavBar() {
           >
             <div className="container mx-auto flex space-x-4 px-4 justify-between">
               {/* Movie Genres */}
-              <div className="flex-1 border-r-2 py-2 pr-1">
-                <h3 className="font-semibold pb-2">Movie Genres</h3>
-                <div className="grid grid-cols-5 w-full  gap-x-4 lg:gap-x-9 gap-y-2">
-                  {MovieGenres &&
-                    MovieGenres.map((genre) => (
-                      <a
-                        href="#"
-                        className="py-1 text-sm hover:text-[#24baef] duration-200 tracking-tight line-clamp-1"
-                      >
-                        {genre.name}
-                      </a>
-                    ))}
+              {MovieGenres && (
+                <div className="flex-1 border-r-2 py-2 pr-1">
+                  <h3 className="font-semibold pb-2">Movie Genres</h3>
+                  <div className="grid grid-cols-5 w-full  gap-x-4 lg:gap-x-9 gap-y-2">
+                    {MovieGenres &&
+                      MovieGenres.map((genre) => (
+                        <a
+                          href="#"
+                          className="py-1 text-sm hover:text-[#24baef] duration-200 tracking-tight line-clamp-1"
+                        >
+                          {genre.name}
+                        </a>
+                      ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* TY Genres */}
-              <div className="flex-1 py-2 pl-1">
-                <h3 className="font-semibold pb-2">TV Genres</h3>
-                <div className="grid grid-cols-4 w-full gap-x-0 lg:gap-x-9 gap-y-2">
-                  {SerieGenres &&
-                    SerieGenres.map((genre) => (
-                      <a
-                        href="#"
-                        className="py-1 text-sm hover:text-[#24baef] duration-200 line-clamp-1  tracking-tight"
-                      >
-                        {genre.name}
-                      </a>
-                    ))}
+              {SerieGenres && (
+                <div className="flex-1 py-2 pl-1">
+                  <h3 className="font-semibold pb-2">TV Genres</h3>
+                  <div className="grid grid-cols-4 w-full gap-x-0 lg:gap-x-9 gap-y-2">
+                    {SerieGenres &&
+                      SerieGenres.map((genre) => (
+                        <a
+                          href="#"
+                          className="py-1 text-sm hover:text-[#24baef] duration-200 line-clamp-1  tracking-tight"
+                        >
+                          {genre.name}
+                        </a>
+                      ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         )}
@@ -274,205 +278,217 @@ export default function NavBar() {
           >
             <div className="container mx-auto flex space-x-4 px-2">
               {/* Most Popular Movie */}
-              <div className="border-r-2 py-2">
-                <h3 className="font-semibold pb-2">Most Popular Movies</h3>
-                <div className="flex mt-3 space-x-4">
-                  <img
-                    src={ImageBaseUrl + PopularMovies[0].poster_path}
-                    alt=""
-                    className="h-44"
-                  />
-                  <div className="max-w-52 pr-4">
-                    <p className="text-slate-700 text-sm line-clamp-1">
-                      {MovieGenres &&
-                        PopularMovies[0].genre_ids.map((id, index) => {
-                          let genre = MovieGenres.find(
-                            (genre) => genre.id == id
-                          );
-                          if (PopularMovies[0].genre_ids.length == index + 1) {
-                            return <span>{genre.name}</span>;
-                          }
-                          return <span>{genre.name}, </span>;
-                        })}
-                    </p>
-                    <h3 className="font-semibold pb-1 line-clamp-1">
-                      {PopularMovies[0].title}
-                    </h3>
-                    <p className="line-clamp-5 text-xs">
-                      "{PopularMovies[0].overview}"
-                    </p>
-                    <div className="flex items-center justify-between pr-6">
-                      <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
-                        Watch Now
-                      </button>
-                      <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
-                        More
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="18"
-                          height="12"
-                          className="scale-50 -rotate-90 relative top-[1px]"
-                        >
-                          <path
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="3"
-                            d="M1 1l8 8 8-8"
-                          />
-                        </svg>
-                      </button>
+              {PopularMovies && (
+                <div className="border-r-2 py-2">
+                  <h3 className="font-semibold pb-2">Most Popular Movies</h3>
+                  <div className="flex mt-3 space-x-4">
+                    <img
+                      src={ImageBaseUrl + PopularMovies[0].poster_path}
+                      alt=""
+                      className="h-44"
+                    />
+                    <div className="max-w-52 pr-4">
+                      <p className="text-slate-700 text-sm line-clamp-1">
+                        {MovieGenres &&
+                          PopularMovies[0].genre_ids.map((id, index) => {
+                            let genre = MovieGenres.find(
+                              (genre) => genre.id == id
+                            );
+                            if (
+                              PopularMovies[0].genre_ids.length ==
+                              index + 1
+                            ) {
+                              return <span>{genre.name}</span>;
+                            }
+                            return <span>{genre.name}, </span>;
+                          })}
+                      </p>
+                      <h3 className="font-semibold pb-1 line-clamp-1">
+                        {PopularMovies[0].title}
+                      </h3>
+                      <p className="line-clamp-5 text-xs">
+                        "{PopularMovies[0].overview}"
+                      </p>
+                      <div className="flex items-center justify-between pr-6">
+                        <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
+                          Watch Now
+                        </button>
+                        <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                          More
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="18"
+                            height="12"
+                            className="scale-50 -rotate-90 relative top-[1px]"
+                          >
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="3"
+                              d="M1 1l8 8 8-8"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               {/* Top Rated Movie */}
-              <div className="border-r-2 py-2">
-                <h3 className="font-semibold pb-2">Top Rated Movies</h3>
-                <div className="flex mt-3 space-x-4">
-                  <img
-                    src={ImageBaseUrl + TopRatedMovie.poster_path}
-                    alt=""
-                    className="h-44"
-                  />
-                  <div className="max-w-52 pr-4">
-                    <p className="text-slate-700 text-sm line-clamp-1">
-                      {MovieGenres &&
-                        TopRatedMovie.genre_ids.map((id, index) => {
-                          let genre = MovieGenres.find(
-                            (genre) => genre.id == id
-                          );
-                          if (TopRatedMovie.genre_ids.length == index + 1) {
-                            return <span>{genre.name}</span>;
-                          }
-                          return <span>{genre.name}, </span>;
-                        })}
-                    </p>
-                    <h3 className="font-semibold pb-1 line-clamp-1">
-                      {TopRatedMovie.title}
-                    </h3>
-                    <p className="line-clamp-5 text-xs">
-                      "{TopRatedMovie.overview}"
-                    </p>
-                    <div className="flex items-center justify-between pr-6">
-                      <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
-                        Watch Now
-                      </button>
-                      <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
-                        More
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="18"
-                          height="12"
-                          className="scale-50 -rotate-90 relative top-[1px]"
-                        >
-                          <path
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="3"
-                            d="M1 1l8 8 8-8"
-                          />
-                        </svg>
-                      </button>
+              {TopRatedMovie && (
+                <div className="border-r-2 py-2">
+                  <h3 className="font-semibold pb-2">Top Rated Movies</h3>
+                  <div className="flex mt-3 space-x-4">
+                    <img
+                      src={ImageBaseUrl + TopRatedMovie.poster_path}
+                      alt=""
+                      className="h-44"
+                    />
+                    <div className="max-w-52 pr-4">
+                      <p className="text-slate-700 text-sm line-clamp-1">
+                        {MovieGenres &&
+                          TopRatedMovie.genre_ids.map((id, index) => {
+                            let genre = MovieGenres.find(
+                              (genre) => genre.id == id
+                            );
+                            if (TopRatedMovie.genre_ids.length == index + 1) {
+                              return <span>{genre.name}</span>;
+                            }
+                            return <span>{genre.name}, </span>;
+                          })}
+                      </p>
+                      <h3 className="font-semibold pb-1 line-clamp-1">
+                        {TopRatedMovie.title}
+                      </h3>
+                      <p className="line-clamp-5 text-xs">
+                        "{TopRatedMovie.overview}"
+                      </p>
+                      <div className="flex items-center justify-between pr-6">
+                        <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
+                          Watch Now
+                        </button>
+                        <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                          More
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="18"
+                            height="12"
+                            className="scale-50 -rotate-90 relative top-[1px]"
+                          >
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="3"
+                              d="M1 1l8 8 8-8"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               <div className=" flex-1">
                 {/* Now Playing */}
-                <div className="py-2">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">Movies In Theatres</h3>
-                    <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
-                      More
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="12"
-                        className="scale-50 -rotate-90 relative top-[1px]"
-                      >
-                        <path
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="3"
-                          d="M1 1l8 8 8-8"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div className="flex items-center py-3 space-x-4">
-                    {TheaterMovies &&
-                      TheaterMovies.slice(0, 4).map((movie, index) => (
-                        <div
-                          className={`flex space-x-2 ${
-                            index == 2 && "lg:flex hidden"
-                          } ${index == 3 && "xl:flex hidden"}`}
+
+                {TheaterMovies && (
+                  <div className="py-2">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold">Movies In Theatres</h3>
+                      <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                        More
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="12"
+                          className="scale-50 -rotate-90 relative top-[1px]"
                         >
-                          <img
-                            src={ImageBaseUrl + movie.poster_path}
-                            alt=""
-                            className="h-16"
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="3"
+                            d="M1 1l8 8 8-8"
                           />
-                          <div className="max-w-32">
-                            <h3 className="font-semibold text-xs">
-                              {movie.title}
-                            </h3>
-                            <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                              {movie.overview}
-                            </p>
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="flex items-center py-3 space-x-4">
+                      {TheaterMovies &&
+                        TheaterMovies.slice(0, 4).map((movie, index) => (
+                          <div
+                            className={`flex space-x-2 ${
+                              index == 2 && "lg:flex hidden"
+                            } ${index == 3 && "xl:flex hidden"}`}
+                          >
+                            <img
+                              src={ImageBaseUrl + movie.poster_path}
+                              alt=""
+                              className="h-16"
+                            />
+                            <div className="w-32">
+                              <h3 className="font-semibold text-xs">
+                                {movie.title}
+                              </h3>
+                              <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                                {movie.overview}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Upcomming */}
-                <div className="">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">Upcomming Movies</h3>
-                    <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
-                      More
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="12"
-                        className="scale-50 -rotate-90 relative top-[1px]"
-                      >
-                        <path
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="3"
-                          d="M1 1l8 8 8-8"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div className="flex items-center py-3 space-x-4">
-                    {UpcomingMovies &&
-                      UpcomingMovies.slice(1, 5).map((movie, index) => (
-                        <div
-                          className={`flex space-x-2 ${
-                            index == 2 && "lg:flex hidden"
-                          } ${index == 3 && "xl:flex hidden"}`}
+                {UpcomingMovies && (
+                  <div className="">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold">Upcomming Movies</h3>
+                      <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                        More
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="12"
+                          className="scale-50 -rotate-90 relative top-[1px]"
                         >
-                          <img
-                            src={ImageBaseUrl + movie.poster_path}
-                            alt=""
-                            className="h-16"
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="3"
+                            d="M1 1l8 8 8-8"
                           />
-                          <div className="max-w-32">
-                            <h3 className="font-semibold text-xs">
-                              {movie.title}
-                            </h3>
-                            <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                              {movie.overview}
-                            </p>
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="flex items-center py-3 space-x-4">
+                      {UpcomingMovies &&
+                        UpcomingMovies.slice(1, 5).map((movie, index) => (
+                          <div
+                            className={`flex space-x-2 ${
+                              index == 2 && "lg:flex hidden"
+                            } ${index == 3 && "xl:flex hidden"}`}
+                          >
+                            <img
+                              src={ImageBaseUrl + movie.poster_path}
+                              alt=""
+                              className="h-16"
+                            />
+                            <div className="w-32">
+                              <h3 className="font-semibold text-xs">
+                                {movie.title}
+                              </h3>
+                              <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                                {movie.overview}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -491,205 +507,216 @@ export default function NavBar() {
           >
             <div className="container mx-auto flex space-x-4 px-2">
               {/* Most Popular Series */}
-              <div className="border-r-2 py-2">
-                <h3 className="font-semibold pb-2">Most Popular Series</h3>
-                <div className="flex mt-3 space-x-4">
-                  <img
-                    src={ImageBaseUrl + PopularSeries[0].poster_path}
-                    alt=""
-                    className="h-44"
-                  />
-                  <div className="max-w-52  pr-4">
-                    <p className="text-slate-700 text-sm line-clamp-1">
-                      {SerieGenres &&
-                        PopularSeries[0].genre_ids.map((id, index) => {
-                          let genre = SerieGenres.find(
-                            (genre) => genre.id == id
-                          );
-                          if (PopularSeries[0].genre_ids.length == index + 1) {
-                            return <span>{genre.name}</span>;
-                          }
-                          return <span>{genre.name}, </span>;
-                        })}
-                    </p>
-                    <h3 className="font-semibold pb-1 line-clamp-1">
-                      {PopularSeries[0].name}
-                    </h3>
-                    <p className="line-clamp-5 text-xs">
-                      "{PopularSeries[0].overview}"
-                    </p>
-                    <div className="flex items-center justify-between pr-6">
-                      <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
-                        Watch Now
-                      </button>
-                      <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
-                        More
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="18"
-                          height="12"
-                          className="scale-50 -rotate-90 relative top-[1px]"
-                        >
-                          <path
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="3"
-                            d="M1 1l8 8 8-8"
-                          />
-                        </svg>
-                      </button>
+              {PopularSeries && (
+                <div className="border-r-2 py-2">
+                  <h3 className="font-semibold pb-2">Most Popular Series</h3>
+                  <div className="flex mt-3 space-x-4">
+                    <img
+                      src={ImageBaseUrl + PopularSeries[0].poster_path}
+                      alt=""
+                      className="h-44"
+                    />
+                    <div className="max-w-52  pr-4">
+                      <p className="text-slate-700 text-sm line-clamp-1">
+                        {SerieGenres &&
+                          PopularSeries[0].genre_ids.map((id, index) => {
+                            let genre = SerieGenres.find(
+                              (genre) => genre.id == id
+                            );
+                            if (
+                              PopularSeries[0].genre_ids.length ==
+                              index + 1
+                            ) {
+                              return <span>{genre.name}</span>;
+                            }
+                            return <span>{genre.name}, </span>;
+                          })}
+                      </p>
+                      <h3 className="font-semibold pb-1 line-clamp-1">
+                        {PopularSeries[0].name}
+                      </h3>
+                      <p className="line-clamp-5 text-xs">
+                        "{PopularSeries[0].overview}"
+                      </p>
+                      <div className="flex items-center justify-between pr-6">
+                        <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
+                          Watch Now
+                        </button>
+                        <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                          More
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="18"
+                            height="12"
+                            className="scale-50 -rotate-90 relative top-[1px]"
+                          >
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="3"
+                              d="M1 1l8 8 8-8"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               {/* Top Rated Series*/}
-              <div className="border-r-2 py-2">
-                <h3 className="font-semibold pb-2">Top Rated Series</h3>
-                <div className="flex mt-3 space-x-4">
-                  <img
-                    src={ImageBaseUrl + TopRatedSerie.poster_path}
-                    alt=""
-                    className="h-44"
-                  />
-                  <div className="max-w-52  pr-4">
-                    <p className="text-slate-700 text-sm line-clamp-1">
-                      {SerieGenres &&
-                        TopRatedSerie.genre_ids.map((id, index) => {
-                          let genre = SerieGenres.find(
-                            (genre) => genre.id == id
-                          );
-                          if (TopRatedSerie.genre_ids.length == index + 1) {
-                            return <span>{genre.name}</span>;
-                          }
-                          return <span>{genre.name}, </span>;
-                        })}
-                    </p>
-                    <h3 className="font-semibold pb-1 line-clamp-1">
-                      {TopRatedSerie.name}
-                    </h3>
-                    <p className="line-clamp-5 text-xs">
-                      "{TopRatedSerie.overview}"
-                    </p>
-                    <div className="flex items-center justify-between pr-6">
-                      <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
-                        Watch Now
-                      </button>
-                      <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
-                        More
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="18"
-                          height="12"
-                          className="scale-50 -rotate-90 relative top-[1px]"
-                        >
-                          <path
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="3"
-                            d="M1 1l8 8 8-8"
-                          />
-                        </svg>
-                      </button>
+              {PopularSeries && (
+                <div className="border-r-2 py-2">
+                  <h3 className="font-semibold pb-2">Top Rated Series</h3>
+                  <div className="flex mt-3 space-x-4">
+                    <img
+                      src={ImageBaseUrl + PopularSeries.poster_path}
+                      alt=""
+                      className="h-44"
+                    />
+                    <div className="max-w-52  pr-4">
+                      <p className="text-slate-700 text-sm line-clamp-1">
+                        {SerieGenres &&
+                          TopRatedSerie.genre_ids.map((id, index) => {
+                            let genre = SerieGenres.find(
+                              (genre) => genre.id == id
+                            );
+                            if (TopRatedSerie.genre_ids.length == index + 1) {
+                              return <span>{genre.name}</span>;
+                            }
+                            return <span>{genre.name}, </span>;
+                          })}
+                      </p>
+                      <h3 className="font-semibold pb-1 line-clamp-1">
+                        {TopRatedSerie.name}
+                      </h3>
+                      <p className="line-clamp-5 text-xs">
+                        "{TopRatedSerie.overview}"
+                      </p>
+                      <div className="flex items-center justify-between pr-6">
+                        <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
+                          Watch Now
+                        </button>
+                        <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                          More
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="18"
+                            height="12"
+                            className="scale-50 -rotate-90 relative top-[1px]"
+                          >
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="3"
+                              d="M1 1l8 8 8-8"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               <div className=" flex-1">
                 {/* Airing today */}
-                <div className="py-2">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">Airing Today</h3>
-                    <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
-                      More
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="12"
-                        className="scale-50 -rotate-90 relative top-[1px]"
-                      >
-                        <path
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="3"
-                          d="M1 1l8 8 8-8"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div className="flex items-center py-3 space-x-4">
-                    {AirTodaySeries &&
-                      AirTodaySeries.slice(0, 4).map((serie, index) => (
-                        <div
-                          className={`flex space-x-2 ${
-                            index == 2 && "lg:flex hidden"
-                          } ${index == 3 && "xl:flex hidden"}`}
+                {AirTodaySeries && (
+                  <div className="py-2">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold">Airing Today</h3>
+                      <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                        More
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="12"
+                          className="scale-50 -rotate-90 relative top-[1px]"
                         >
-                          <img
-                            src={ImageBaseUrl + serie.poster_path}
-                            alt=""
-                            className="h-16"
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="3"
+                            d="M1 1l8 8 8-8"
                           />
-                          <div className="max-w-32">
-                            <h3 className="font-semibold text-xs line-clamp-1">
-                              {serie.name}
-                            </h3>
-                            <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                              {serie.overview}
-                            </p>
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="flex items-center py-3 space-x-4">
+                      {AirTodaySeries &&
+                        AirTodaySeries.slice(0, 4).map((serie, index) => (
+                          <div
+                            className={`flex space-x-2 ${
+                              index == 2 && "lg:flex hidden"
+                            } ${index == 3 && "xl:flex hidden"}`}
+                          >
+                            <img
+                              src={ImageBaseUrl + serie.poster_path}
+                              alt=""
+                              className="h-16"
+                            />
+                            <div className="w-32">
+                              <h3 className="font-semibold text-xs line-clamp-1">
+                                {serie.name}
+                              </h3>
+                              <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                                {serie.overview}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* On the air */}
-                <div className="">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">On the Air</h3>
-                    <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
-                      More
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="12"
-                        className="scale-50 -rotate-90 relative top-[1px]"
-                      >
-                        <path
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="3"
-                          d="M1 1l8 8 8-8"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div className="flex items-center py-3 space-x-4">
-                    {OnAirSeries &&
-                      OnAirSeries.slice(0, 4).map((serie, index) => (
-                        <div
-                          className={`flex space-x-2 ${
-                            index == 2 && "lg:flex hidden"
-                          } ${index == 3 && "xl:flex hidden"}`}
+                {OnAirSeries && (
+                  <div className="">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold">On the Air</h3>
+                      <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                        More
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="12"
+                          className="scale-50 -rotate-90 relative top-[1px]"
                         >
-                          <img
-                            src={ImageBaseUrl + serie.poster_path}
-                            alt=""
-                            className="h-16"
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="3"
+                            d="M1 1l8 8 8-8"
                           />
-                          <div className="max-w-32">
-                            <h3 className="font-semibold text-xs line-clamp-1">
-                              {serie.name}
-                            </h3>
-                            <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                              {serie.overview}
-                            </p>
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="flex items-center py-3 space-x-4">
+                      {OnAirSeries &&
+                        OnAirSeries.slice(0, 4).map((serie, index) => (
+                          <div
+                            className={`flex space-x-2 ${
+                              index == 2 && "lg:flex hidden"
+                            } ${index == 3 && "xl:flex hidden"}`}
+                          >
+                            <img
+                              src={ImageBaseUrl + serie.poster_path}
+                              alt=""
+                              className="h-16"
+                            />
+                            <div className="w-32">
+                              <h3 className="font-semibold text-xs line-clamp-1">
+                                {serie.name}
+                              </h3>
+                              <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                                {serie.overview}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
