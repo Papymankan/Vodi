@@ -428,7 +428,7 @@ export default function NavBar() {
                               className="h-16"
                             />
                             <div className="w-32">
-                              <h3 className="font-semibold text-xs">
+                              <h3 className="font-semibold text-xs line-clamp-1">
                                 {movie.title}
                               </h3>
                               <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
@@ -477,7 +477,7 @@ export default function NavBar() {
                               className="h-16"
                             />
                             <div className="w-32">
-                              <h3 className="font-semibold text-xs">
+                              <h3 className="font-semibold text-xs line-clamp-1">
                                 {movie.title}
                               </h3>
                               <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
@@ -565,12 +565,12 @@ export default function NavBar() {
               )}
 
               {/* Top Rated Series*/}
-              {PopularSeries && (
+              {TopRatedSerie && (
                 <div className="border-r-2 py-2">
                   <h3 className="font-semibold pb-2">Top Rated Series</h3>
                   <div className="flex mt-3 space-x-4">
                     <img
-                      src={ImageBaseUrl + PopularSeries.poster_path}
+                      src={ImageBaseUrl + TopRatedSerie.poster_path}
                       alt=""
                       className="h-44"
                     />

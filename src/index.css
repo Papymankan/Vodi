@@ -62,3 +62,11 @@
   transition: background-image 2s ease-in-out !important;
   -webkit-transition: background-image 2s ease-in-out !important;
 }
+
+/* Movie detail */
+
+.movie-detail-landing {
+  height: calc(100vh - 68px);
+}
+
+/* Movie detail */
