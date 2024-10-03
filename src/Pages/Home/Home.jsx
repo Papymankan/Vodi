@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -31,12 +31,22 @@ import {
 
 export default function Home() {
   const [LandingSlides, setLandingSlides] = useState(5);
+  const [ActiveSlide, setActiveSlide] = useState(0);
   const [LandingRandom, setLandingRandom] = useState([]);
   const [TrendingMoviesRandom, setTrendingMoviesRandom] = useState([]);
   const [TrendingSeriesRandom, setTrendingSeriesRandom] = useState([]);
 
+  const swiperRef = useRef(null);
+
+  const handlePaginationClick = (index) => {
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(index);
+      setActiveSlide(index);
+    }
+  };
+
   const CheckWidth = () => {
-    if (window.innerWidth < 630) {
+    if (window.innerWidth < 460) {
       if (LandingSlides == 5) {
         setLandingSlides(3);
       }
@@ -47,6 +57,13 @@ export default function Home() {
     }
   };
   window.addEventListener("resize", CheckWidth);
+  useEffect(() => {
+    if (window.innerWidth < 460) {
+      setLandingSlides(3);
+    } else {
+      setLandingSlides(5);
+    }
+  }, []);
 
   // Movies ----------------------------------
   const TopYearMovies = useSelector((state) => state.Movies.TopYearMovies);
@@ -166,21 +183,24 @@ export default function Home() {
     Store.dispatch(fetchLandingSeries());
   }, []);
 
-  useEffect(() => {
-    setLandingSlides(3);
-  }, [window.innerWidth < 630]);
-
   return (
     <>
       <NavBar />
 
       {/* Landing */}
       <div className="w-full relative bg-[#131722]">
-        <Swiper className="mySwiper" threshold={0}>
+        <Swiper
+          className="mySwiper"
+          threshold={0}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          onActiveIndexChange={(e) => setActiveSlide(e.activeIndex)}
+        >
           {LandingRandom &&
             LandingRandom.length > 0 &&
-            LandingRandom.map((item) => (
-              <SwiperSlide>
+            LandingRandom.map((item, index) => (
+              <SwiperSlide key={index}>
                 <div
                   className="w-full md:h-[690px] sm:h-[500px] ms:h-[400px] h-[350px] bg-cover bg-center"
                   style={{
@@ -241,74 +261,38 @@ export default function Home() {
             ))}
         </Swiper>
 
-        <div className="md:w-2/3 w-full absolute md:bottom-4 -bottom-16 md:right-5 z-10 flex items-center justify-center md:justify-end">
+        <div className="md:w-2/3 w-full absolute md:bottom-4 -bottom-8 md:right-5 z-10 flex items-center justify-center md:justify-end">
           <Swiper
             className="LandingSwiper"
             threshold={0}
             slidesPerView={LandingSlides}
             spaceBetween={10}
           >
-            <SwiperSlide className="swiper-slide2">
-              <div
-                className="lg:h-40 lg:w-32 md:w-24 md:h-36 w-28 h-36 bg-cover bg-center cursor-pointer border-2 border-cyan relative"
-                style={{
-                  backgroundImage:
-                    "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
-                }}
-              >
-                <div className="w-full h-full bg-[#00000066] absolute top-0 right-0 z-20"></div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="swiper-slide2">
-              <div
-                className="lg:h-40 lg:w-32 md:w-24 md:h-36 w-28 h-36 bg-cover bg-center cursor-pointer border-2 border-cyan relative"
-                style={{
-                  backgroundImage:
-                    "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
-                }}
-              >
-                <div className="w-full h-full bg-[#00000066] absolute top-0 right-0 z-20"></div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="swiper-slide2">
-              <div
-                className="lg:h-40 lg:w-32 md:w-24 md:h-36 w-28 h-36 bg-cover bg-center cursor-pointer border-2 border-cyan relative"
-                style={{
-                  backgroundImage:
-                    "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
-                }}
-              >
-                <div className="w-full h-full bg-[#00000066] absolute top-0 right-0 z-20"></div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="swiper-slide2">
-              <div
-                className="lg:h-40 lg:w-32 md:w-24 md:h-36 w-28 h-36 bg-cover bg-center cursor-pointer border-2 border-cyan relative"
-                style={{
-                  backgroundImage:
-                    "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
-                }}
-              >
-                <div className="w-full h-full bg-[#00000066] absolute top-0 right-0 z-20"></div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="swiper-slide2">
-              <div
-                className="lg:h-40 lg:w-32 md:w-24 md:h-36 w-28 h-36 bg-cover bg-center cursor-pointer border-2 border-cyan relative"
-                style={{
-                  backgroundImage:
-                    "url(https://vodi.madrasthemes.com/main/wp-content/uploads/sites/2/2019/05/h5-slider-6.jpg)",
-                }}
-              >
-                <div className="w-full h-full bg-[#00000066] absolute top-0 right-0 z-20"></div>
-              </div>
-            </SwiperSlide>
+            {LandingRandom &&
+              LandingRandom.length > 0 &&
+              LandingRandom.map((item, index) => (
+                <SwiperSlide className="swiper-slide2">
+                  <div
+                    className={`lg:h-40 lg:w-28 md:w-24 md:h-36 w-20 h-24 bg-cover bg-center cursor-pointer ${
+                      ActiveSlide == index && "border-2 border-cyan"
+                    } relative`}
+                    style={{
+                      backgroundImage: `url(${
+                        ImageBaseUrl + item.backdrop_path
+                      })`,
+                    }}
+                    onClick={() => handlePaginationClick(index)}
+                  >
+                    <div className="w-full h-full bg-[#00000066] absolute top-0 right-0 z-20"></div>
+                  </div>
+                </SwiperSlide>
+              ))}
           </Swiper>
         </div>
       </div>
 
       {/* Trending Movies */}
-      <div className="w-full bg-[#131722] md:pt-7 pt-12 pb-7">
+      <div className="w-full bg-[#131722] md:pt-7 xs:pt-12 pt-16 pb-7">
         <div className="container mx-auto font-montserrat text-white">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4">
             <h2 className="text-2xl xs:py-7 font-semibold">Trending Movies</h2>
@@ -397,7 +381,7 @@ export default function Home() {
       </div>
 
       {/* Recommanded Movies */}
-      <div className="w-full bg-[#0e0d12]">
+      <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
         <div className="container mx-auto">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
             <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
@@ -603,7 +587,7 @@ export default function Home() {
       </div>
 
       {/* Top Rated Movie */}
-      <div className="w-full relative bg-[#0e0d12]">
+      <div className="w-full relative bg-[#0e0d12] xs:pt-0 pt-6">
         <div className="container mx-auto">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
             <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
@@ -653,7 +637,7 @@ export default function Home() {
       </div>
 
       {/* 2024 Top Movies */}
-      <div className="w-full bg-[#0e0d12] py-8">
+      <div className="w-full bg-[#0e0d12] xs:py-8  xs:pt-0 pt-16">
         <div className="container mx-auto">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
             <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
@@ -720,7 +704,7 @@ export default function Home() {
       </div>
 
       {/* Trending Series */}
-      <div className="w-full bg-[#131722] md:pt-7 pt-32 pb-7">
+      <div className="w-full bg-[#131722] md:pt-7 pt-10 pb-7">
         <div className="container mx-auto font-montserrat text-white">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4">
             <h2 className="text-2xl xs:py-7 font-semibold">Trending Series</h2>
@@ -809,7 +793,7 @@ export default function Home() {
       </div>
 
       {/* Recommanded Series */}
-      <div className="w-full bg-[#0e0d12]">
+      <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
         <div className="container mx-auto">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
             <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
@@ -1015,7 +999,7 @@ export default function Home() {
       </div>
 
       {/* Top Reated Serie */}
-      <div className="w-full relative bg-[#0e0d12]">
+      <div className="w-full relative bg-[#0e0d12] xs:pt-0 pt-6">
         <div className="container mx-auto">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
             <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
@@ -1065,7 +1049,7 @@ export default function Home() {
       </div>
 
       {/* 2024 Top Series */}
-      <div className="w-full bg-[#0e0d12] py-8">
+      <div className="w-full bg-[#0e0d12]  xs:py-8  xs:pt-0 pt-16">
         <div className="container mx-auto">
           <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
             <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
