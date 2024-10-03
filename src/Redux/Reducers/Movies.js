@@ -1,14 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BaseUrl, ApiKey } from "../FetchConfigs";
 
-export const fetchMovies = createAsyncThunk(
-  "Movies/fetchMovies",
-  async ({ url, filters }) => {
-    let filtersStr = filters.reduce((prev, next) => {
-      return prev + "&" + next;
-    });
-
-    return fetch(BaseUrl + url + "?" + ApiKey + "&" + filtersStr, {
+export const fetchLandingMovies = createAsyncThunk(
+  "Movies/fetchLandingMovies",
+  async () => {
+    return fetch(BaseUrl + 'discover/movie' + "?" + ApiKey + "&" + 'sort_by=vote_count.desc', {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -20,6 +16,7 @@ export const fetchMovies = createAsyncThunk(
         }
       })
       .then((data) => {
+        console.log(data.results);
         return data.results;
       });
   }
@@ -174,8 +171,8 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchMovies.fulfilled, (state, action) => {
-        console.log(state, action);
+      .addCase(fetchLandingMovies.fulfilled, (state, action) => {
+        return { ...state, LandingMovies: action.payload };
       })
       .addCase(fetchTopYearMovies.fulfilled, (state, action) => {
         return { ...state, TopYearMovies: action.payload };

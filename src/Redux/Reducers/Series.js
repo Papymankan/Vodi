@@ -1,29 +1,30 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BaseUrl, ApiKey } from "../FetchConfigs";
 
-// export const fetchMovies = createAsyncThunk(
-//   "Movies/fetchMovies",
-//   async ({ url, filters }) => {
-//     let filtersStr = filters.reduce((prev, next) => {
-//       return prev + "&" + next;
-//     });
+export const fetchLandingSeries = createAsyncThunk(
+  "Series/fetchLandingSeries",
+  async () => {
+    return fetch(
+      BaseUrl + "discover/tv" + "?" + ApiKey + "&" + "sort_by=vote_count.desc",
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data.results);
 
-//     return fetch(BaseUrl + url + "?" + ApiKey + "&" + filtersStr, {
-//       method: "GET",
-//       headers: {
-//         accept: "application/json",
-//       },
-//     })
-//       .then((res) => {
-//         if (res.ok) {
-//           return res.json();
-//         }
-//       })
-//       .then((data) => {
-//         return data.results;
-//       });
-//   }
-// );
+        return data.results;
+      });
+  }
+);
 
 export const fetchTopYearSeries = createAsyncThunk(
   "Series/fetchTopYearSeries",
@@ -151,7 +152,7 @@ export const fetchAirTodaySeries = createAsyncThunk(
 export const fetchOnAirSeries = createAsyncThunk(
   "Series/fetchOnAirSeries",
   async () => {
-    return fetch(BaseUrl + "tv/on_the_air" + "?" + ApiKey +"&page=2", {
+    return fetch(BaseUrl + "tv/on_the_air" + "?" + ApiKey + "&page=2", {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -163,8 +164,6 @@ export const fetchOnAirSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data.results);
-
         return data.results;
       });
   }
@@ -176,9 +175,9 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      //   .addCase(fetchMovies.fulfilled, (state, action) => {
-      //     console.log(state, action);
-      //   })
+      .addCase(fetchLandingSeries.fulfilled, (state, action) => {
+        return { ...state, LandingSeries: action.payload };
+      })
       .addCase(fetchTopYearSeries.fulfilled, (state, action) => {
         return { ...state, TopYearSeries: action.payload };
       })
