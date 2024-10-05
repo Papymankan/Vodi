@@ -20,7 +20,7 @@ export default function NavBar() {
 
   return (
     <>
-      <div className="w-full relative bg-[#0c0e17] ">
+      <div className="w-full relative bg-[#0c0e17] z-50">
         <div className=" flex items-center justify-between container font-montserrat text-white px-4 mx-auto">
           <div className="flex items-center justify-between md:space-x-0 space-x-4 py-3 md:py-0">
             {/* Hamburger Icon */}

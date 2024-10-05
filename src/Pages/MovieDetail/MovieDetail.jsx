@@ -1,14 +1,15 @@
 import React from "react";
 import NavBar from "../../Components/NavBar/NavBar";
+import BackDrop from "../../Components/BackDrop/BackDrop";
 
 export default function MovieDetail() {
   return (
     <>
       <NavBar />
-      <div className="w-full bg-[#131722] movie-detail-landing">
-        <div className="container mx-auto px-4">
+      <div className="w-full bg-[#131722] movie-detail-landing relative z-10 overflow-hidden">
+        <div className="container mx-auto px-4 z-10">
           {/* BreadCrumb */}
-          <div className="w-full  text-xs xs:text-base flex items-center text-gray-500 py-4 font-montserrat">
+          <div className="w-full  text-xs xs:text-base flex items-center text-gray-500 py-4 font-montserrat z-10">
             <a href="#" className="hover:text-cyan duration-200">
               Home
             </a>
@@ -47,7 +48,8 @@ export default function MovieDetail() {
           </div>
 
           {/* Landing Details */}
-          <div className="w-full my-3 md:my-6 flex items-start sm:flex-row flex-col relative sm:h-96">
+
+          <div className="w-full my-3 md:my-6 flex items-start sm:flex-row flex-col relative sm:h-96 z-10">
             <div className="sm:hidden block absolute top-0 right-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -123,8 +125,7 @@ export default function MovieDetail() {
               </div>
 
               <h1 className="w-full text-lg xs:text-3xl lg:text-5xl font-bold max-w-4xl pt-4">
-                Harry Potter and the Philosopher's Stone Harry Potter and the
-                Philosopher's Stone
+                Harry Potter and the Philosopher's Stone
               </h1>
 
               <div className="text-sm xs:text-base w-full flex items-center justify-between pt-3 xs:pt-6 font-montserrat">
@@ -167,8 +168,9 @@ export default function MovieDetail() {
             </div>
           </div>
 
-          <div className="w-full flex items-center py-0 sm:py-4 justify-between">
-            <div className="flex items-center space-x-4 w-full xs:w-auto">
+          {/* Landing Actions */}
+          <div className="w-full flex items-center py-0 sm:py-4 justify-between z-10">
+            <div className="flex items-center space-x-4 w-full xs:w-auto font-montserrat z-10">
               <button className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2">
                 + WatchList
               </button>
@@ -177,7 +179,7 @@ export default function MovieDetail() {
               </button>
             </div>
 
-            <div className="hidden xs:flex items-center w-28 justify-end font-montserrat">
+            <div className="hidden xs:flex items-center w-28 justify-end  z-10">
               <svg
                 className="vodi-svg scale-75"
                 width="40px"
@@ -199,6 +201,11 @@ export default function MovieDetail() {
             </div>
           </div>
         </div>
+
+        <BackDrop videoKey={"cdx31ak4KbQ"} />
+
+
+        {/* cdx31ak4KbQ */}
       </div>
     </>
   );

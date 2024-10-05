@@ -65,8 +65,44 @@
 
 /* Movie detail */
 
-.movie-detail-landing {
+/* .movie-detail-landing {
   min-height: calc(100vh - 68px);
-}
+} */
 
 /* Movie detail */
+
+/* BackDrop */
+
+.backdrop {
+}
+.youtube-video {
+  width: 100%;
+  height: 640px;
+  object-fit: cover;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  overflow: hidden;
+}
+.youtube-video > iframe {
+  overflow: hidden;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  object-position: center;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+/* BackDrop */
