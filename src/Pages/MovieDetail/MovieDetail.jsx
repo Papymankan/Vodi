@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 import BackDrop from "../../Components/BackDrop/BackDrop";
 
 export default function MovieDetail() {
   const [isMuted, setIsMuted] = useState(true);
+  const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
   const playerRef = useRef(null); // Create a ref to store the player instance
 
   const onReady = (event) => {
@@ -23,10 +24,20 @@ export default function MovieDetail() {
     }
   };
 
+  const onStateChange = (event) => {
+    if (event.data === 1) {
+      setLoadingBackdrop(false);
+      console.log("playing");
+    } else if (event.data === 3) {
+      setLoadingBackdrop(true);
+      console.log("buffering");
+    }
+  };
+
   return (
     <>
       <NavBar />
-      <div className="w-full bg-black pb-3 movie-detail-landing relative z-10 overflow-hidden">
+      <div className="w-full bg-black pb-3 movie-detail-landing relative z-20 overflow-hidden">
         <div className="container mx-auto px-4 z-20">
           {/* BreadCrumb */}
           <div className="w-full text-xs xs:text-base flex items-center text-gray-500 py-4 font-montserrat z-20">
@@ -208,7 +219,7 @@ export default function MovieDetail() {
 
           {/* Landing Actions */}
           <div className="w-full flex items-center py-0 sm:py-4 justify-between z-20">
-            <div className="flex items-center space-x-4 w-full xs:w-auto font-montserrat z-10">
+            <div className="flex items-center space-x-4 w-full xs:w-auto font-montserrat z-20">
               <button className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2">
                 + WatchList
               </button>
@@ -217,7 +228,7 @@ export default function MovieDetail() {
               </button>
             </div>
 
-            <div className="hidden xs:flex items-center w-28 justify-end  z-10">
+            <div className="hidden xs:flex items-center w-28 justify-end  z-20">
               <svg
                 className="vodi-svg scale-75"
                 width="40px"
@@ -240,9 +251,25 @@ export default function MovieDetail() {
           </div>
         </div>
 
-        <BackDrop videoKey={"cdx31ak4KbQ"} onReady={onReady} />
+        <BackDrop
+          videoKey={"cdx31ak4KbQ"}
+          onReady={onReady}
+          onStateChange={onStateChange}
+          isLoading={LoadingBackdrop}
+        />
 
-        {/* mpj9dL7swwk */}
+        <div
+          className={`w-full h-full absolute top-0 z-10 bg-cover bg-center ${
+            LoadingBackdrop ? "block" : "hidden"
+          }`}
+          style={{
+            backgroundImage: `url(https://image.tmdb.org/t/p/original/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg)`,
+          }}
+        >
+          <div className="overlay"></div>{" "}
+        </div>
+
+        {/* cdx31ak4KbQ */}
       </div>
     </>
   );

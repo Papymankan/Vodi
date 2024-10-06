@@ -1,7 +1,7 @@
 import React from "react";
 import YouTube from "react-youtube";
 
-export default function BackDrop({ videoKey, onReady }) {
+export default function BackDrop({ videoKey, onReady , onStateChange , isLoading}) {
   const opts = {
     height: "390",
     width: "640",
@@ -24,10 +24,11 @@ export default function BackDrop({ videoKey, onReady }) {
       <YouTube
         videoId={videoKey}
         opts={opts}
-        className="youtube-video"
+        className={`youtube-video`}
         onReady={onReady}
+        onStateChange={onStateChange}
       />
-      <div className="overlay"></div>{" "}
+      <div className={`overlay`}></div>{" "}
     </>
   );
 }

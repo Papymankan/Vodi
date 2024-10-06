@@ -85,6 +85,7 @@
   right: calc((100vw - 1600px) / 2 );
   overflow: hidden;
   pointer-events: none;
+  z-index: 0;
 }
 .youtube-video > iframe {
   overflow: hidden;
@@ -94,6 +95,7 @@
   position: absolute;
   top: 0px;
   object-position: center;
+  z-index: 0;
 }
 .overlay {
   position: absolute;
