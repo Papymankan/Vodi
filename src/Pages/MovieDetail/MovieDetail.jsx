@@ -1,23 +1,43 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 import BackDrop from "../../Components/BackDrop/BackDrop";
 
 export default function MovieDetail() {
+  const [isMuted, setIsMuted] = useState(true);
+  const playerRef = useRef(null); // Create a ref to store the player instance
+
+  const onReady = (event) => {
+    playerRef.current = event.target; // Store the player instance in the ref
+    playerRef.current.mute(); // Start muted
+  };
+
+  const toggleMute = () => {
+    if (playerRef.current) {
+      // Ensure the player is initialized
+      if (isMuted) {
+        playerRef.current.unMute();
+      } else {
+        playerRef.current.mute();
+      }
+      setIsMuted(!isMuted);
+    }
+  };
+
   return (
     <>
       <NavBar />
-      <div className="w-full bg-[#131722] movie-detail-landing relative z-10 overflow-hidden">
-        <div className="container mx-auto px-4 z-10">
+      <div className="w-full bg-black pb-3 movie-detail-landing relative z-10 overflow-hidden">
+        <div className="container mx-auto px-4 z-20">
           {/* BreadCrumb */}
-          <div className="w-full  text-xs xs:text-base flex items-center text-gray-500 py-4 font-montserrat z-10">
-            <a href="#" className="hover:text-cyan duration-200">
+          <div className="w-full text-xs xs:text-base flex items-center text-gray-500 py-4 font-montserrat z-20">
+            <a href="#" className="hover:text-cyan z-20 duration-200">
               Home
             </a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
               height="12"
-              className="scale-50 mt-1 -rotate-90"
+              className="scale-50 z-20 mt-1 -rotate-90"
             >
               <path
                 fill="none"
@@ -26,14 +46,14 @@ export default function MovieDetail() {
                 d="M1 1l8 8 8-8"
               />
             </svg>
-            <a href="#" className="hover:text-cyan duration-200">
+            <a href="#" className="hover:text-cyan z-20 duration-200">
               Movies
             </a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
               height="12"
-              className="scale-50 mt-1 -rotate-90"
+              className="scale-50 z-20 mt-1 -rotate-90"
             >
               <path
                 fill="none"
@@ -42,15 +62,25 @@ export default function MovieDetail() {
                 d="M1 1l8 8 8-8"
               />
             </svg>
-            <a href="#" className="hover:text-cyan duration-200 text-white">
+            <a
+              href="#"
+              className="hover:text-cyan z-20 duration-200 text-white"
+            >
               Inception
             </a>
           </div>
 
           {/* Landing Details */}
+          <div className="w-full my-3 md:my-6 flex items-start sm:flex-row flex-col relative sm:h-96 z-20">
+            <div className="sm:hidden flex items-center space-x-3 absolute top-0 right-4 z-10">
+              <button onClick={toggleMute} className="text-white z-10">
+                {isMuted ? (
+                  <i className="fa fa-volume-off text-xl mr-3 text-white"></i>
+                ) : (
+                  <i className="fa fa-volume-up text-xl text-white"></i>
+                )}
+              </button>
 
-          <div className="w-full my-3 md:my-6 flex items-start sm:flex-row flex-col relative sm:h-96 z-10">
-            <div className="sm:hidden block absolute top-0 right-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -97,7 +127,15 @@ export default function MovieDetail() {
                   </a>
                 </div>
 
-                <div className="sm:block hidden">
+                <div className="sm:flex hidden  items-center space-x-4">
+                  <button onClick={toggleMute} className="text-white z-10">
+                    {isMuted ? (
+                      <i className="fa fa-volume-off text-xl mr-3 text-white"></i>
+                    ) : (
+                      <i className="fa fa-volume-up text-xl text-white"></i>
+                    )}
+                  </button>
+
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -169,7 +207,7 @@ export default function MovieDetail() {
           </div>
 
           {/* Landing Actions */}
-          <div className="w-full flex items-center py-0 sm:py-4 justify-between z-10">
+          <div className="w-full flex items-center py-0 sm:py-4 justify-between z-20">
             <div className="flex items-center space-x-4 w-full xs:w-auto font-montserrat z-10">
               <button className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2">
                 + WatchList
@@ -202,10 +240,9 @@ export default function MovieDetail() {
           </div>
         </div>
 
-        <BackDrop videoKey={"cdx31ak4KbQ"} />
+        <BackDrop videoKey={"cdx31ak4KbQ"} onReady={onReady} />
 
-
-        {/* cdx31ak4KbQ */}
+        {/* mpj9dL7swwk */}
       </div>
     </>
   );
