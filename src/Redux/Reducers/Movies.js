@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BaseUrl, ApiKey } from "../FetchConfigs";
+import { shuffleArray } from "../../Funcs";
 
 export const fetchLandingMovies = createAsyncThunk(
   "Movies/fetchLandingMovies",
@@ -213,6 +214,26 @@ export const fetchMovieVideos = createAsyncThunk(
   }
 );
 
+export const fetchRecommandMovies = createAsyncThunk(
+  "Movies/fetchRecommandMovies",
+  async ({ id }) => {
+    return fetch(BaseUrl + "movie/" + id + "/recommendations?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return shuffleArray(data.results);
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {},
@@ -248,6 +269,9 @@ const slice = createSlice({
       })
       .addCase(fetchMovieVideos.fulfilled, (state, action) => {
         return { ...state, MovieVideos: action.payload };
+      })
+      .addCase(fetchRecommandMovies.fulfilled, (state, action) => {
+        return { ...state, RecommandMovies: action.payload };
       });
   },
 });
