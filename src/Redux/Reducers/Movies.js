@@ -234,6 +234,26 @@ export const fetchRecommandMovies = createAsyncThunk(
   }
 );
 
+export const fetchSimilarMovies = createAsyncThunk(
+  "Movies/fetchSimilarMovies",
+  async ({ id }) => {
+    return fetch(BaseUrl + "movie/" + id + "/similar?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return shuffleArray(data.results);
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {},
@@ -272,6 +292,9 @@ const slice = createSlice({
       })
       .addCase(fetchRecommandMovies.fulfilled, (state, action) => {
         return { ...state, RecommandMovies: action.payload };
+      })
+      .addCase(fetchSimilarMovies.fulfilled, (state, action) => {
+        return { ...state, SimilarMovies: action.payload };
       });
   },
 });

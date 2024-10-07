@@ -28,6 +28,7 @@ import {
   fetchTopYearSeries,
   fetchTrendingSeries,
 } from "../../Redux/Reducers/Series";
+import { shuffleArray } from "../../Funcs";
 
 export default function Home() {
   const [LandingSlides, setLandingSlides] = useState(5);
@@ -129,37 +130,31 @@ export default function Home() {
 
   useEffect(() => {
     if (LandingMovies && LandingSeries) {
+      // Select Random Series
       let series = [...LandingSeries];
       let shuffledSeries = [];
       if (LandingSeries.length) {
         for (let index = 0; index < 2; index++) {
           let randomNum = Math.floor(Math.random() * (20 - index));
-          console.log(series[randomNum]);
-
           shuffledSeries.push(series[randomNum]);
           series.splice(randomNum, 1);
         }
       }
 
+      // Select Random Movies
       let movies = [...LandingMovies];
       let shuffledMovies = [];
       if (LandingMovies.length) {
         for (let index = 0; index < 3; index++) {
           let randomNum = Math.floor(Math.random() * (20 - index));
-
           shuffledMovies.push(movies[randomNum]);
           movies.splice(randomNum, 1);
         }
       }
-      console.log(shuffledMovies);
 
       let concatArray = shuffledMovies.concat(shuffledSeries);
 
-      for (let i = concatArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [concatArray[i], concatArray[j]] = [concatArray[j], concatArray[i]];
-      }
-      setLandingRandom(concatArray);
+      setLandingRandom(shuffleArray(concatArray));
     }
   }, [LandingMovies, LandingSeries]);
 
