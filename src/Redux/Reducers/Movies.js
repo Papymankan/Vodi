@@ -4,12 +4,20 @@ import { BaseUrl, ApiKey } from "../FetchConfigs";
 export const fetchLandingMovies = createAsyncThunk(
   "Movies/fetchLandingMovies",
   async () => {
-    return fetch(BaseUrl + 'discover/movie' + "?" + ApiKey + "&" + 'sort_by=vote_count.desc', {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    })
+    return fetch(
+      BaseUrl +
+        "discover/movie" +
+        "?" +
+        ApiKey +
+        "&" +
+        "sort_by=vote_count.desc",
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -167,8 +175,8 @@ export const fetchUpcomingMovies = createAsyncThunk(
 
 export const fetchMovieDetails = createAsyncThunk(
   "Movies/fetchMovieDetails",
-  async ({id}) => {
-    return fetch(BaseUrl + "movie/"+ id + "?" + ApiKey, {
+  async ({ id }) => {
+    return fetch(BaseUrl + "movie/" + id + "?" + ApiKey, {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -180,9 +188,27 @@ export const fetchMovieDetails = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
-        
         return data;
+      });
+  }
+);
+
+export const fetchMovieVideos = createAsyncThunk(
+  "Movies/fetchMovieVideos",
+  async ({ id }) => {
+    return fetch(BaseUrl + "movie/" + id + "/videos?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data.results;
       });
   }
 );
@@ -220,6 +246,9 @@ const slice = createSlice({
       .addCase(fetchMovieDetails.fulfilled, (state, action) => {
         return { ...state, MovieDetails: action.payload };
       })
+      .addCase(fetchMovieVideos.fulfilled, (state, action) => {
+        return { ...state, MovieVideos: action.payload };
+      });
   },
 });
 

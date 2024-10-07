@@ -2,7 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 import BackDrop from "../../Components/BackDrop/BackDrop";
 import { useParams } from "react-router-dom";
-import { fetchMovieDetails } from "../../Redux/Reducers/Movies";
+import {
+  fetchMovieDetails,
+  fetchMovieVideos,
+} from "../../Redux/Reducers/Movies";
 import { useSelector } from "react-redux";
 import Store from "../../Redux/Store";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
@@ -10,6 +13,7 @@ import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 export default function MovieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
+  const [BackdropVideo, setBackdropVideo] = useState({});
   const playerRef = useRef(null); // Create a ref to store the player instance
 
   const onReady = (event) => {
@@ -49,10 +53,23 @@ export default function MovieDetail() {
   console.log(MovieDetails);
 
   useEffect(() => {
-    if(MovieDetails){
-      
+    if (MovieDetails) {
+      Store.dispatch(fetchMovieVideos({ id: params.id }));
     }
   }, [MovieDetails]);
+
+  const MovieVideos = useSelector((state) => state.Movies.MovieVideos);
+  console.log(MovieVideos);
+
+  useEffect(() => {
+    if (MovieVideos) {
+      MovieVideos.some((video) => {
+        if (video.type == "Trailer") {
+          setBackdropVideo(video);
+        }
+      });
+    }
+  }, [MovieVideos]);
 
   return (
     <>
@@ -271,12 +288,14 @@ export default function MovieDetail() {
             </div>
           </div>
 
-          <BackDrop
-            videoKey={"cdx31ak4KbQ"}
-            onReady={onReady}
-            onStateChange={onStateChange}
-            isLoading={LoadingBackdrop}
-          />
+          {BackdropVideo.key && (
+            <BackDrop
+              videoKey={BackdropVideo.key}
+              onReady={onReady}
+              onStateChange={onStateChange}
+              isLoading={LoadingBackdrop}
+            />
+          )}
 
           {/* Loading backDrop Tumbnail */}
           <div

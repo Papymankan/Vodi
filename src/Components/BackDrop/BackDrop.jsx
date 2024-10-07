@@ -3,8 +3,7 @@ import YouTube from "react-youtube";
 
 export default function BackDrop({ videoKey, onReady , onStateChange , isLoading}) {
   const opts = {
-    height: "390",
-    width: "640",
+    width: "1600",
     playerVars: {
       autoplay: 1, // Auto-play the video
       controls: 0, // Hide player controls
