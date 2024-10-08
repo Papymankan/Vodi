@@ -4,6 +4,7 @@ import BackDrop from "../../Components/BackDrop/BackDrop";
 import { useParams } from "react-router-dom";
 import {
   fetchMovieDetails,
+  fetchMovieImages,
   fetchMovieVideos,
   fetchRecommandMovies,
   fetchSimilarMovies,
@@ -16,6 +17,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { shuffleArray } from "../../Funcs";
+
+import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
 
 export default function MovieDetail() {
   const [isMuted, setIsMuted] = useState(true);
@@ -44,9 +47,6 @@ export default function MovieDetail() {
     if (event.data === 1) {
       setLoadingBackdrop(false);
       console.log("playing");
-    } else if (event.data === 3) {
-      setLoadingBackdrop(true);
-      console.log("buffering");
     }
   };
 
@@ -61,12 +61,15 @@ export default function MovieDetail() {
   useEffect(() => {
     if (MovieDetails) {
       Store.dispatch(fetchMovieVideos({ id: params.id }));
+      Store.dispatch(fetchMovieImages({ id: params.id }));
       Store.dispatch(fetchRecommandMovies({ id: params.id }));
       Store.dispatch(fetchSimilarMovies({ id: params.id }));
     }
   }, [MovieDetails]);
 
   const MovieVideos = useSelector((state) => state.Movies.MovieVideos);
+
+  const MovieImages = useSelector((state) => state.Movies.MovieImages);
 
   const RecommandMovies = useSelector((state) => state.Movies.RecommandMovies);
 
@@ -325,8 +328,6 @@ export default function MovieDetail() {
             >
               <div className="overlay"></div>{" "}
             </div>
-
-            {/* cdx31ak4KbQ */}
           </div>
 
           {/* Movie Details */}
@@ -373,7 +374,7 @@ export default function MovieDetail() {
                 {/* Budget */}
                 {MovieDetails && (
                   <div className="w-full flex flex-wrap items-center py-2">
-                    {MovieDetails.budget && (
+                    {MovieDetails.budget > 0 && (
                       <>
                         <h3 className="font-bold">Budget :</h3>
                         <span className="mx-2">
@@ -382,7 +383,7 @@ export default function MovieDetail() {
                       </>
                     )}
 
-                    {MovieDetails.revenue && (
+                    {MovieDetails.revenue > 0 && (
                       <>
                         <h3 className="font-bold ml-5">Revenue :</h3>
                         <span className="mx-2">
@@ -393,10 +394,13 @@ export default function MovieDetail() {
                   </div>
                 )}
               </div>
+          {MovieVideos && (
+            <div className="w-1/2 text-white">
+              <CustomLightBox allSlides={MovieVideos} />
+            </div>
+          )}
             </div>
           </div>
-
-          {/* Recommand */}
           {RecommandMovies && RecommandMovies.length > 0 && (
             <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
               <div className="container mx-auto">
@@ -544,6 +548,7 @@ export default function MovieDetail() {
               </div>
             </div>
           )}
+
         </>
       )}
     </>
