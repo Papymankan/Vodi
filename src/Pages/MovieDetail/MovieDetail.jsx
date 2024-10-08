@@ -328,9 +328,76 @@ export default function MovieDetail() {
 
             {/* cdx31ak4KbQ */}
           </div>
-          {/* Recommand */}
 
-          {RecommandMovies.length > 0 && (
+          {/* Movie Details */}
+          <div className="w-full py-4 bg-[#131722]">
+            <div className="container mx-auto flex px-4">
+              <div className="w-1/2 text-white font-montserrat">
+                {/* Countries */}
+                {MovieDetails && MovieDetails.production_countries && (
+                  <div className="w-full flex flex-wrap items-center py-2">
+                    <h3 className="font-bold mr-2">Countries :</h3>
+                    {MovieDetails &&
+                      MovieDetails.production_countries &&
+                      MovieDetails.production_countries.map((country) => (
+                        <span className="text-sm mr-2">{country.name}</span>
+                      ))}
+                  </div>
+                )}
+
+                {/* Companies */}
+                {MovieDetails && MovieDetails.production_companies && (
+                  <div className="w-full flex flex-wrap items-center py-2">
+                    <h3 className="font-bold mr-2">Companies :</h3>
+                    {MovieDetails &&
+                      MovieDetails.production_companies &&
+                      MovieDetails.production_companies.map((company) => (
+                        <a
+                          className="text-sm mr-2 my-1 px-3 space-x-2 flex items-center py-2 rounded-full bg-gray-500"
+                          href="#"
+                        >
+                          {company.logo_path && (
+                            <img
+                              src={ImageBaseUrl + company.logo_path}
+                              alt=""
+                              className="h-3"
+                            />
+                          )}
+
+                          <span className="text-xs">{company.name}</span>
+                        </a>
+                      ))}
+                  </div>
+                )}
+
+                {/* Budget */}
+                {MovieDetails && (
+                  <div className="w-full flex flex-wrap items-center py-2">
+                    {MovieDetails.budget && (
+                      <>
+                        <h3 className="font-bold">Budget :</h3>
+                        <span className="mx-2">
+                          {MovieDetails.budget.toLocaleString()}
+                        </span>
+                      </>
+                    )}
+
+                    {MovieDetails.revenue && (
+                      <>
+                        <h3 className="font-bold ml-5">Revenue :</h3>
+                        <span className="mx-2">
+                          {MovieDetails.revenue.toLocaleString()}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Recommand */}
+          {RecommandMovies && RecommandMovies.length > 0 && (
             <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
               <div className="container mx-auto">
                 <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
@@ -404,8 +471,7 @@ export default function MovieDetail() {
             </div>
           )}
           {/* Simillar */}
-
-          {SimilarMovies.length > 0 && (
+          {SimilarMovies && SimilarMovies.length > 0 && (
             <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
               <div className="container mx-auto">
                 <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
