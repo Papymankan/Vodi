@@ -35,15 +35,16 @@ export default function NavBar() {
             </svg>
 
             {/* Logo */}
-            <svg version="1.1" width="103" height="40px">
-              <linearGradient id="vodi-gr" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0" stop-color="#2A4999" />
-                <stop offset="1" stop-color="#2C9CD4" />
-              </linearGradient>
-              <g class="vodi-gr" fill="url(#vodi-gr)">
-                <path
-                  class="vodi-svg0"
-                  d="M72.8,12.7c0-2.7,0-1.8,0-4.4c0-0.9,0-1.8,0-2.8C73,3,74.7,1.4,77,1.4c2.3,0,4.1,1.8,4.2,4.2c0,1,0,2.1,0,3.1
+            <a href="/">
+              <svg version="1.1" width="103" height="40px">
+                <linearGradient id="vodi-gr" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0" stop-color="#2A4999" />
+                  <stop offset="1" stop-color="#2C9CD4" />
+                </linearGradient>
+                <g class="vodi-gr" fill="url(#vodi-gr)">
+                  <path
+                    class="vodi-svg0"
+                    d="M72.8,12.7c0-2.7,0-1.8,0-4.4c0-0.9,0-1.8,0-2.8C73,3,74.7,1.4,77,1.4c2.3,0,4.1,1.8,4.2,4.2c0,1,0,2.1,0,3.1
 		c0,6.5,0,9.4,0,15.9c0,4.7-1.7,8.8-5.6,11.5c-4.5,3.1-9.3,3.5-14.1,0.9c-4.7-2.5-7.1-6.7-7-12.1c0.1-7.8,6.3-13.6,14.1-13.2
 		c0.7,0,1.4,0.2,2.1,0.3C71.3,12.2,72,12.4,72.8,12.7z M67.8,19.8c-2.9,0-5.2,2.2-5.2,5c0,2.9,2.3,5.3,5.2,5.3
 		c2.8,0,5.2-2.4,5.2-5.2C73,22.2,70.6,19.8,67.8,19.8z
@@ -57,9 +58,10 @@ export default function NavBar() {
 		c-0.1-6.1-0.1-11.3,0-17.5c0-2.2,1.5-3.9,3.5-4.2c2.1-0.3,4.1,0.9,4.7,2.9c0.1,0.5,0.2,1.1,0.2,1.6C90.9,20,90.9,22.1,90.9,25.1
 		C90.9,25.1,90.9,25.1,90.9,25.1z
 	M90.2,4.7L86,2.3c-1.3-0.8-3,0.2-3,1.7v4.8c0,1.5,1.7,2.5,3,1.7l4.2-2.4C91.5,7.4,91.5,5.5,90.2,4.7z"
-                ></path>
-              </g>
-            </svg>
+                  ></path>
+                </g>
+              </svg>
+            </a>
 
             {/* Links */}
             <div className="md:flex hidden items-center pl-8">
@@ -310,9 +312,12 @@ export default function NavBar() {
                         "{PopularMovies[0].overview}"
                       </p>
                       <div className="flex items-center justify-between pr-6">
-                        <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
-                          Watch Now
-                        </button>
+                        <a
+                          href={"/movie/" + PopularMovies[0].id}
+                          className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold"
+                        >
+                          Explore
+                        </a>
                         <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
                           More
                           <svg
@@ -365,9 +370,12 @@ export default function NavBar() {
                         "{TopRatedMovie.overview}"
                       </p>
                       <div className="flex items-center justify-between pr-6">
-                        <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
-                          Watch Now
-                        </button>
+                        <a
+                          href={"/movie/" + TopRatedMovie.id}
+                          className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold"
+                        >
+                          Explore
+                        </a>
                         <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
                           More
                           <svg
@@ -418,23 +426,28 @@ export default function NavBar() {
                       {TheaterMovies &&
                         TheaterMovies.slice(0, 4).map((movie, index) => (
                           <div
-                            className={`flex space-x-2 ${
-                              index == 2 && "lg:flex hidden"
-                            } ${index == 3 && "xl:flex hidden"}`}
+                            className={` ${index == 2 && "lg:flex hidden"} ${
+                              index == 3 && "xl:flex hidden"
+                            }`}
                           >
-                            <img
-                              src={ImageBaseUrl + movie.poster_path}
-                              alt=""
-                              className="h-16"
-                            />
-                            <div className="w-32">
-                              <h3 className="font-semibold text-xs line-clamp-1">
-                                {movie.title}
-                              </h3>
-                              <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                                {movie.overview}
-                              </p>
-                            </div>
+                            <a
+                              href={"/movie/" + movie.id}
+                              className="flex space-x-2 hover:text-cyan duration-200"
+                            >
+                              <img
+                                src={ImageBaseUrl + movie.poster_path}
+                                alt=""
+                                className="h-16"
+                              />
+                              <div className="w-32">
+                                <h3 className="font-semibold text-xs line-clamp-1">
+                                  {movie.title}
+                                </h3>
+                                <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                                  {movie.overview}
+                                </p>
+                              </div>
+                            </a>
                           </div>
                         ))}
                     </div>
@@ -467,23 +480,28 @@ export default function NavBar() {
                       {UpcomingMovies &&
                         UpcomingMovies.slice(1, 5).map((movie, index) => (
                           <div
-                            className={`flex space-x-2 ${
-                              index == 2 && "lg:flex hidden"
-                            } ${index == 3 && "xl:flex hidden"}`}
+                            className={` ${index == 2 && "lg:flex hidden"} ${
+                              index == 3 && "xl:flex hidden"
+                            }`}
                           >
-                            <img
-                              src={ImageBaseUrl + movie.poster_path}
-                              alt=""
-                              className="h-16"
-                            />
-                            <div className="w-32">
-                              <h3 className="font-semibold text-xs line-clamp-1">
-                                {movie.title}
-                              </h3>
-                              <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                                {movie.overview}
-                              </p>
-                            </div>
+                            <a
+                              href={"/movie/" + movie.id}
+                              className="flex space-x-2 hover:text-cyan duration-200"
+                            >
+                              <img
+                                src={ImageBaseUrl + movie.poster_path}
+                                alt=""
+                                className="h-16"
+                              />
+                              <div className="w-32">
+                                <h3 className="font-semibold text-xs line-clamp-1">
+                                  {movie.title}
+                                </h3>
+                                <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                                  {movie.overview}
+                                </p>
+                              </div>
+                            </a>
                           </div>
                         ))}
                     </div>

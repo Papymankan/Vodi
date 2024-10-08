@@ -239,14 +239,17 @@ export default function Home() {
                         {item.title || item.name}
                       </h1>
                       <div className="w-full flex items-center md:justify-start justify-center space-x-8 md:my-8 my-4">
-                        <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200">
+                        <a
+                          className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200"
+                          href={item.title ? "/movie/" + item.id : ""}
+                        >
                           Explore
-                        </button>
+                        </a>
                         <button
                           className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:text-black  hover:bg-white duration-200 shadow-xl"
                           style={{ textShadow: "1px 1px 2px #000000" }}
                         >
-                          + PlayList
+                          + Watchlist
                         </button>
                       </div>
                     </div>
@@ -315,23 +318,30 @@ export default function Home() {
                   })`,
                 }}
               >
-                <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                  <p className="text-sm text-slate-300">
-                    {MovieGenres &&
-                      TrendingMoviesRandom[0].genre_ids.map((id, index) => {
-                        let genre = MovieGenres.find((genre) => genre.id == id);
-                        if (
-                          TrendingMoviesRandom[0].genre_ids.length ==
-                          index + 1
-                        ) {
-                          return <span>{genre.name}</span>;
-                        }
-                        return <span>{genre.name}, </span>;
-                      })}
-                  </p>
-                  <p className="group-hover:text-cyan duration-200">
-                    {TrendingMoviesRandom[0].title}
-                  </p>
+                <div className="w-full h-full poster-cover  p-3 group transition-all">
+                  <a
+                    href={"/movie/" + TrendingMoviesRandom[0].id}
+                    className="w-full h-full flex flex-col justify-end"
+                  >
+                    <p className="text-sm text-slate-300">
+                      {MovieGenres &&
+                        TrendingMoviesRandom[0].genre_ids.map((id, index) => {
+                          let genre = MovieGenres.find(
+                            (genre) => genre.id == id
+                          );
+                          if (
+                            TrendingMoviesRandom[0].genre_ids.length ==
+                            index + 1
+                          ) {
+                            return <span>{genre.name}</span>;
+                          }
+                          return <span>{genre.name}, </span>;
+                        })}
+                    </p>
+                    <p className="group-hover:text-cyan duration-200">
+                      {TrendingMoviesRandom[0].title}
+                    </p>
+                  </a>
                 </div>
               </div>
             )}
@@ -351,22 +361,27 @@ export default function Home() {
                       })`,
                     }}
                   >
-                    <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                      <p className="text-sm text-slate-300 line-clamp-1">
-                        {MovieGenres &&
-                          movie.genre_ids.map((id, index) => {
-                            let genre = MovieGenres.find(
-                              (genre) => genre.id == id
-                            );
-                            if (movie.genre_ids.length == index + 1) {
-                              return <span>{genre.name}</span>;
-                            }
-                            return <span>{genre.name}, </span>;
-                          })}
-                      </p>
-                      <p className="group-hover:text-cyan duration-200">
-                        {movie.title}
-                      </p>
+                    <div className="w-full h-full poster-cover p-3 group transition-all">
+                      <a
+                        href={"/movie/" + movie.id}
+                        className="w-full h-full flex justify-end flex-col"
+                      >
+                        <p className="text-sm text-slate-300 line-clamp-1">
+                          {MovieGenres &&
+                            movie.genre_ids.map((id, index) => {
+                              let genre = MovieGenres.find(
+                                (genre) => genre.id == id
+                              );
+                              if (movie.genre_ids.length == index + 1) {
+                                return <span>{genre.name}</span>;
+                              }
+                              return <span>{genre.name}, </span>;
+                            })}
+                        </p>
+                        <p className="group-hover:text-cyan duration-200">
+                          {movie.title}
+                        </p>
+                      </a>
                     </div>
                   </div>
                 );
@@ -618,9 +633,9 @@ export default function Home() {
                   {TopRatedMovie.title}
                 </h1>
                 <div className="w-full flex items-center md:justify-start justify-center space-x-8 md:my-8 my-4">
-                  <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200">
+                  <a href={"/movie/" + TopRatedMovie.id} className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200">
                     Explore
-                  </button>
+                  </a>
                   <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:opacity-60 duration-200">
                     + PlayList
                   </button>
@@ -664,7 +679,10 @@ export default function Home() {
                 TopYearMovies.length > 0 &&
                 TopYearMovies.map((movie) => (
                   <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                    <a href="#" className="relative w-full h-full">
+                    <a
+                      href={"/movie/" + movie.id}
+                      className="relative w-full h-full"
+                    >
                       <img
                         src={ImageBaseUrl + movie.poster_path}
                         alt=""
