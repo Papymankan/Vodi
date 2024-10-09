@@ -214,6 +214,7 @@ export const fetchMovieVideos = createAsyncThunk(
   }
 );
 
+
 export const fetchMovieImages = createAsyncThunk(
   "Movies/fetchMovieImages",
   async ({ id }) => {

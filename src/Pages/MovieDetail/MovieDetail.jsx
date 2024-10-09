@@ -92,28 +92,27 @@ export default function MovieDetail() {
     }
   }, [MovieVideos]);
 
-
-  const CheckWidth = ()=>{
-    if(window.innerWidth > 1486){
-      setCastsRow(7)
-    }else if(window.innerWidth > 1200){
-      setCastsRow(6)
-    }else if(window.innerWidth > 992){
-      setCastsRow(6)
-    }else if(window.innerWidth > 768){
-      setCastsRow(10)
-    }else if(window.innerWidth > 576){
-      setCastsRow(9)
-    }else if(window.innerWidth > 384){
-      setCastsRow(6)
-    }else{
-      setCastsRow(5)
+  const CheckWidth = () => {
+    if (window.innerWidth > 1486) {
+      setCastsRow(7);
+    } else if (window.innerWidth > 1200) {
+      setCastsRow(6);
+    } else if (window.innerWidth > 992) {
+      setCastsRow(6);
+    } else if (window.innerWidth > 768) {
+      setCastsRow(10);
+    } else if (window.innerWidth > 576) {
+      setCastsRow(9);
+    } else if (window.innerWidth > 384) {
+      setCastsRow(6);
+    } else {
+      setCastsRow(5);
     }
-  }
+  };
 
   window.addEventListener("resize", CheckWidth);
 
-  useEffect(CheckWidth , [])
+  useEffect(CheckWidth, []);
 
   return (
     <>
@@ -435,14 +434,13 @@ export default function MovieDetail() {
                 )}
 
                 {/* Crews */}
-                <div className="w-full py-2">
-                  <h3 className="font-bold mr-2 xs:text-base text-sm">
-                    Casts :
-                  </h3>
-                  <div className="w-full flex items-center justify-center md:justify-start flex-wrap py-1 md:pr-4">
-                    {MovieCrews &&
-                      MovieCrews.cast.length > 0 &&
-                      MovieCrews.cast.slice(0, CastsRow).map((crew) => (
+                {MovieCrews && MovieCrews.cast.length > 0 && (
+                  <div className="w-full py-2">
+                    <h3 className="font-bold mr-2 xs:text-base text-sm">
+                      Casts :
+                    </h3>
+                    <div className="w-full flex items-center justify-center md:justify-start flex-wrap py-1 md:pr-4">
+                      {MovieCrews.cast.slice(0, CastsRow).map((crew) => (
                         <a
                           className="text-sm mr-4 my-1 space-x-4 flex items-center"
                           href="#"
@@ -456,8 +454,9 @@ export default function MovieDetail() {
                           )}
                         </a>
                       ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
               {MovieVideos && (
                 <div className="w-full md:w-1/2 text-white md:my-0 my-5">
@@ -541,6 +540,34 @@ export default function MovieDetail() {
               </div>
             </div>
           )}
+
+          {/* Images */}
+          {MovieImages && MovieImages.backdrops.length > 0 && (
+            <div className="w-full py-12 bg-[#131722]">
+              <div className="container mx-auto px-4">
+                <div className="w-full flex pb-6 flex-col xs:flex-row  items-center justify-between text-white">
+                  <h2 className="text-2xl xs:mb-0 font-semibold">Images</h2>
+
+                  <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+
+                  <button className="hover:text-cyan duration-200 hidden xs:block">
+                    More
+                  </button>
+                </div>
+                <div className="w-full grid md:grid-cols-4 md:grid-rows-1 grid-cols-2 grid-rows-2 gap-3 flex-wrap">
+                  {MovieImages.backdrops.slice(0, 4).map((image) => (
+                    <button className="w-full">
+                      <img
+                        src={ImageBaseUrl + image.file_path}
+                        className="w-full"
+                      ></img>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Simillar */}
           {SimilarMovies && SimilarMovies.length > 0 && (
             <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">

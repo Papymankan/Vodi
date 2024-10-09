@@ -54,7 +54,7 @@ export default function CustomLightBox({ allSlides }) {
           onClick={() => setShowLightBox(true)}
           className="w-full relative"
         >
-          {videoSlides && videoSlides.length && (
+          {videoSlides && videoSlides.length > 0 && (
             <iframe
               src={videoSlides[0].url}
               frameborder="0"
