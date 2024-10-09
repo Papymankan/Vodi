@@ -24,7 +24,7 @@ export default function MovieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
   const [BackdropVideo, setBackdropVideo] = useState({});
-  const playerRef = useRef(null)
+  const playerRef = useRef(null);
 
   const onReady = (event) => {
     playerRef.current = event.target; // Store the player instance in the ref
@@ -331,17 +331,17 @@ export default function MovieDetail() {
           </div>
 
           {/* Movie Details */}
-          <div className="w-full py-4 bg-[#131722]">
-            <div className="container mx-auto flex px-4">
-              <div className="w-1/2 text-white font-montserrat">
+          <div className="w-full py-8 bg-[#131722]">
+            <div className="container mx-auto flex flex-col md:flex-row px-4">
+              <div className="w-full md:w-1/2 text-white font-montserrat">
                 {/* Countries */}
                 {MovieDetails && MovieDetails.production_countries && (
                   <div className="w-full flex flex-wrap items-center py-2">
-                    <h3 className="font-bold mr-2">Countries :</h3>
+                    <h3 className="font-bold mr-2 xs:text-base text-sm">Countries :</h3>
                     {MovieDetails &&
                       MovieDetails.production_countries &&
                       MovieDetails.production_countries.map((country) => (
-                        <span className="text-sm mr-2">{country.name}</span>
+                        <span className="xs:text-sm text-xs mr-2">{country.name}</span>
                       ))}
                   </div>
                 )}
@@ -349,7 +349,7 @@ export default function MovieDetail() {
                 {/* Companies */}
                 {MovieDetails && MovieDetails.production_companies && (
                   <div className="w-full flex flex-wrap items-center py-2">
-                    <h3 className="font-bold mr-2">Companies :</h3>
+                    <h3 className="font-bold mr-2 xs:text-base text-sm">Companies :</h3>
                     {MovieDetails &&
                       MovieDetails.production_companies &&
                       MovieDetails.production_companies.map((company) => (
@@ -365,7 +365,7 @@ export default function MovieDetail() {
                             />
                           )}
 
-                          <span className="text-xs">{company.name}</span>
+                          <span className="xs:text-xs text-xs">{company.name}</span>
                         </a>
                       ))}
                   </div>
@@ -376,8 +376,8 @@ export default function MovieDetail() {
                   <div className="w-full flex flex-wrap items-center py-2">
                     {MovieDetails.budget > 0 && (
                       <>
-                        <h3 className="font-bold">Budget :</h3>
-                        <span className="mx-2">
+                        <h3 className="font-bold xs:text-base text-sm">Budget :</h3>
+                        <span className="mx-2 xs:text-base text-sm">
                           {MovieDetails.budget.toLocaleString()}
                         </span>
                       </>
@@ -385,8 +385,8 @@ export default function MovieDetail() {
 
                     {MovieDetails.revenue > 0 && (
                       <>
-                        <h3 className="font-bold ml-5">Revenue :</h3>
-                        <span className="mx-2">
+                        <h3 className="font-bold ml-5 xs:text-base text-sm">Revenue :</h3>
+                        <span className="mx-2 xs:text-base text-sm">
                           {MovieDetails.revenue.toLocaleString()}
                         </span>
                       </>
@@ -394,13 +394,15 @@ export default function MovieDetail() {
                   </div>
                 )}
               </div>
-          {MovieVideos && (
-            <div className="w-1/2 text-white">
-              <CustomLightBox allSlides={MovieVideos} />
-            </div>
-          )}
+              {MovieVideos && (
+                <div className="w-full md:w-1/2 text-white md:my-0 my-5">
+                  <CustomLightBox allSlides={MovieVideos} />
+                </div>
+              )}
             </div>
           </div>
+
+          {/* Recommand */}
           {RecommandMovies && RecommandMovies.length > 0 && (
             <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
               <div className="container mx-auto">
@@ -548,7 +550,6 @@ export default function MovieDetail() {
               </div>
             </div>
           )}
-
         </>
       )}
     </>

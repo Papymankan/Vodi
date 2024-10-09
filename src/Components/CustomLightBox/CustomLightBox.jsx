@@ -49,7 +49,20 @@ export default function CustomLightBox({ allSlides }) {
 
   return (
     <>
-      <button onClick={() => setShowLightBox(true)}>open</button>
+      <div className="w-full">
+        <button
+          onClick={() => setShowLightBox(true)}
+          className="w-full relative"
+        >
+          {videoSlides && videoSlides.length && (
+            <iframe
+              src={videoSlides[0].url}
+              frameborder="0"
+              className="w-full lg:h-96 xs:h-80 h-60 rounded-2xl pointer-events-none"
+            ></iframe>
+          )}
+        </button>
+      </div>
 
       <Lightbox
         open={showLightBox}
@@ -62,16 +75,16 @@ export default function CustomLightBox({ allSlides }) {
         }}
         carousel={{ finite: true }}
         controller={{ iframeRefs }}
-        // on={{
-        //   view: ({ index }) => {
-        //     iframeRefs.current.map((e, i) => {
-        //       if (i != index) {
-        //         var iframeSrc = e.src;
-        //         e.src = iframeSrc;
-        //       }
-        //     });
-        //   },
-        // }}
+        on={{
+          view: ({ index }) => {
+            iframeRefs.current.map((e, i) => {
+              if (i != index) {
+                var iframeSrc = e.src;
+                e.src = iframeSrc;
+              }
+            });
+          },
+        }}
       />
     </>
   );
