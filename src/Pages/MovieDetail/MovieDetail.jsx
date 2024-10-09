@@ -3,6 +3,7 @@ import NavBar from "../../Components/NavBar/NavBar";
 import BackDrop from "../../Components/BackDrop/BackDrop";
 import { useParams } from "react-router-dom";
 import {
+  fetchMovieCrews,
   fetchMovieDetails,
   fetchMovieImages,
   fetchMovieVideos,
@@ -23,6 +24,7 @@ import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
 export default function MovieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
+  const [CastsRow, setCastsRow] = useState(8);
   const [BackdropVideo, setBackdropVideo] = useState({});
   const playerRef = useRef(null);
 
@@ -64,6 +66,7 @@ export default function MovieDetail() {
       Store.dispatch(fetchMovieImages({ id: params.id }));
       Store.dispatch(fetchRecommandMovies({ id: params.id }));
       Store.dispatch(fetchSimilarMovies({ id: params.id }));
+      Store.dispatch(fetchMovieCrews({ id: params.id }));
     }
   }, [MovieDetails]);
 
@@ -74,6 +77,8 @@ export default function MovieDetail() {
   const RecommandMovies = useSelector((state) => state.Movies.RecommandMovies);
 
   const SimilarMovies = useSelector((state) => state.Movies.SimilarMovies);
+
+  const MovieCrews = useSelector((state) => state.Movies.MovieCrews);
 
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
 
@@ -86,6 +91,29 @@ export default function MovieDetail() {
       });
     }
   }, [MovieVideos]);
+
+
+  const CheckWidth = ()=>{
+    if(window.innerWidth > 1486){
+      setCastsRow(7)
+    }else if(window.innerWidth > 1200){
+      setCastsRow(6)
+    }else if(window.innerWidth > 992){
+      setCastsRow(6)
+    }else if(window.innerWidth > 768){
+      setCastsRow(10)
+    }else if(window.innerWidth > 576){
+      setCastsRow(9)
+    }else if(window.innerWidth > 384){
+      setCastsRow(6)
+    }else{
+      setCastsRow(5)
+    }
+  }
+
+  window.addEventListener("resize", CheckWidth);
+
+  useEffect(CheckWidth , [])
 
   return (
     <>
@@ -337,11 +365,15 @@ export default function MovieDetail() {
                 {/* Countries */}
                 {MovieDetails && MovieDetails.production_countries && (
                   <div className="w-full flex flex-wrap items-center py-2">
-                    <h3 className="font-bold mr-2 xs:text-base text-sm">Countries :</h3>
+                    <h3 className="font-bold mr-2 xs:text-base text-sm">
+                      Countries :
+                    </h3>
                     {MovieDetails &&
                       MovieDetails.production_countries &&
                       MovieDetails.production_countries.map((country) => (
-                        <span className="xs:text-sm text-xs mr-2">{country.name}</span>
+                        <span className="xs:text-sm text-xs mr-2">
+                          {country.name}
+                        </span>
                       ))}
                   </div>
                 )}
@@ -349,7 +381,9 @@ export default function MovieDetail() {
                 {/* Companies */}
                 {MovieDetails && MovieDetails.production_companies && (
                   <div className="w-full flex flex-wrap items-center py-2">
-                    <h3 className="font-bold mr-2 xs:text-base text-sm">Companies :</h3>
+                    <h3 className="font-bold mr-2 xs:text-base text-sm">
+                      Companies :
+                    </h3>
                     {MovieDetails &&
                       MovieDetails.production_companies &&
                       MovieDetails.production_companies.map((company) => (
@@ -365,7 +399,9 @@ export default function MovieDetail() {
                             />
                           )}
 
-                          <span className="xs:text-xs text-xs">{company.name}</span>
+                          <span className="xs:text-xs text-xs">
+                            {company.name}
+                          </span>
                         </a>
                       ))}
                   </div>
@@ -376,7 +412,9 @@ export default function MovieDetail() {
                   <div className="w-full flex flex-wrap items-center py-2">
                     {MovieDetails.budget > 0 && (
                       <>
-                        <h3 className="font-bold xs:text-base text-sm">Budget :</h3>
+                        <h3 className="font-bold xs:text-base text-sm">
+                          Budget :
+                        </h3>
                         <span className="mx-2 xs:text-base text-sm">
                           {MovieDetails.budget.toLocaleString()}
                         </span>
@@ -385,7 +423,9 @@ export default function MovieDetail() {
 
                     {MovieDetails.revenue > 0 && (
                       <>
-                        <h3 className="font-bold ml-5 xs:text-base text-sm">Revenue :</h3>
+                        <h3 className="font-bold ml-5 xs:text-base text-sm">
+                          Revenue :
+                        </h3>
                         <span className="mx-2 xs:text-base text-sm">
                           {MovieDetails.revenue.toLocaleString()}
                         </span>
@@ -393,6 +433,31 @@ export default function MovieDetail() {
                     )}
                   </div>
                 )}
+
+                {/* Crews */}
+                <div className="w-full py-2">
+                  <h3 className="font-bold mr-2 xs:text-base text-sm">
+                    Casts :
+                  </h3>
+                  <div className="w-full flex items-center justify-center md:justify-start flex-wrap py-1 md:pr-4">
+                    {MovieCrews &&
+                      MovieCrews.cast.length > 0 &&
+                      MovieCrews.cast.slice(0, CastsRow).map((crew) => (
+                        <a
+                          className="text-sm mr-4 my-1 space-x-4 flex items-center"
+                          href="#"
+                        >
+                          {crew.profile_path && (
+                            <img
+                              src={ImageBaseUrl + crew.profile_path}
+                              alt=""
+                              className="rounded-lg h-16 sm:h-20 lg:h-28"
+                            />
+                          )}
+                        </a>
+                      ))}
+                  </div>
+                </div>
               </div>
               {MovieVideos && (
                 <div className="w-full md:w-1/2 text-white md:my-0 my-5">

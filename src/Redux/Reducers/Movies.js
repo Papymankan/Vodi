@@ -274,6 +274,26 @@ export const fetchSimilarMovies = createAsyncThunk(
   }
 );
 
+export const fetchMovieCrews = createAsyncThunk(
+  "Movies/fetchMovieCrews",
+  async ({ id }) => {
+    return fetch(BaseUrl + "movie/" + id + "/credits?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {},
@@ -318,6 +338,9 @@ const slice = createSlice({
       })
       .addCase(fetchMovieImages.fulfilled, (state, action) => {
         return { ...state, MovieImages: action.payload };
+      })
+      .addCase(fetchMovieCrews.fulfilled, (state, action) => {
+        return { ...state, MovieCrews: action.payload };
       });
   },
 });
