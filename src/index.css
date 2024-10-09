@@ -76,7 +76,7 @@
 .youtube-video {
   width: 1600px;
   margin: 0px auto;
-  height: 750px;
+  height: 800px;
   object-fit: cover;
   pointer-events: none;
   position: absolute;

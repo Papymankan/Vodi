@@ -160,21 +160,11 @@ export default function Home() {
 
   useEffect(() => {
     Store.dispatch(fetchTopYearMovies());
-    Store.dispatch(fetchMovieGenres());
     Store.dispatch(fetchTrendingMovies());
-    Store.dispatch(fetchTopRatedMovie());
-    Store.dispatch(fetchPopularMovies());
-    Store.dispatch(fetchTheaterMovies());
-    Store.dispatch(fetchUpcomingMovies());
     Store.dispatch(fetchLandingMovies());
 
     Store.dispatch(fetchTopYearSeries());
-    Store.dispatch(fetchSerieGenres());
     Store.dispatch(fetchTrendingSeries());
-    Store.dispatch(fetchTopRatedSerie());
-    Store.dispatch(fetchPopularSeries());
-    Store.dispatch(fetchAirTodaySeries());
-    Store.dispatch(fetchOnAirSeries());
     Store.dispatch(fetchLandingSeries());
   }, []);
 

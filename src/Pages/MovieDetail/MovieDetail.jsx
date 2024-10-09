@@ -24,7 +24,7 @@ export default function MovieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
   const [BackdropVideo, setBackdropVideo] = useState({});
-  const playerRef = useRef(null); // Create a ref to store the player instance
+  const playerRef = useRef(null)
 
   const onReady = (event) => {
     playerRef.current = event.target; // Store the player instance in the ref
