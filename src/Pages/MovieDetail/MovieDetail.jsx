@@ -440,30 +440,32 @@ export default function MovieDetail() {
                 )}
 
                 {/* Crews */}
-                {MovieCrews && MovieCrews.cast.length > 0 && (
+                {MovieCrews && MovieCrews.cast.length > 0 && MovieCrews.cast[0].profile_path && (
                   <div className="w-full py-2">
                     <h3 className="font-bold mr-2 xs:text-base text-sm">
                       Casts :
                     </h3>
                     <div className="w-full flex items-center justify-center md:justify-start flex-wrap py-1 md:pr-4">
-                      {MovieCrews.cast.slice(0, CastsRow).map((crew) => (
-                        <a
-                          className="text-sm mr-4 my-1 space-x-4 flex items-center"
-                          href="#"
-                        >
-                          {crew.profile_path && (
-                            <img
-                              src={ImageBaseUrl + crew.profile_path}
-                              alt=""
-                              className="rounded-lg h-16 sm:h-20 lg:h-28"
-                            />
-                          )}
-                        </a>
-                      ))}
+                      {MovieCrews.cast.slice(0, CastsRow).map(
+                        (crew) =>
+                          crew.profile_path && (
+                            <a
+                              className="text-sm mr-4 my-1 space-x-4 flex items-center"
+                              href="#"
+                            >
+                              <img
+                                src={ImageBaseUrl + crew.profile_path}
+                                alt=""
+                                className="rounded-lg h-16 sm:h-20 lg:h-28"
+                              />
+                            </a>
+                          )
+                      )}
                     </div>
                   </div>
                 )}
               </div>
+              
               {MovieVideos && (
                 <div className="w-full md:w-1/2 text-white md:my-0 my-5">
                   <CustomLightBox allSlides={MovieVideos} />
@@ -519,6 +521,8 @@ export default function MovieDetail() {
                                 <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
                                   <p className="text-slate-300 text-sm font-light line-clamp-1 text-start w-full">
                                     {MovieGenres &&
+                                      movie.genre_ids &&
+                                      movie.genre_ids.length > 0 &&
                                       movie.genre_ids.map((id) => {
                                         let genre = MovieGenres.find(
                                           (genre) => genre.id == id
@@ -589,14 +593,16 @@ export default function MovieDetail() {
                 slides={MovieImages.backdrops}
                 plugins={[Counter]}
                 swipe={{ distance: 50, velocity: 0.5 }}
-                counter={{ container: { style: { top: 0 , left: 0 , display:'inline'} } }}
+                counter={{
+                  container: { style: { top: 0, left: 0, display: "inline" } },
+                }}
                 render={{
                   slide: (slide) => {
                     return (
                       <>
                         <div className="w-full h-full flex items-center">
                           <img
-                          draggable={false}
+                            draggable={false}
                             src={ImageBaseUrl + slide.slide.file_path}
                             alt=""
                             className="w-full"

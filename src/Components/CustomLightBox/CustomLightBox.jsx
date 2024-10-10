@@ -30,7 +30,7 @@ export default function CustomLightBox({ allSlides }) {
   function CustomSlide({ slide }) {
     if (slide.type === "youtube") {
       return (
-        <div style={{ width: "100%", height: "100%" }}>
+        <div className="w-full h-full flex items-center">
           <iframe
             ref={iframeRefs.current[slide.id]}
             width="100%"
@@ -71,7 +71,7 @@ export default function CustomLightBox({ allSlides }) {
         close={() => setShowLightBox(false)}
         slides={videoSlides}
         plugins={[Counter]}
-        counter={{ container: { style: { top: 0 , bottom: 0 } } }}
+        counter={{ container: { style: { top: 0 , left: 0 } } }}
         render={{
           slide: (slide) => {
             return <CustomSlide slide={slide.slide} />;
