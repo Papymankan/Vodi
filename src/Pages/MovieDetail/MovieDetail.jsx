@@ -20,10 +20,16 @@ import { Navigation } from "swiper/modules";
 import { shuffleArray } from "../../Funcs";
 
 import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
+import Lightbox from "yet-another-react-lightbox";
+import Counter from "yet-another-react-lightbox/plugins/counter";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/counter.css";
 
 export default function MovieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
+  const [showImagesLightbox, setShowImagesLightbox] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [CastsRow, setCastsRow] = useState(8);
   const [BackdropVideo, setBackdropVideo] = useState({});
   const playerRef = useRef(null);
@@ -550,13 +556,24 @@ export default function MovieDetail() {
 
                   <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
 
-                  <button className="hover:text-cyan duration-200 hidden xs:block">
+                  <button
+                    className="hover:text-cyan duration-200 hidden xs:block"
+                    onClick={() => {
+                      setShowImagesLightbox(true);
+                    }}
+                  >
                     More
                   </button>
                 </div>
                 <div className="w-full grid md:grid-cols-4 md:grid-rows-1 grid-cols-2 grid-rows-2 gap-3 flex-wrap">
-                  {MovieImages.backdrops.slice(0, 4).map((image) => (
-                    <button className="w-full">
+                  {MovieImages.backdrops.slice(0, 4).map((image, index) => (
+                    <button
+                      className="w-full"
+                      onClick={() => {
+                        setShowImagesLightbox(true);
+                        setCurrentSlide(index);
+                      }}
+                    >
                       <img
                         src={ImageBaseUrl + image.file_path}
                         className="w-full"
@@ -565,6 +582,37 @@ export default function MovieDetail() {
                   ))}
                 </div>
               </div>
+              <Lightbox
+                open={showImagesLightbox}
+                index={currentSlide}
+                close={() => setShowImagesLightbox(false)}
+                slides={MovieImages.backdrops}
+                plugins={[Counter]}
+                swipe={{ distance: 50, velocity: 0.5 }}
+                counter={{ container: { style: { top: 0 , left: 0 , display:'inline'} } }}
+                render={{
+                  slide: (slide) => {
+                    return (
+                      <>
+                        <div className="w-full h-full flex items-center">
+                          <img
+                          draggable={false}
+                            src={ImageBaseUrl + slide.slide.file_path}
+                            alt=""
+                            className="w-full"
+                          />
+                        </div>
+                      </>
+                    );
+                  },
+                }}
+                carousel={{ finite: true }}
+                on={{
+                  view: ({ index }) => {
+                    setCurrentSlide(index);
+                  },
+                }}
+              />
             </div>
           )}
 

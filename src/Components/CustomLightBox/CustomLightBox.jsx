@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
+import Counter from "yet-another-react-lightbox/plugins/counter";
 import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/counter.css";
 
 export default function CustomLightBox({ allSlides }) {
   const [showLightBox, setShowLightBox] = useState(false);
@@ -68,6 +70,8 @@ export default function CustomLightBox({ allSlides }) {
         open={showLightBox}
         close={() => setShowLightBox(false)}
         slides={videoSlides}
+        plugins={[Counter]}
+        counter={{ container: { style: { top: 0 , bottom: 0 } } }}
         render={{
           slide: (slide) => {
             return <CustomSlide slide={slide.slide} />;
