@@ -127,3 +127,26 @@
 }
 
 /* BackDrop */
+
+/* Reviews */
+
+#reviews-pagination {
+  width: 100%;
+  margin-top: 20px;
+}
+#reviews-pagination > ul {
+  display: flex;
+  justify-content: center;
+}
+#reviews-pagination > ul > li > button {
+  color: white;
+  @apply hover:opacity-75 duration-300 transition-all
+}
+#reviews-pagination > ul > li > div {
+  color: white;
+}
+.Mui-selected{
+  @apply bg-cyan !important
+}
+
+/* Reviews */
