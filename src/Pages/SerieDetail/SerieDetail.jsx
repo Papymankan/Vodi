@@ -8,10 +8,12 @@ import {
 import Store from "../../Redux/Store";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
+import BackDrop from "../../Components/BackDrop/BackDrop";
 
 export default function SerieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
+  const [BackdropVideo, setBackdropVideo] = useState({});
   const playerRef = useRef(null);
 
   const params = useParams();
@@ -47,10 +49,27 @@ export default function SerieDetail() {
     }
   };
 
+  const onStateChange = (event) => {
+    if (event.data === 1) {
+      setLoadingBackdrop(false);
+      console.log("playing");
+    }
+  };
+
   const onReady = (event) => {
     playerRef.current = event.target; // Store the player instance in the ref
     playerRef.current.mute(); // Start muted
   };
+
+  useEffect(() => {
+    if (SerieVideos) {
+      SerieVideos.some((video) => {
+        if (video.type == "Trailer") {
+          setBackdropVideo(video);
+        }
+      });
+    }
+  }, [SerieVideos]);
 
   return (
     <>
@@ -293,14 +312,14 @@ export default function SerieDetail() {
               </div>
             </div>
 
-            {/* {BackdropVideo.key && (
-          <BackDrop
-            videoKey={BackdropVideo.key}
-            onReady={onReady}
-            onStateChange={onStateChange}
-            isLoading={LoadingBackdrop}
-          />
-        )} */}
+            {BackdropVideo.key && (
+              <BackDrop
+                videoKey={BackdropVideo.key}
+                onReady={onReady}
+                onStateChange={onStateChange}
+                isLoading={LoadingBackdrop}
+              />
+            )}
 
             {/* Loading backDrop Tumbnail */}
             <div
