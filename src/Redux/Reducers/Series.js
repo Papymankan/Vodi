@@ -169,6 +169,48 @@ export const fetchOnAirSeries = createAsyncThunk(
   }
 );
 
+export const fetchSerieDetails = createAsyncThunk(
+  "Series/fetchSerieDetails",
+  async ({ id }) => {
+    return fetch(BaseUrl + "tv/" + id + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        
+        return data;
+      });
+  }
+);
+
+export const fetchSerieVideos = createAsyncThunk(
+  "Series/fetchSerieVideos",
+  async ({ id }) => {
+    return fetch(BaseUrl + "tv/" + id + "/videos?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data.results;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {},
@@ -198,6 +240,12 @@ const slice = createSlice({
       })
       .addCase(fetchOnAirSeries.fulfilled, (state, action) => {
         return { ...state, OnAirSeries: action.payload };
+      })
+      .addCase(fetchSerieDetails.fulfilled, (state, action) => {
+        return { ...state, SerieDetails: action.payload };
+      })
+      .addCase(fetchSerieVideos.fulfilled, (state, action) => {
+        return { ...state, SerieVideos: action.payload };
       });
   },
 });
