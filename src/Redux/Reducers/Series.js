@@ -211,6 +211,26 @@ export const fetchSerieVideos = createAsyncThunk(
   }
 );
 
+export const fetchSerieCrews = createAsyncThunk(
+  "Series/fetchSerieCrews",
+  async ({ id }) => {
+    return fetch(BaseUrl + "tv/" + id + "/credits?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {},
@@ -246,6 +266,9 @@ const slice = createSlice({
       })
       .addCase(fetchSerieVideos.fulfilled, (state, action) => {
         return { ...state, SerieVideos: action.payload };
+      })
+      .addCase(fetchSerieCrews.fulfilled, (state, action) => {
+        return { ...state, SerieCrews: action.payload };
       });
   },
 });

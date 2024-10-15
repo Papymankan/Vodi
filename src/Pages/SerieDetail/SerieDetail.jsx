@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 import { useParams } from "react-router-dom";
 import {
+  fetchSerieCrews,
   fetchSerieDetails,
   fetchSerieVideos,
 } from "../../Redux/Reducers/Series";
@@ -9,11 +10,13 @@ import Store from "../../Redux/Store";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import BackDrop from "../../Components/BackDrop/BackDrop";
+import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
 
 export default function SerieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
   const [BackdropVideo, setBackdropVideo] = useState({});
+  const [CastsRow, setCastsRow] = useState(8);
   const playerRef = useRef(null);
 
   const params = useParams();
@@ -23,7 +26,6 @@ export default function SerieDetail() {
   }, [params]);
 
   const SerieDetails = useSelector((state) => state.Series.SerieDetails);
-  console.log(SerieDetails);
 
   useEffect(() => {
     if (SerieDetails) {
@@ -31,11 +33,12 @@ export default function SerieDetail() {
       // Store.dispatch(fetchMovieImages({ id: params.id }));
       // Store.dispatch(fetchRecommandMovies({ id: params.id }));
       // Store.dispatch(fetchSimilarMovies({ id: params.id }));
-      // Store.dispatch(fetchMovieCrews({ id: params.id }));
+      Store.dispatch(fetchSerieCrews({ id: params.id }));
     }
   }, [SerieDetails]);
 
   const SerieVideos = useSelector((state) => state.Series.SerieVideos);
+  const SerieCrews = useSelector((state) => state.Series.SerieCrews);
 
   const toggleMute = () => {
     if (playerRef.current) {
@@ -70,6 +73,28 @@ export default function SerieDetail() {
       });
     }
   }, [SerieVideos]);
+
+  const CheckWidth = () => {
+    if (window.innerWidth > 1486) {
+      setCastsRow(7);
+    } else if (window.innerWidth > 1200) {
+      setCastsRow(6);
+    } else if (window.innerWidth > 992) {
+      setCastsRow(6);
+    } else if (window.innerWidth > 768) {
+      setCastsRow(10);
+    } else if (window.innerWidth > 576) {
+      setCastsRow(9);
+    } else if (window.innerWidth > 384) {
+      setCastsRow(6);
+    } else {
+      setCastsRow(5);
+    }
+  };
+
+  window.addEventListener("resize", CheckWidth);
+
+  useEffect(CheckWidth, []);
 
   return (
     <>
@@ -333,6 +358,121 @@ export default function SerieDetail() {
               }}
             >
               <div className="overlay"></div>{" "}
+            </div>
+          </div>
+
+          {/* Movie Details */}
+          <div className="w-full py-8 bg-[#131722]">
+            <div className="container mx-auto flex flex-col md:flex-row px-4">
+              <div className="w-full md:w-1/2 text-white font-montserrat">
+                {/* Countries */}
+                {SerieDetails && SerieDetails.production_countries && (
+                  <div className="w-full flex flex-wrap items-center py-2">
+                    <h3 className="font-bold mr-2 xs:text-base text-sm">
+                      Countries :
+                    </h3>
+                    {SerieDetails &&
+                      SerieDetails.production_countries &&
+                      SerieDetails.production_countries.map((country) => (
+                        <span className="xs:text-sm text-xs mr-2">
+                          {country.name}
+                        </span>
+                      ))}
+                  </div>
+                )}
+
+                {/* Companies */}
+                {SerieDetails &&
+                  SerieDetails.production_companies &&
+                  SerieDetails.production_companies.length > 0 && (
+                    <div className="w-full flex flex-wrap items-center py-2">
+                      <h3 className="font-bold mr-2 xs:text-base text-sm">
+                        Companies :
+                      </h3>
+                      {SerieDetails &&
+                        SerieDetails.production_companies &&
+                        SerieDetails.production_companies.map((company) => (
+                          <a
+                            className="text-sm mr-2 my-1 px-3 space-x-2 flex items-center py-2 rounded-full bg-gray-500"
+                            href="#"
+                          >
+                            {company.logo_path && (
+                              <img
+                                src={ImageBaseUrl + company.logo_path}
+                                alt=""
+                                className="h-3"
+                              />
+                            )}
+
+                            <span className="xs:text-xs text-xs">
+                              {company.name}
+                            </span>
+                          </a>
+                        ))}
+                    </div>
+                  )}
+
+                {/* Budget */}
+                {/* {MovieDetails && (
+                  <div className="w-full flex flex-wrap items-center py-2">
+                    {MovieDetails.budget > 0 && (
+                      <>
+                        <h3 className="font-bold xs:text-base text-sm">
+                          Budget :
+                        </h3>
+                        <span className="mx-2 xs:text-base text-sm">
+                          {MovieDetails.budget.toLocaleString()}
+                        </span>
+                      </>
+                    )}
+
+                    {MovieDetails.revenue > 0 && (
+                      <>
+                        <h3 className="font-bold ml-5 xs:text-base text-sm">
+                          Revenue :
+                        </h3>
+                        <span className="mx-2 xs:text-base text-sm">
+                          {MovieDetails.revenue.toLocaleString()}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                )} */}
+
+                {/* Crews */}
+                {SerieCrews &&
+                  SerieCrews.cast.length > 0 &&
+                  SerieCrews.cast[0].profile_path && (
+                    <div className="w-full py-2">
+                      <h3 className="font-bold mr-2 xs:text-base text-sm">
+                        Casts :
+                      </h3>
+                      <div className="w-full flex items-center justify-start flex-wrap py-1 md:pr-4">
+                        {SerieCrews.cast.slice(0, CastsRow).map(
+                          (crew) =>
+                            crew.profile_path && (
+                              <a
+                                className="text-sm mr-4 my-1 space-x-4 flex items-center"
+                                href="#"
+                              >
+                                <img
+                                  src={ImageBaseUrl + crew.profile_path}
+                                  alt=""
+                                  className="rounded-lg h-16 sm:h-20 lg:h-28"
+                                />
+                              </a>
+                            )
+                        )}
+                      </div>
+                    </div>
+                  )}
+              </div>
+
+              {SerieVideos && (
+                <div className="w-full md:w-1/2 text-white md:my-0 my-5">
+                  <CustomLightBox allSlides={SerieVideos} />
+                </div>
+              )}
             </div>
           </div>
         </>

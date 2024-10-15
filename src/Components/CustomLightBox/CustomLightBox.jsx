@@ -54,14 +54,25 @@ export default function CustomLightBox({ allSlides }) {
       <div className="w-full">
         <button
           onClick={() => setShowLightBox(true)}
-          className="w-full relative"
+          className="w-full relative pb-[56.25%]"
         >
           {videoSlides && videoSlides.length > 0 && (
-            <iframe
-              src={videoSlides[0].url}
-              frameborder="0"
-              className="w-full lg:h-96 xs:h-80 h-60 rounded-2xl pointer-events-none"
-            ></iframe>
+            // <iframe
+            //   src={videoSlides[0].url}
+            //   frameborder="0"
+            //   className="w-full h-full rounded-2xl pointer-events-none"
+            // ></iframe>
+            <div className="w-full h-full relative z-10">
+              <img
+                src={`https://img.youtube.com/vi/${allSlides[0].key}/maxresdefault.jpg`}
+                alt=""
+                className="w-full h-full rounded-xl z-0"
+              />
+              <div className="absolute w-full h-full top-0 left-0 flex items-center justify-center z-20">
+                <i aria-hidden="true" className="fa fa-play text-6xl text-white z-20"></i>
+                <div className="overlay_2"></div>
+              </div>
+            </div>
           )}
         </button>
       </div>
@@ -71,7 +82,7 @@ export default function CustomLightBox({ allSlides }) {
         close={() => setShowLightBox(false)}
         slides={videoSlides}
         plugins={[Counter]}
-        counter={{ container: { style: { top: 0 , left: 0 } } }}
+        counter={{ container: { style: { top: 0, left: 0 } } }}
         render={{
           slide: (slide) => {
             return <CustomSlide slide={slide.slide} />;
