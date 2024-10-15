@@ -54,14 +54,9 @@ export default function CustomLightBox({ allSlides }) {
       <div className="w-full">
         <button
           onClick={() => setShowLightBox(true)}
-          className="w-full relative pb-[56.25%]"
+          className="w-full relative"
         >
           {videoSlides && videoSlides.length > 0 && (
-            // <iframe
-            //   src={videoSlides[0].url}
-            //   frameborder="0"
-            //   className="w-full h-full rounded-2xl pointer-events-none"
-            // ></iframe>
             <div className="w-full h-full relative z-10">
               <img
                 src={`https://img.youtube.com/vi/${allSlides[0].key}/maxresdefault.jpg`}

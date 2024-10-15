@@ -15,7 +15,7 @@ import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
 export default function SerieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
-  const [BackdropVideo, setBackdropVideo] = useState({});
+  const [BackdropVideo, setBackdropVideo] = useState(null);
   const [CastsRow, setCastsRow] = useState(8);
   const playerRef = useRef(null);
 
@@ -149,13 +149,15 @@ export default function SerieDetail() {
               {/* Landing Details */}
               <div className="w-full my-3 md:my-6 flex items-start sm:flex-row flex-col relative sm:h-96 z-20">
                 <div className="sm:hidden flex items-center space-x-3 absolute top-0 right-4 z-10">
-                  <button onClick={toggleMute} className="text-white z-10">
-                    {isMuted ? (
-                      <i className="fa fa-volume-off text-xl mr-3 text-white"></i>
-                    ) : (
-                      <i className="fa fa-volume-up text-xl text-white"></i>
-                    )}
-                  </button>
+                  {BackdropVideo && (
+                    <button onClick={toggleMute} className="text-white z-10">
+                      {isMuted ? (
+                        <i className="fa fa-volume-off text-xl mr-3 text-white"></i>
+                      ) : (
+                        <i className="fa fa-volume-up text-xl text-white"></i>
+                      )}
+                    </button>
+                  )}
 
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -200,13 +202,18 @@ export default function SerieDetail() {
                     </div>
 
                     <div className="sm:flex hidden  items-center space-x-4">
-                      <button onClick={toggleMute} className="text-white z-10">
-                        {isMuted ? (
-                          <i className="fa fa-volume-off text-xl mr-3 text-white"></i>
-                        ) : (
-                          <i className="fa fa-volume-up text-xl text-white"></i>
-                        )}
-                      </button>
+                      {BackdropVideo && (
+                        <button
+                          onClick={toggleMute}
+                          className="text-white z-10"
+                        >
+                          {isMuted ? (
+                            <i className="fa fa-volume-off text-xl mr-3 text-white"></i>
+                          ) : (
+                            <i className="fa fa-volume-up text-xl text-white"></i>
+                          )}
+                        </button>
+                      )}
 
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -337,7 +344,7 @@ export default function SerieDetail() {
               </div>
             </div>
 
-            {BackdropVideo.key && (
+            {BackdropVideo && BackdropVideo.key && (
               <BackDrop
                 videoKey={BackdropVideo.key}
                 onReady={onReady}
@@ -366,20 +373,22 @@ export default function SerieDetail() {
             <div className="container mx-auto flex flex-col md:flex-row px-4">
               <div className="w-full md:w-1/2 text-white font-montserrat">
                 {/* Countries */}
-                {SerieDetails && SerieDetails.production_countries && (
-                  <div className="w-full flex flex-wrap items-center py-2">
-                    <h3 className="font-bold mr-2 xs:text-base text-sm">
-                      Countries :
-                    </h3>
-                    {SerieDetails &&
-                      SerieDetails.production_countries &&
-                      SerieDetails.production_countries.map((country) => (
-                        <span className="xs:text-sm text-xs mr-2">
-                          {country.name}
-                        </span>
-                      ))}
-                  </div>
-                )}
+                {SerieDetails &&
+                  SerieDetails.production_countries &&
+                  SerieDetails.production_countries.length > 0 && (
+                    <div className="w-full flex flex-wrap items-center py-2">
+                      <h3 className="font-bold mr-2 xs:text-base text-sm">
+                        Countries :
+                      </h3>
+                      {SerieDetails &&
+                        SerieDetails.production_countries &&
+                        SerieDetails.production_countries.map((country) => (
+                          <span className="xs:text-sm text-xs mr-2">
+                            {country.name}
+                          </span>
+                        ))}
+                    </div>
+                  )}
 
                 {/* Companies */}
                 {SerieDetails &&

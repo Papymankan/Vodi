@@ -400,7 +400,6 @@ export default function NavBar() {
 
               <div className=" flex-1">
                 {/* Now Playing */}
-
                 {TheaterMovies && (
                   <div className="py-2">
                     <div className="flex items-center justify-between">
@@ -557,9 +556,12 @@ export default function NavBar() {
                         "{PopularSeries[0].overview}"
                       </p>
                       <div className="flex items-center justify-between pr-6">
-                        <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
-                          Watch Now
-                        </button>
+                        <a
+                          href={"/serie/" + PopularSeries[0].id}
+                          className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold"
+                        >
+                          Explore
+                        </a>
                         <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
                           More
                           <svg
@@ -612,9 +614,12 @@ export default function NavBar() {
                         "{TopRatedSerie.overview}"
                       </p>
                       <div className="flex items-center justify-between pr-6">
-                        <button className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold">
-                          Watch Now
-                        </button>
+                        <a
+                          href={"/serie/" + TopRatedSerie.id}
+                          className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold"
+                        >
+                          Explore
+                        </a>
                         <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
                           More
                           <svg
@@ -664,23 +669,28 @@ export default function NavBar() {
                       {AirTodaySeries &&
                         AirTodaySeries.slice(0, 4).map((serie, index) => (
                           <div
-                            className={`flex space-x-2 ${
-                              index == 2 && "lg:flex hidden"
-                            } ${index == 3 && "xl:flex hidden"}`}
+                            className={` ${index == 2 && "lg:flex hidden"} ${
+                              index == 3 && "xl:flex hidden"
+                            }`}
                           >
-                            <img
-                              src={ImageBaseUrl + serie.poster_path}
-                              alt=""
-                              className="h-16"
-                            />
-                            <div className="w-32">
-                              <h3 className="font-semibold text-xs line-clamp-1">
-                                {serie.name}
-                              </h3>
-                              <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                                {serie.overview}
-                              </p>
-                            </div>
+                            <a
+                              href={"/serie/" + serie.id}
+                              className="flex space-x-2 hover:text-cyan duration-200"
+                            >
+                              <img
+                                src={ImageBaseUrl + serie.poster_path}
+                                alt=""
+                                className="h-16"
+                              />
+                              <div className="w-32">
+                                <h3 className="font-semibold text-xs line-clamp-1">
+                                  {serie.name}
+                                </h3>
+                                <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                                  {serie.overview}
+                                </p>
+                              </div>
+                            </a>
                           </div>
                         ))}
                     </div>
@@ -713,23 +723,28 @@ export default function NavBar() {
                       {OnAirSeries &&
                         OnAirSeries.slice(0, 4).map((serie, index) => (
                           <div
-                            className={`flex space-x-2 ${
-                              index == 2 && "lg:flex hidden"
-                            } ${index == 3 && "xl:flex hidden"}`}
+                            className={` ${index == 2 && "lg:flex hidden"} ${
+                              index == 3 && "xl:flex hidden"
+                            }`}
                           >
-                            <img
-                              src={ImageBaseUrl + serie.poster_path}
-                              alt=""
-                              className="h-16"
-                            />
-                            <div className="w-32">
-                              <h3 className="font-semibold text-xs line-clamp-1">
-                                {serie.name}
-                              </h3>
-                              <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
-                                {serie.overview}
-                              </p>
-                            </div>
+                            <a
+                              href={"/serie/" + serie.id}
+                              className="flex space-x-2 hover:text-cyan duration-200"
+                            >
+                              <img
+                                src={ImageBaseUrl + serie.poster_path}
+                                alt=""
+                                className="h-16"
+                              />
+                              <div className="w-32">
+                                <h3 className="font-semibold text-xs line-clamp-1">
+                                  {serie.name}
+                                </h3>
+                                <p className="text-xs line-clamp-3 font-light tracking-tighter leading-3 mt-1">
+                                  {serie.overview}
+                                </p>
+                              </div>
+                            </a>
                           </div>
                         ))}
                     </div>
