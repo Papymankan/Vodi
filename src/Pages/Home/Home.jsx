@@ -80,15 +80,20 @@ export default function Home() {
       let arr = [];
       if (TrendingMovies.length) {
         for (let index = 0; index < 7; index++) {
-          let randomNum = Math.floor(Math.random() * (20 - index));
-
+          let randomNum = Math.floor(Math.random() * (TrendingMovies.length - index));
+          console.log(randomNum , movies[randomNum]);
+          console.log(movies);
+          
           arr.push(movies[randomNum]);
           movies.splice(randomNum, 1);
+          
         }
       }
+      console.log(arr);
+
       setTrendingMoviesRandom(arr);
     }
-  }, [TrendingMovies]);
+  }, [TrendingMovies]); 
 
   const TopRatedMovie = useSelector((state) => state.Movies.TopRatedMovie);
 
@@ -111,7 +116,7 @@ export default function Home() {
       let arr = [];
       if (TrendingSeries.length) {
         for (let index = 0; index < 7; index++) {
-          let randomNum = Math.floor(Math.random() * (20 - index));
+          let randomNum = Math.floor(Math.random() * (TrendingSeries.length - index));
 
           arr.push(series[randomNum]);
           series.splice(randomNum, 1);
@@ -343,42 +348,46 @@ export default function Home() {
             {TrendingMoviesRandom &&
               TrendingMoviesRandom.length > 0 &&
               TrendingMoviesRandom.map((movie, index) => {
+                console.log(movie);
+
                 if (index == 0) {
                   return true;
                 }
-                return (
-                  <div
-                    className="bg-cover bg-center cursor-pointer"
-                    style={{
-                      backgroundImage: `url(${
-                        ImageBaseUrl + movie.backdrop_path
-                      })`,
-                    }}
-                  >
-                    <div className="w-full h-full poster-cover p-3 group transition-all">
-                      <a
-                        href={"/movie/" + movie.id}
-                        className="w-full h-full flex justify-end flex-col"
-                      >
-                        <p className="text-sm text-slate-300 line-clamp-1">
-                          {MovieGenres &&
-                            movie.genre_ids.map((id, index) => {
-                              let genre = MovieGenres.find(
-                                (genre) => genre.id == id
-                              );
-                              if (movie.genre_ids.length == index + 1) {
-                                return <span>{genre.name}</span>;
-                              }
-                              return <span>{genre.name}, </span>;
-                            })}
-                        </p>
-                        <p className="group-hover:text-cyan duration-200">
-                          {movie.title}
-                        </p>
-                      </a>
+
+                if (movie)
+                  return (
+                    <div
+                      className="bg-cover bg-center cursor-pointer"
+                      style={{
+                        backgroundImage: `url(${
+                          ImageBaseUrl + movie.backdrop_path
+                        })`,
+                      }}
+                    >
+                      <div className="w-full h-full poster-cover p-3 group transition-all">
+                        <a
+                          href={"/movie/" + movie.id}
+                          className="w-full h-full flex justify-end flex-col"
+                        >
+                          <p className="text-sm text-slate-300 line-clamp-1">
+                            {MovieGenres &&
+                              movie.genre_ids.map((id, index) => {
+                                let genre = MovieGenres.find(
+                                  (genre) => genre.id == id
+                                );
+                                if (movie.genre_ids.length == index + 1) {
+                                  return <span>{genre.name}</span>;
+                                }
+                                return <span>{genre.name}, </span>;
+                              })}
+                          </p>
+                          <p className="group-hover:text-cyan duration-200">
+                            {movie.title}
+                          </p>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                );
+                  );
               })}
           </div>
         </div>
@@ -776,39 +785,40 @@ export default function Home() {
                 if (index == 0) {
                   return true;
                 }
-                return (
-                  <div
-                    className="bg-cover bg-center cursor-pointer"
-                    style={{
-                      backgroundImage: `url(${
-                        ImageBaseUrl + serie.backdrop_path
-                      })`,
-                    }}
-                  >
-                    <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
-                      <a
-                        href={"/serie/" + serie.id}
-                        className="w-full h-full flex flex-col justify-end"
-                      >
-                        <p className="text-sm text-slate-300 line-clamp-1">
-                          {SerieGenres &&
-                            serie.genre_ids.map((id, index) => {
-                              let genre = SerieGenres.find(
-                                (genre) => genre.id == id
-                              );
-                              if (serie.genre_ids.length == index + 1) {
-                                return <span>{genre.name}</span>;
-                              }
-                              return <span>{genre.name}, </span>;
-                            })}
-                        </p>
-                        <p className="group-hover:text-cyan duration-200 line-clamp-2">
-                          {serie.name}
-                        </p>
-                      </a>
+                if (serie)
+                  return (
+                    <div
+                      className="bg-cover bg-center cursor-pointer"
+                      style={{
+                        backgroundImage: `url(${
+                          ImageBaseUrl + serie.backdrop_path
+                        })`,
+                      }}
+                    >
+                      <div className="w-full h-full poster-cover flex justify-end p-3 flex-col group transition-all">
+                        <a
+                          href={"/serie/" + serie.id}
+                          className="w-full h-full flex flex-col justify-end"
+                        >
+                          <p className="text-sm text-slate-300 line-clamp-1">
+                            {SerieGenres &&
+                              serie.genre_ids.map((id, index) => {
+                                let genre = SerieGenres.find(
+                                  (genre) => genre.id == id
+                                );
+                                if (serie.genre_ids.length == index + 1) {
+                                  return <span>{genre.name}</span>;
+                                }
+                                return <span>{genre.name}, </span>;
+                              })}
+                          </p>
+                          <p className="group-hover:text-cyan duration-200 line-clamp-2">
+                            {serie.name}
+                          </p>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                );
+                  );
               })}
           </div>
         </div>
@@ -1057,7 +1067,10 @@ export default function Home() {
                   {TopRatedSerie.name}
                 </h1>
                 <div className="w-full flex items-center md:justify-start justify-center space-x-8 md:my-8 my-4">
-                  <a href={`/serie/` + TopRatedSerie.id} className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200">
+                  <a
+                    href={`/serie/` + TopRatedSerie.id}
+                    className="px-9 text-center text-sm md_text-md py-2 md:py-4 bg-cyan rounded-md hover:opacity-60 duration-200"
+                  >
                     Explore
                   </a>
                   <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:opacity-60 duration-200">
@@ -1103,7 +1116,10 @@ export default function Home() {
                 TopYearSeries.length > 0 &&
                 TopYearSeries.map((serie) => (
                   <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                    <a href={"/serie/" + serie.id} className="relative w-full h-full">
+                    <a
+                      href={"/serie/" + serie.id}
+                      className="relative w-full h-full"
+                    >
                       <img
                         src={ImageBaseUrl + serie.poster_path}
                         alt=""

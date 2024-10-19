@@ -34,9 +34,9 @@ export default function MovieDetail() {
   const [showImagesLightbox, setShowImagesLightbox] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [CastsRow, setCastsRow] = useState(8);
-  const [BackdropVideo, setBackdropVideo] = useState({});
+  const [BackdropVideo, setBackdropVideo] = useState(null);
   const [reviewsPage, setReviewsPage] = useState(1);
-  const [expandReview, setExpandReview] = useState(10);
+  const [expandReview, setExpandReview] = useState(0);
   const playerRef = useRef(null);
 
   const onReady = (event) => {
@@ -190,13 +190,15 @@ export default function MovieDetail() {
               {/* Landing Details */}
               <div className="w-full my-3 md:my-6 flex items-start sm:flex-row flex-col relative sm:h-96 z-20">
                 <div className="sm:hidden flex items-center space-x-3 absolute top-0 right-4 z-10">
-                  <button onClick={toggleMute} className="text-white z-10">
-                    {isMuted ? (
-                      <i className="fa fa-volume-off text-xl mr-3 text-white"></i>
-                    ) : (
-                      <i className="fa fa-volume-up text-xl text-white"></i>
-                    )}
-                  </button>
+                  {BackdropVideo && (
+                    <button onClick={toggleMute} className="text-white z-10">
+                      {isMuted ? (
+                        <i className="fa fa-volume-off text-xl mr-3 text-white"></i>
+                      ) : (
+                        <i className="fa fa-volume-up text-xl text-white"></i>
+                      )}
+                    </button>
+                  )}
 
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -241,13 +243,18 @@ export default function MovieDetail() {
                     </div>
 
                     <div className="sm:flex hidden  items-center space-x-4">
-                      <button onClick={toggleMute} className="text-white z-10">
-                        {isMuted ? (
-                          <i className="fa fa-volume-off text-xl mr-3 text-white"></i>
-                        ) : (
-                          <i className="fa fa-volume-up text-xl text-white"></i>
-                        )}
-                      </button>
+                      {BackdropVideo && (
+                        <button
+                          onClick={toggleMute}
+                          className="text-white z-10"
+                        >
+                          {isMuted ? (
+                            <i className="fa fa-volume-off text-xl mr-3 text-white"></i>
+                          ) : (
+                            <i className="fa fa-volume-up text-xl text-white"></i>
+                          )}
+                        </button>
+                      )}
 
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -364,9 +371,9 @@ export default function MovieDetail() {
               </div>
             </div>
 
-            {BackdropVideo.key && (
+            {BackdropVideo && BackdropVideo.key && (
               <BackDrop
-                videoKey={BackdropVideo.key}
+                // videoKey={BackdropVideo.key}
                 onReady={onReady}
                 onStateChange={onStateChange}
                 isLoading={LoadingBackdrop}
