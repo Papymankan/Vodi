@@ -270,6 +270,51 @@ export const fetchSerieCrews = createAsyncThunk(
   }
 );
 
+export const fetchSimilarSeries = createAsyncThunk(
+  "Series/fetchSimilarSeries",
+  async ({ id }) => {
+    return fetch(BaseUrl + "tv/" + id + "/similar?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return shuffleArray(data.results);
+      });
+  }
+);
+
+export const fetchSerieReviews = createAsyncThunk(
+  "Series/fetchSerieReviews",
+  async ({ id, page }) => {
+    return fetch(
+      BaseUrl + "tv/" + id + "/reviews?" + ApiKey + "&page=" + page,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {},
@@ -314,7 +359,13 @@ const slice = createSlice({
       })
       .addCase(fetchSerieImages.fulfilled, (state, action) => {
         return { ...state, SerieImages: action.payload };
-      });
+      })
+      .addCase(fetchSimilarSeries.fulfilled, (state, action) => {
+        return { ...state, SimilarSeries: action.payload };
+      })
+      .addCase(fetchSerieReviews.fulfilled, (state, action) => {
+        return { ...state, SerieReviews: action.payload };
+      })
   },
 });
 

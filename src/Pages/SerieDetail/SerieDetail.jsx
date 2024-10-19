@@ -6,7 +6,9 @@ import {
   fetchSerieCrews,
   fetchSerieDetails,
   fetchSerieImages,
+  fetchSerieReviews,
   fetchSerieVideos,
+  fetchSimilarSeries,
 } from "../../Redux/Reducers/Series";
 import Store from "../../Redux/Store";
 import { useSelector } from "react-redux";
@@ -17,6 +19,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import Lightbox from "yet-another-react-lightbox";
 import { Counter } from "yet-another-react-lightbox/plugins";
+import { Avatar } from "@mui/material";
+import Footer from "../../Components/Footer/Footer";
 
 export default function SerieDetail() {
   const [isMuted, setIsMuted] = useState(true);
@@ -25,6 +29,8 @@ export default function SerieDetail() {
   const [CastsRow, setCastsRow] = useState(8);
   const [showImagesLightbox, setShowImagesLightbox] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [reviewsPage, setReviewsPage] = useState(1);
+  const [expandReview, setExpandReview] = useState(0);
   const playerRef = useRef(null);
 
   const params = useParams();
@@ -40,7 +46,7 @@ export default function SerieDetail() {
       Store.dispatch(fetchSerieVideos({ id: params.id }));
       Store.dispatch(fetchSerieImages({ id: params.id }));
       Store.dispatch(fetchRecommandSeries({ id: params.id }));
-      // Store.dispatch(fetchSimilarMovies({ id: params.id }));
+      Store.dispatch(fetchSimilarSeries({ id: params.id }));
       Store.dispatch(fetchSerieCrews({ id: params.id }));
     }
   }, [SerieDetails]);
@@ -48,9 +54,17 @@ export default function SerieDetail() {
   const SerieVideos = useSelector((state) => state.Series.SerieVideos);
   const SerieImages = useSelector((state) => state.Series.SerieImages);
   const RecommandSeries = useSelector((state) => state.Series.RecommandSeries);
+  const SimilarSeries = useSelector((state) => state.Series.SimilarSeries);
   const SerieCrews = useSelector((state) => state.Series.SerieCrews);
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
-
+  
+  useEffect(() => {
+    if (SerieDetails && reviewsPage) {
+      Store.dispatch(fetchSerieReviews({ id: params.id, page: reviewsPage }));
+    }
+  }, [SerieDetails, reviewsPage]);
+  
+  const SerieReviews = useSelector((state) => state.Series.SerieReviews);
   const toggleMute = () => {
     if (playerRef.current) {
       // Ensure the player is initialized
@@ -641,6 +655,199 @@ export default function SerieDetail() {
               />
             </div>
           )}
+
+          {/* Simillar */}
+          {SimilarSeries && SimilarSeries.length > 0 && (
+            <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
+              <div className="container mx-auto">
+                <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+                  <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+                    Similar Series
+                  </h2>
+                  <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+                </div>
+
+                <div className="w-full">
+                  <Swiper
+                    navigation={true}
+                    modules={[Navigation]}
+                    className="mySwiper text-white px-4"
+                    slidesPerView={2}
+                    spaceBetween={20}
+                    slidesPerGroup={1}
+                    breakpoints={{
+                      1200: {
+                        slidesPerView: 6,
+                        slidesPerGroup: 3,
+                      },
+                      768: {
+                        slidesPerView: 4,
+                        slidesPerGroup: 2,
+                      },
+                    }}
+                  >
+                    {SimilarSeries &&
+                      SimilarSeries.map((serie) => {
+                        if (serie.poster_path) {
+                          return (
+                            <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                              <a
+                                href={"/movie/" + serie.id}
+                                className="relative w-full h-full"
+                              >
+                                <img
+                                  src={ImageBaseUrl + serie.poster_path}
+                                  alt=""
+                                  className="h-80 w-full"
+                                />
+                                <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                                  <p className="text-slate-300 text-sm font-light line-clamp-1 text-start w-full">
+                                    {SerieGenres &&
+                                      serie.genre_ids.map((id) => {
+                                        let genre = SerieGenres.find(
+                                          (genre) => genre.id == id
+                                        );
+                                        return <span>{genre.name}, </span>;
+                                      })}
+                                  </p>
+                                  <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
+                                    {serie.name}
+                                  </p>
+                                </div>
+                              </a>
+                            </SwiperSlide>
+                          );
+                        }
+                      })}
+                  </Swiper>
+                </div>
+
+                <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+                  <a href="#" className="hover:text-cyan duration-200">
+                    VIEW ALL
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Reviews */}
+          {SerieReviews && SerieReviews.results.length > 0 && (
+            <div className="w-full bg-[#0e0d12] text-white">
+              <div className="container mx-auto py-4 px-4">
+                <div className="w-full flex  flex-col xs:flex-row  items-center justify-between text-white">
+                  <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+                    Reviews
+                  </h2>
+                  <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+                </div>
+
+                <div className="w-full relative">
+                  <div className="w-full md:grid-cols-1 grid-cols-1 grid gap-3">
+                    {SerieReviews.results.map((review, index) => (
+                      <div
+                        className={`w-full  rounded-xl p-4 ${
+                          index == expandReview
+                            ? "bg-[#222632]"
+                            : "bg-[#131722]"
+                        } duration-500`}
+                      >
+                        {/* Review Header */}
+                        <div className="w-full flex items-center justify-between">
+                          {/* Review Title */}
+                          <div className="flex items-center">
+                            <Avatar sx={{ width: 32, height: 32 }}>H</Avatar>
+                            <div className="ml-3 font-montserrat">
+                              <p className="text-sm text-left">
+                                {review.author}
+                              </p>
+                              <p className="text-xs text-gray-500 text-left">
+                                {review.created_at.slice(0, 10)}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Review Vote */}
+                          <div className="flex items-center space-x-3">
+                            {review.author_details.rating && (
+                              <div className="hidden xs:flex items-center justify-end z-20">
+                                <svg
+                                  className="vodi-svg scale-50"
+                                  width="40px"
+                                  height="39px"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 40 39"
+                                  fill="cyan"
+                                >
+                                  <title>play</title>
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M19.633,-0.000 C21.509,0.035 21.530,1.174 22.167,2.414 C23.329,4.679 24.406,7.067 25.572,9.338 C25.853,9.886 26.431,11.640 26.918,11.834 C27.486,12.203 29.345,12.109 30.165,12.316 C32.170,12.825 34.489,12.860 36.500,13.364 C37.516,13.618 38.689,13.413 39.430,13.927 C39.689,14.107 39.770,14.504 39.984,14.732 C40.047,16.499 39.096,16.843 38.163,17.792 C36.473,19.509 34.784,21.227 33.095,22.944 C32.585,23.462 31.092,24.543 31.036,25.359 C31.423,25.951 31.307,27.455 31.511,28.258 C32.138,30.727 32.213,33.522 32.857,35.987 C33.142,37.078 33.016,38.241 32.303,38.724 C31.108,39.533 29.632,38.193 28.819,37.758 C26.695,36.623 24.601,35.624 22.483,34.457 C21.979,34.179 20.607,33.178 20.108,33.088 C19.748,33.023 18.163,34.107 17.812,34.296 C15.557,35.505 13.340,36.640 11.080,37.839 C10.548,38.120 9.180,39.226 8.309,38.966 C6.955,38.558 6.874,36.993 7.280,35.423 C7.716,33.733 7.697,31.880 8.151,30.109 C8.527,28.642 8.907,26.529 9.022,24.957 C8.092,24.344 7.202,23.107 6.408,22.300 C4.760,20.625 3.059,18.990 1.340,17.389 C0.646,16.742 -0.578,15.515 0.311,14.249 C0.915,13.388 2.364,13.656 3.557,13.364 C6.678,12.599 10.114,12.468 13.298,11.834 C14.186,9.747 15.306,7.711 16.307,5.716 C16.954,4.426 17.496,3.163 18.128,1.931 C18.334,1.531 18.358,1.093 18.603,0.724 C18.845,0.362 19.299,0.273 19.633,-0.000 Z"
+                                  ></path>
+                                </svg>
+
+                                <div className=" text-white flex flex-col text-center">
+                                  <p className="text-xl font-bold">
+                                    {review.author_details.rating}
+                                  </p>
+                                </div>
+                              </div>
+                            )}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="18"
+                              height="12"
+                              className={`scale-75 ${
+                                expandReview != index && "rotate-180"
+                              } cursor-pointer duration-200`}
+                              onClick={() => {
+                                if (index != expandReview) {
+                                  setExpandReview(index);
+                                } else {
+                                  setExpandReview(-1);
+                                }
+                              }}
+                            >
+                              <path
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="3"
+                                d="M1 1l8 8 8-8"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+
+                        {/* Review Body */}
+                        <div
+                          className={`w-full ${
+                            index != expandReview &&
+                            "line-clamp-2 sm:line-clamp-1"
+                          } mt-4 text-left text-gray-300`}
+                        >
+                          {review.content}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {SerieReviews && SerieReviews.total_pages > 1 && (
+                    <div className="w-full">
+                      <Pagination
+                        count={SerieReviews.total_pages}
+                        id="reviews-pagination"
+                        size="large"
+                        page={reviewsPage}
+                        onChange={reviewsPageChange}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <Footer/>
         </>
       )}
     </>
