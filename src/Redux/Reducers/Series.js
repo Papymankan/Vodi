@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BaseUrl, ApiKey } from "../FetchConfigs";
+import { shuffleArray } from "../../Funcs";
 
 export const fetchLandingSeries = createAsyncThunk(
   "Series/fetchLandingSeries",
@@ -184,9 +185,27 @@ export const fetchSerieDetails = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
-        
         return data;
+      });
+  }
+);
+
+export const fetchRecommandSeries = createAsyncThunk(
+  "Series/fetchRecommandSeries",
+  async ({ id }) => {
+    return fetch(BaseUrl + "tv/" + id + "/recommendations?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return shuffleArray(data.results);
       });
   }
 );
@@ -207,6 +226,26 @@ export const fetchSerieVideos = createAsyncThunk(
       })
       .then((data) => {
         return data.results;
+      });
+  }
+);
+
+export const fetchSerieImages = createAsyncThunk(
+  "Series/fetchSerieImages",
+  async ({ id }) => {
+    return fetch(BaseUrl + "tv/" + id + "/images?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data;
       });
   }
 );
@@ -269,6 +308,12 @@ const slice = createSlice({
       })
       .addCase(fetchSerieCrews.fulfilled, (state, action) => {
         return { ...state, SerieCrews: action.payload };
+      })
+      .addCase(fetchRecommandSeries.fulfilled, (state, action) => {
+        return { ...state, RecommandSeries: action.payload };
+      })
+      .addCase(fetchSerieImages.fulfilled, (state, action) => {
+        return { ...state, SerieImages: action.payload };
       });
   },
 });

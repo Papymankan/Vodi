@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 import { useParams } from "react-router-dom";
 import {
+  fetchRecommandSeries,
   fetchSerieCrews,
   fetchSerieDetails,
+  fetchSerieImages,
   fetchSerieVideos,
 } from "../../Redux/Reducers/Series";
 import Store from "../../Redux/Store";
@@ -11,12 +13,18 @@ import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import BackDrop from "../../Components/BackDrop/BackDrop";
 import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import Lightbox from "yet-another-react-lightbox";
+import { Counter } from "yet-another-react-lightbox/plugins";
 
 export default function SerieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
   const [BackdropVideo, setBackdropVideo] = useState(null);
   const [CastsRow, setCastsRow] = useState(8);
+  const [showImagesLightbox, setShowImagesLightbox] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const playerRef = useRef(null);
 
   const params = useParams();
@@ -30,15 +38,18 @@ export default function SerieDetail() {
   useEffect(() => {
     if (SerieDetails) {
       Store.dispatch(fetchSerieVideos({ id: params.id }));
-      // Store.dispatch(fetchMovieImages({ id: params.id }));
-      // Store.dispatch(fetchRecommandMovies({ id: params.id }));
+      Store.dispatch(fetchSerieImages({ id: params.id }));
+      Store.dispatch(fetchRecommandSeries({ id: params.id }));
       // Store.dispatch(fetchSimilarMovies({ id: params.id }));
       Store.dispatch(fetchSerieCrews({ id: params.id }));
     }
   }, [SerieDetails]);
 
   const SerieVideos = useSelector((state) => state.Series.SerieVideos);
+  const SerieImages = useSelector((state) => state.Series.SerieImages);
+  const RecommandSeries = useSelector((state) => state.Series.RecommandSeries);
   const SerieCrews = useSelector((state) => state.Series.SerieCrews);
+  const SerieGenres = useSelector((state) => state.Series.SerieGenres);
 
   const toggleMute = () => {
     if (playerRef.current) {
@@ -91,9 +102,7 @@ export default function SerieDetail() {
       setCastsRow(5);
     }
   };
-
   window.addEventListener("resize", CheckWidth);
-
   useEffect(CheckWidth, []);
 
   return (
@@ -346,7 +355,7 @@ export default function SerieDetail() {
 
             {BackdropVideo && BackdropVideo.key && (
               <BackDrop
-                videoKey={BackdropVideo.key}
+                // videoKey={BackdropVideo.key}
                 onReady={onReady}
                 onStateChange={onStateChange}
                 isLoading={LoadingBackdrop}
@@ -484,6 +493,154 @@ export default function SerieDetail() {
               )}
             </div>
           </div>
+
+          {/* Recommand */}
+          {RecommandSeries && RecommandSeries.length > 0 && (
+            <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
+              <div className="container mx-auto">
+                <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+                  <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+                    We Recommanded
+                  </h2>
+                  <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+                </div>
+
+                <div className="w-full">
+                  <Swiper
+                    navigation={true}
+                    modules={[Navigation]}
+                    className="mySwiper text-white px-4"
+                    slidesPerView={2}
+                    spaceBetween={20}
+                    slidesPerGroup={1}
+                    breakpoints={{
+                      1200: {
+                        slidesPerView: 6,
+                        slidesPerGroup: 3,
+                      },
+                      768: {
+                        slidesPerView: 4,
+                        slidesPerGroup: 2,
+                      },
+                    }}
+                  >
+                    {RecommandSeries &&
+                      RecommandSeries.map((serie) => {
+                        if (serie.poster_path) {
+                          return (
+                            <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                              <a
+                                href={"/serie/" + serie.id}
+                                className="relative w-full h-full"
+                              >
+                                <img
+                                  src={ImageBaseUrl + serie.poster_path}
+                                  alt=""
+                                  className="h-80 w-full"
+                                />
+                                <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                                  <p className="text-slate-300 text-sm font-light line-clamp-1 text-start w-full">
+                                    {SerieGenres &&
+                                      serie.genre_ids &&
+                                      serie.genre_ids.length > 0 &&
+                                      serie.genre_ids.map((id) => {
+                                        let genre = SerieGenres.find(
+                                          (genre) => genre.id == id
+                                        );
+                                        return <span>{genre.name}, </span>;
+                                      })}
+                                  </p>
+                                  <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
+                                    {serie.name}
+                                  </p>
+                                </div>
+                              </a>
+                            </SwiperSlide>
+                          );
+                        }
+                      })}
+                  </Swiper>
+                </div>
+
+                <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+                  <a href="#" className="hover:text-cyan duration-200">
+                    VIEW ALL
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Images */}
+          {SerieImages && SerieImages.backdrops.length > 0 && (
+            <div className="w-full py-12 bg-[#131722]">
+              <div className="container mx-auto px-4">
+                <div className="w-full flex pb-6 flex-col xs:flex-row  items-center justify-between text-white">
+                  <h2 className="text-2xl xs:mb-0 font-semibold">Images</h2>
+
+                  <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+
+                  <button
+                    className="hover:text-cyan duration-200 hidden xs:block"
+                    onClick={() => {
+                      setShowImagesLightbox(true);
+                    }}
+                  >
+                    More
+                  </button>
+                </div>
+                <div className="w-full grid md:grid-cols-4 md:grid-rows-1 grid-cols-2 grid-rows-2 gap-3 flex-wrap">
+                  {SerieImages.backdrops.slice(0, 4).map((image, index) => (
+                    <button
+                      className="w-full"
+                      onClick={() => {
+                        setShowImagesLightbox(true);
+                        setCurrentSlide(index);
+                      }}
+                    >
+                      <img
+                        src={ImageBaseUrl + image.file_path}
+                        className="w-full"
+                      ></img>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <Lightbox
+                open={showImagesLightbox}
+                index={currentSlide}
+                close={() => setShowImagesLightbox(false)}
+                slides={SerieImages.backdrops}
+                plugins={[Counter]}
+                swipe={{ distance: 50, velocity: 0.5 }}
+                counter={{
+                  container: { style: { top: 0, left: 0, display: "inline" } },
+                }}
+                render={{
+                  slide: (slide) => {
+                    return (
+                      <>
+                        <div className="w-full h-full flex items-center">
+                          <img
+                            draggable={false}
+                            src={ImageBaseUrl + slide.slide.file_path}
+                            alt=""
+                            className="w-full"
+                          />
+                        </div>
+                      </>
+                    );
+                  },
+                }}
+                carousel={{ finite: true }}
+                on={{
+                  view: ({ index }) => {
+                    setCurrentSlide(index);
+                  },
+                }}
+              />
+            </div>
+          )}
         </>
       )}
     </>
