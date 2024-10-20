@@ -772,7 +772,7 @@ export default function MovieDetail() {
                           {/* Review Vote */}
                           <div className="flex items-center space-x-3">
                             {review.author_details.rating && (
-                              <div className="hidden xs:flex items-center justify-end z-20">
+                              <div className="flex items-center justify-end z-20">
                                 <svg
                                   className="vodi-svg scale-50"
                                   width="40px"

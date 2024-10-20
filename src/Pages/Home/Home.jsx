@@ -79,21 +79,23 @@ export default function Home() {
       let movies = [...TrendingMovies];
       let arr = [];
       if (TrendingMovies.length) {
-        for (let index = 0; index < 7; index++) {
-          let randomNum = Math.floor(Math.random() * (TrendingMovies.length - index));
-          console.log(randomNum , movies[randomNum]);
-          console.log(movies);
-          
-          arr.push(movies[randomNum]);
-          movies.splice(randomNum, 1);
-          
+        let index = 0;
+        while (index < 7) {
+          let randomNum = Math.floor(
+            Math.random() * (TrendingMovies.length - index)
+          );
+          if (movies[randomNum].backdrop_path) {
+            arr.push(movies[randomNum]);
+            movies.splice(randomNum, 1);
+            index++;
+          }
         }
       }
       console.log(arr);
 
       setTrendingMoviesRandom(arr);
     }
-  }, [TrendingMovies]); 
+  }, [TrendingMovies]);
 
   const TopRatedMovie = useSelector((state) => state.Movies.TopRatedMovie);
 
@@ -115,11 +117,16 @@ export default function Home() {
       let series = [...TrendingSeries];
       let arr = [];
       if (TrendingSeries.length) {
-        for (let index = 0; index < 7; index++) {
-          let randomNum = Math.floor(Math.random() * (TrendingSeries.length - index));
-
-          arr.push(series[randomNum]);
-          series.splice(randomNum, 1);
+        let index = 0;
+        while (index < 7) {
+          let randomNum = Math.floor(
+            Math.random() * (TrendingSeries.length - index)
+          );
+          if (series[randomNum].backdrop_path) {
+            arr.push(series[randomNum]);
+            series.splice(randomNum, 1);
+            index++;
+          }
         }
       }
       setTrendingSeriesRandom(arr);
