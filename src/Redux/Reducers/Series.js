@@ -337,7 +337,9 @@ export const fetchSerieReviews = createAsyncThunk(
 
 const slice = createSlice({
   name: "Series",
-  initialState: {},
+  initialState: {
+    loading: true,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -387,8 +389,11 @@ const slice = createSlice({
         return { ...state, SerieReviews: action.payload };
       })
       .addCase(fetchSerieSeason.fulfilled, (state, action) => {
-        return { ...state, SerieSeason: action.payload };
+        return { ...state, loading: false, SerieSeason: action.payload };
       })
+      .addCase(fetchSerieSeason.pending, (state, action) => {
+        return { ...state, loading: true };
+      });
   },
 });
 
