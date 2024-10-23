@@ -290,6 +290,28 @@ export const fetchSimilarSeries = createAsyncThunk(
   }
 );
 
+export const fetchSerieSeason = createAsyncThunk(
+  "Series/fetchSerieSeason",
+  async ({ id, season }) => {
+    return fetch(BaseUrl + "tv/" + id + "/season/" + season + "?" + ApiKey, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
+  }
+);
+
 export const fetchSerieReviews = createAsyncThunk(
   "Series/fetchSerieReviews",
   async ({ id, page }) => {
@@ -308,8 +330,6 @@ export const fetchSerieReviews = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
-        
         return data;
       });
   }
@@ -365,6 +385,9 @@ const slice = createSlice({
       })
       .addCase(fetchSerieReviews.fulfilled, (state, action) => {
         return { ...state, SerieReviews: action.payload };
+      })
+      .addCase(fetchSerieSeason.fulfilled, (state, action) => {
+        return { ...state, SerieSeason: action.payload };
       })
   },
 });
