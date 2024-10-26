@@ -370,7 +370,7 @@ export const fetchSerieEpisode = createAsyncThunk(
 
 export const fetchEpisodeVideos = createAsyncThunk(
   "Series/fetchEpisodeVideos",
-  async ({ id , season , episode}) => {
+  async ({ id, season, episode }) => {
     return fetch(
       BaseUrl +
         "tv/" +
@@ -395,6 +395,36 @@ export const fetchEpisodeVideos = createAsyncThunk(
       })
       .then((data) => {
         return data.results;
+      });
+  }
+);
+export const fetchEpisodeImages = createAsyncThunk(
+  "Series/fetchEpisodeImages",
+  async ({ id, season, episode }) => {
+    return fetch(
+      BaseUrl +
+        "tv/" +
+        id +
+        "/season/" +
+        season +
+        "/episode/" +
+        episode +
+        "/images?" +
+        ApiKey,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data.stills;
       });
   }
 );
@@ -463,6 +493,9 @@ const slice = createSlice({
       })
       .addCase(fetchEpisodeVideos.fulfilled, (state, action) => {
         return { ...state, EpisodeVideos: action.payload };
+      })
+      .addCase(fetchEpisodeImages.fulfilled, (state, action) => {
+        return { ...state, EpisodeImages: action.payload };
       })
   },
 });

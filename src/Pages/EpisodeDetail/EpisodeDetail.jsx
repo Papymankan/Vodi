@@ -3,6 +3,7 @@ import NavBar from "../../Components/NavBar/NavBar";
 import { useParams } from "react-router-dom";
 import Store from "../../Redux/Store";
 import {
+  fetchEpisodeImages,
   fetchEpisodeVideos,
   fetchRecommandSeries,
   fetchSerieDetails,
@@ -13,11 +14,14 @@ import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "yet-another-react-lightbox";
+import Lightbox, { Navigation } from "yet-another-react-lightbox";
+import { Counter } from "yet-another-react-lightbox/plugins";
 export default function EpisodeDetail() {
   const params = useParams();
 
   const [CastsRow, setCastsRow] = useState(8);
+  const [showImagesLightbox, setShowImagesLightbox] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     Store.dispatch(fetchSerieDetails({ id: params.id }));
@@ -41,11 +45,17 @@ export default function EpisodeDetail() {
 
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
 
-
   useEffect(() => {
     if (SerieDetails && SerieEpisode && SerieSeason) {
       Store.dispatch(
         fetchEpisodeVideos({
+          id: params.id,
+          season: params.season,
+          episode: params.episode,
+        })
+      );
+      Store.dispatch(
+        fetchEpisodeImages({
           id: params.id,
           season: params.season,
           episode: params.episode,
@@ -60,8 +70,9 @@ export default function EpisodeDetail() {
 
   const EpisodeVideos = useSelector((state) => state.Series.EpisodeVideos);
 
-  const RecommandSeries = useSelector((state) => state.Series.RecommandSeries);
+  const EpisodeImages = useSelector((state) => state.Series.EpisodeImages);
 
+  const RecommandSeries = useSelector((state) => state.Series.RecommandSeries);
 
   const CheckWidth = () => {
     if (window.innerWidth > 1486) {
@@ -491,6 +502,78 @@ export default function EpisodeDetail() {
                   </a>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Images */}
+          {EpisodeImages && EpisodeImages.length > 0 && (
+            <div className="w-full py-12 bg-[#131722]">
+              <div className="container mx-auto px-4">
+                <div className="w-full flex pb-6 flex-col xs:flex-row  items-center justify-between text-white">
+                  <h2 className="text-2xl xs:mb-0 font-semibold">Images</h2>
+
+                  <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+
+                  <button
+                    className="hover:text-cyan duration-200 hidden xs:block"
+                    onClick={() => {
+                      setShowImagesLightbox(true);
+                    }}
+                  >
+                    More
+                  </button>
+                </div>
+                <div className="w-full grid md:grid-cols-4 md:grid-rows-1 grid-cols-2 grid-rows-2 gap-3 flex-wrap">
+                  {EpisodeImages.slice(0, 4).map((image, index) => (
+                    <button
+                      className="w-full"
+                      onClick={() => {
+                        setShowImagesLightbox(true);
+                        setCurrentSlide(index);
+                      }}
+                    >
+                      <img
+                        src={ImageBaseUrl + image.file_path}
+                        className="w-full"
+                      ></img>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <Lightbox
+                open={showImagesLightbox}
+                index={currentSlide}
+                close={() => setShowImagesLightbox(false)}
+                slides={EpisodeImages}
+                plugins={[Counter]}
+                swipe={{ distance: 50, velocity: 0.5 }}
+                counter={{
+                  container: { style: { top: 0, left: 0, display: "inline" } },
+                }}
+                render={{
+                  slide: (slide) => {
+                    return (
+                      <>
+                        <div className="w-full h-full flex items-center">
+                          <img
+                            draggable={false}
+                            src={ImageBaseUrl + slide.slide.file_path}
+                            alt=""
+                            className="w-full"
+                          />
+                        </div>
+                      </>
+                    );
+                  },
+                }}
+                carousel={{ finite: true }}
+                on={{
+                  view: ({ index }) => {
+                    setCurrentSlide(index);
+                  },
+                }}
+              />
             </div>
           )}
         </>
