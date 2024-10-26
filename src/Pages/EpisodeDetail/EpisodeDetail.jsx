@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Store from "../../Redux/Store";
 import {
   fetchEpisodeVideos,
+  fetchRecommandSeries,
   fetchSerieDetails,
   fetchSerieEpisode,
   fetchSerieSeason,
@@ -11,7 +12,8 @@ import {
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "yet-another-react-lightbox";
 export default function EpisodeDetail() {
   const params = useParams();
 
@@ -36,24 +38,30 @@ export default function EpisodeDetail() {
   const SerieEpisode = useSelector((state) => state.Series.SerieEpisode);
 
   const SerieSeason = useSelector((state) => state.Series.SerieSeason);
-  
-  useEffect(() => {
-      if (SerieDetails && SerieEpisode && SerieSeason) {
-          Store.dispatch(
-              fetchEpisodeVideos({
-                  id: params.id,
-                  season: params.season,
-                  episode: params.episode,
-                })
-            );
-            //   Store.dispatch(fetchSerieImages({ id: params.id }));
-            //   Store.dispatch(fetchRecommandSeries({ id: params.id }));
-            //   Store.dispatch(fetchSimilarSeries({ id: params.id }));
-            //   Store.dispatch(fetchSerieCrews({ id: params.id }));
-        }
-    }, [SerieDetails, SerieEpisode, SerieSeason]);
 
-    const EpisodeVideos = useSelector((state) => state.Series.EpisodeVideos);
+  const SerieGenres = useSelector((state) => state.Series.SerieGenres);
+
+
+  useEffect(() => {
+    if (SerieDetails && SerieEpisode && SerieSeason) {
+      Store.dispatch(
+        fetchEpisodeVideos({
+          id: params.id,
+          season: params.season,
+          episode: params.episode,
+        })
+      );
+      Store.dispatch(fetchRecommandSeries({ id: params.id }));
+      //   Store.dispatch(fetchSerieImages({ id: params.id }));
+      //   Store.dispatch(fetchSimilarSeries({ id: params.id }));
+      //   Store.dispatch(fetchSerieCrews({ id: params.id }));
+    }
+  }, [SerieDetails, SerieEpisode, SerieSeason]);
+
+  const EpisodeVideos = useSelector((state) => state.Series.EpisodeVideos);
+
+  const RecommandSeries = useSelector((state) => state.Series.RecommandSeries);
+
 
   const CheckWidth = () => {
     if (window.innerWidth > 1486) {
@@ -409,7 +417,82 @@ export default function EpisodeDetail() {
             </div>
           </div>
 
-          
+          {/* Recommand */}
+          {RecommandSeries && RecommandSeries.length > 0 && (
+            <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
+              <div className="container mx-auto">
+                <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+                  <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+                    We Recommanded
+                  </h2>
+                  <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+                </div>
+
+                <div className="w-full">
+                  <Swiper
+                    navigation={true}
+                    // modules={[Navigation]}
+                    className="mySwiper text-white px-4"
+                    slidesPerView={2}
+                    spaceBetween={20}
+                    slidesPerGroup={1}
+                    breakpoints={{
+                      1200: {
+                        slidesPerView: 6,
+                        slidesPerGroup: 3,
+                      },
+                      768: {
+                        slidesPerView: 4,
+                        slidesPerGroup: 2,
+                      },
+                    }}
+                  >
+                    {RecommandSeries &&
+                      RecommandSeries.map((serie) => {
+                        if (serie.poster_path) {
+                          return (
+                            <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
+                              <a
+                                href={"/serie/" + serie.id}
+                                className="relative w-full h-full"
+                              >
+                                <img
+                                  src={ImageBaseUrl + serie.poster_path}
+                                  alt=""
+                                  className="h-80 w-full"
+                                />
+                                <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
+                                  <p className="text-slate-300 text-sm font-light line-clamp-1 text-start w-full">
+                                    {SerieGenres &&
+                                      serie.genre_ids &&
+                                      serie.genre_ids.length > 0 &&
+                                      serie.genre_ids.map((id) => {
+                                        let genre = SerieGenres.find(
+                                          (genre) => genre.id == id
+                                        );
+                                        return <span>{genre.name}, </span>;
+                                      })}
+                                  </p>
+                                  <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
+                                    {serie.name}
+                                  </p>
+                                </div>
+                              </a>
+                            </SwiperSlide>
+                          );
+                        }
+                      })}
+                  </Swiper>
+                </div>
+
+                <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+                  <a href="#" className="hover:text-cyan duration-200">
+                    VIEW ALL
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       )}
     </>
