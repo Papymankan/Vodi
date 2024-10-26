@@ -3,18 +3,19 @@ import NavBar from "../../Components/NavBar/NavBar";
 import { useParams } from "react-router-dom";
 import Store from "../../Redux/Store";
 import {
+  fetchEpisodeVideos,
   fetchSerieDetails,
   fetchSerieEpisode,
   fetchSerieSeason,
 } from "../../Redux/Reducers/Series";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
+import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
 
 export default function EpisodeDetail() {
   const params = useParams();
 
   const [CastsRow, setCastsRow] = useState(8);
-
 
   useEffect(() => {
     Store.dispatch(fetchSerieDetails({ id: params.id }));
@@ -35,6 +36,24 @@ export default function EpisodeDetail() {
   const SerieEpisode = useSelector((state) => state.Series.SerieEpisode);
 
   const SerieSeason = useSelector((state) => state.Series.SerieSeason);
+  
+  useEffect(() => {
+      if (SerieDetails && SerieEpisode && SerieSeason) {
+          Store.dispatch(
+              fetchEpisodeVideos({
+                  id: params.id,
+                  season: params.season,
+                  episode: params.episode,
+                })
+            );
+            //   Store.dispatch(fetchSerieImages({ id: params.id }));
+            //   Store.dispatch(fetchRecommandSeries({ id: params.id }));
+            //   Store.dispatch(fetchSimilarSeries({ id: params.id }));
+            //   Store.dispatch(fetchSerieCrews({ id: params.id }));
+        }
+    }, [SerieDetails, SerieEpisode, SerieSeason]);
+
+    const EpisodeVideos = useSelector((state) => state.Series.EpisodeVideos);
 
   const CheckWidth = () => {
     if (window.innerWidth > 1486) {
@@ -381,8 +400,16 @@ export default function EpisodeDetail() {
                     </div>
                   )}
               </div>
+
+              {EpisodeVideos && (
+                <div className="w-full md:w-1/2 text-white md:my-0 my-5">
+                  <CustomLightBox allSlides={EpisodeVideos} />
+                </div>
+              )}
             </div>
           </div>
+
+          
         </>
       )}
     </>
