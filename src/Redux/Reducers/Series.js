@@ -335,6 +335,39 @@ export const fetchSerieReviews = createAsyncThunk(
   }
 );
 
+export const fetchSerieEpisode = createAsyncThunk(
+  "Series/fetchSerieEpisode",
+  async ({ id, season, episode }) => {
+    return fetch(
+      BaseUrl +
+        "tv/" +
+        id +
+        "/season/" +
+        season +
+        "/episode/" +
+        episode +
+        "?" +
+        ApiKey,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {
@@ -393,6 +426,9 @@ const slice = createSlice({
       })
       .addCase(fetchSerieSeason.pending, (state, action) => {
         return { ...state, loading: true };
+      })
+      .addCase(fetchSerieEpisode.fulfilled, (state, action) => {
+        return { ...state, SerieEpisode: action.payload };
       });
   },
 });
