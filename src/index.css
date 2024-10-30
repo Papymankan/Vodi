@@ -95,10 +95,6 @@
 
 /* Movie detail */
 
-/* .movie-detail-landing {
-  min-height: calc(100vh - 68px);
-} */
-
 /* Movie detail */
 
 /* BackDrop */
@@ -192,3 +188,19 @@
 }
 
 /* Reviews */
+
+/* episode section */
+
+@media (max-width: 400px) {
+  .episode-img {
+    @apply w-32
+  }
+}
+
+@media (max-width: 330px) {
+  .episode-img {
+    @apply w-24
+  }
+}
+
+/* episode section */

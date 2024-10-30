@@ -16,12 +16,14 @@ import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Lightbox, { Navigation } from "yet-another-react-lightbox";
 import { Counter } from "yet-another-react-lightbox/plugins";
+import EpisodeSection from "../../Components/EpisodeSection/EpisodeSection";
 export default function EpisodeDetail() {
   const params = useParams();
 
   const [CastsRow, setCastsRow] = useState(8);
   const [showImagesLightbox, setShowImagesLightbox] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [selectedSeason, setSelectedSeason] = useState(params.season);
 
   useEffect(() => {
     Store.dispatch(fetchSerieDetails({ id: params.id }));
@@ -93,6 +95,16 @@ export default function EpisodeDetail() {
   };
   window.addEventListener("resize", CheckWidth);
   useEffect(CheckWidth, []);
+
+  const loading = useSelector((state) => state.Series.loading);
+
+  useEffect(() => {
+    if (SerieDetails && selectedSeason) {
+      Store.dispatch(
+        fetchSerieSeason({ id: params.id, season: selectedSeason })
+      );
+    }
+  }, [SerieDetails, selectedSeason]);
 
   return (
     <>
@@ -576,6 +588,8 @@ export default function EpisodeDetail() {
               />
             </div>
           )}
+
+          <EpisodeSection SerieDetails={SerieDetails} selectedSeason={selectedSeason} setSelectedSeason={setSelectedSeason} SerieSeason={SerieSeason} loading={loading} params={params} />
         </>
       )}
     </>
