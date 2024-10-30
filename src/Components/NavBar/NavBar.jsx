@@ -236,7 +236,7 @@ export default function NavBar() {
                     {MovieGenres &&
                       MovieGenres.map((genre) => (
                         <a
-                          href="#"
+                          href={"/movie/genre/" + genre.id}
                           className="py-1 text-sm hover:text-[#24baef] duration-200 tracking-tight line-clamp-1"
                         >
                           {genre.name}
@@ -254,7 +254,7 @@ export default function NavBar() {
                     {SerieGenres &&
                       SerieGenres.map((genre) => (
                         <a
-                          href="#"
+                          href={"/serie/genre/" + genre.id}
                           className="py-1 text-sm hover:text-[#24baef] duration-200 line-clamp-1  tracking-tight"
                         >
                           {genre.name}
@@ -719,6 +719,7 @@ export default function NavBar() {
                         </svg>
                       </button>
                     </div>
+
                     <div className="flex items-center py-3 space-x-4">
                       {OnAirSeries &&
                         OnAirSeries.slice(0, 4).map((serie, index) => (

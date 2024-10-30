@@ -17,6 +17,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Lightbox, { Navigation } from "yet-another-react-lightbox";
 import { Counter } from "yet-another-react-lightbox/plugins";
 import EpisodeSection from "../../Components/EpisodeSection/EpisodeSection";
+import Footer from "../../Components/Footer/Footer";
 export default function EpisodeDetail() {
   const params = useParams();
 
@@ -589,7 +590,17 @@ export default function EpisodeDetail() {
             </div>
           )}
 
-          <EpisodeSection SerieDetails={SerieDetails} selectedSeason={selectedSeason} setSelectedSeason={setSelectedSeason} SerieSeason={SerieSeason} loading={loading} params={params} />
+          {/* Episodes */}
+          <EpisodeSection
+            SerieDetails={SerieDetails}
+            selectedSeason={selectedSeason}
+            setSelectedSeason={setSelectedSeason}
+            SerieSeason={SerieSeason}
+            loading={loading}
+            params={params}
+          />
+
+          <Footer/>
         </>
       )}
     </>

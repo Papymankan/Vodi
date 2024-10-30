@@ -317,6 +317,25 @@ export const fetchMovieReviews = createAsyncThunk(
   }
 );
 
+export const fetchMoviesWithGenre = createAsyncThunk(
+  "Movies/fetchMoviesWithGenre",
+  async ({ id }) => {
+    return fetch(BaseUrl + "discover/movie?" + ApiKey + "&with_genres=" + id, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data;
+      });
+  }
+);
 const slice = createSlice({
   name: "Movies",
   initialState: {},
@@ -367,6 +386,9 @@ const slice = createSlice({
       })
       .addCase(fetchMovieReviews.fulfilled, (state, action) => {
         return { ...state, MovieReviews: action.payload };
+      })
+      .addCase(fetchMoviesWithGenre.fulfilled, (state, action) => {
+        return { ...state, MoviesWithGenre: action.payload };
       });
   },
 });
