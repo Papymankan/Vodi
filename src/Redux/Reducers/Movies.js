@@ -319,7 +319,7 @@ export const fetchMovieReviews = createAsyncThunk(
 
 export const fetchMoviesWithGenre = createAsyncThunk(
   "Movies/fetchMoviesWithGenre",
-  async ({ id , page }) => {
+  async ({ id, page }) => {
     return fetch(
       BaseUrl +
         "discover/movie?" +
@@ -347,7 +347,9 @@ export const fetchMoviesWithGenre = createAsyncThunk(
 );
 const slice = createSlice({
   name: "Movies",
-  initialState: {},
+  initialState: {
+    loadingMore: false,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -397,7 +399,14 @@ const slice = createSlice({
         return { ...state, MovieReviews: action.payload };
       })
       .addCase(fetchMoviesWithGenre.fulfilled, (state, action) => {
-        return { ...state, MoviesWithGenre: action.payload };
+        return {
+          ...state,
+          loadingMore: false,
+          MoviesWithGenre: action.payload,
+        };
+      })
+      .addCase(fetchMoviesWithGenre.pending, (state, action) => {
+        return { ...state, loadingMore: true };
       });
   },
 });
