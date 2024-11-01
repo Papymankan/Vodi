@@ -14,7 +14,7 @@ import {
 } from "../../Redux/Reducers/Movies";
 import { useSelector } from "react-redux";
 import Store from "../../Redux/Store";
-import { ImageBaseUrl } from "../../Redux/FetchConfigs";
+import { ImageBaseUrl, ImageLowQualityUrl } from "../../Redux/FetchConfigs";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -432,7 +432,7 @@ export default function MovieDetail() {
                           >
                             {company.logo_path && (
                               <img
-                                src={ImageBaseUrl + company.logo_path}
+                                src={ImageLowQualityUrl + company.logo_path}
                                 alt=""
                                 className="h-3"
                               />
@@ -490,7 +490,7 @@ export default function MovieDetail() {
                                 href="#"
                               >
                                 <img
-                                  src={ImageBaseUrl + crew.profile_path}
+                                  src={ImageLowQualityUrl + crew.profile_path}
                                   alt=""
                                   className="rounded-lg h-16 sm:h-20 lg:h-28"
                                 />
@@ -550,7 +550,7 @@ export default function MovieDetail() {
                                 className="relative w-full h-full"
                               >
                                 <img
-                                  src={ImageBaseUrl + movie.poster_path}
+                                  src={ImageLowQualityUrl + movie.poster_path}
                                   alt=""
                                   className="h-80 w-full"
                                 />
@@ -615,7 +615,7 @@ export default function MovieDetail() {
                       }}
                     >
                       <img
-                        src={ImageBaseUrl + image.file_path}
+                        src={ImageLowQualityUrl + image.file_path}
                         className="w-full"
                       ></img>
                     </button>
@@ -698,7 +698,7 @@ export default function MovieDetail() {
                                 className="relative w-full h-full"
                               >
                                 <img
-                                  src={ImageBaseUrl + movie.poster_path}
+                                  src={ImageLowQualityUrl + movie.poster_path}
                                   alt=""
                                   className="h-80 w-full"
                                 />

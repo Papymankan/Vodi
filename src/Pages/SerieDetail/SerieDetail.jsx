@@ -443,7 +443,7 @@ export default function SerieDetail() {
                           >
                             {company.logo_path && (
                               <img
-                                src={ImageBaseUrl + company.logo_path}
+                                src={ImageLowQualityUrl + company.logo_path}
                                 alt=""
                                 className="h-3"
                               />
@@ -456,33 +456,6 @@ export default function SerieDetail() {
                         ))}
                     </div>
                   )}
-
-                {/* Budget */}
-                {/* {MovieDetails && (
-                  <div className="w-full flex flex-wrap items-center py-2">
-                    {MovieDetails.budget > 0 && (
-                      <>
-                        <h3 className="font-bold xs:text-base text-sm">
-                          Budget :
-                        </h3>
-                        <span className="mx-2 xs:text-base text-sm">
-                          {MovieDetails.budget.toLocaleString()}
-                        </span>
-                      </>
-                    )}
-
-                    {MovieDetails.revenue > 0 && (
-                      <>
-                        <h3 className="font-bold ml-5 xs:text-base text-sm">
-                          Revenue :
-                        </h3>
-                        <span className="mx-2 xs:text-base text-sm">
-                          {MovieDetails.revenue.toLocaleString()}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                )} */}
 
                 {/* Crews */}
                 {SerieCrews &&
@@ -501,7 +474,7 @@ export default function SerieDetail() {
                                 href="#"
                               >
                                 <img
-                                  src={ImageBaseUrl + crew.profile_path}
+                                  src={ImageLowQualityUrl + crew.profile_path}
                                   alt=""
                                   className="rounded-lg h-16 sm:h-20 lg:h-28"
                                 />
@@ -626,7 +599,7 @@ export default function SerieDetail() {
                       }}
                     >
                       <img
-                        src={ImageBaseUrl + image.file_path}
+                        src={ImageLowQualityUrl + image.file_path}
                         className="w-full"
                       ></img>
                     </button>
