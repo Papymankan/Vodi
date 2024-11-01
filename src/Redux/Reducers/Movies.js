@@ -319,13 +319,22 @@ export const fetchMovieReviews = createAsyncThunk(
 
 export const fetchMoviesWithGenre = createAsyncThunk(
   "Movies/fetchMoviesWithGenre",
-  async ({ id }) => {
-    return fetch(BaseUrl + "discover/movie?" + ApiKey + "&with_genres=" + id, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    })
+  async ({ id , page }) => {
+    return fetch(
+      BaseUrl +
+        "discover/movie?" +
+        ApiKey +
+        "&with_genres=" +
+        id +
+        "&page=" +
+        page,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
       .then((res) => {
         if (res.ok) {
           return res.json();
