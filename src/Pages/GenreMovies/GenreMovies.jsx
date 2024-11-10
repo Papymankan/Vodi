@@ -37,7 +37,7 @@ export default function GenreMovies() {
       {MoviesWithGenre &&
         moviesList &&
         moviesList.length > 0 &&
-        MovieGenres && (
+        MovieGenres && (  
           <>
             <div className="container mx-auto px-4 flex flex-col items-center ">
               {/* BreadCrumb */}

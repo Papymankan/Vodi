@@ -12,7 +12,7 @@ import {
 } from "../../Redux/Reducers/Series";
 import Store from "../../Redux/Store";
 import { useSelector } from "react-redux";
-import { ImageBaseUrl } from "../../Redux/FetchConfigs";
+import { ImageBaseUrl, ImageLowQualityUrl } from "../../Redux/FetchConfigs";
 import BackDrop from "../../Components/BackDrop/BackDrop";
 import CustomLightBox from "../../Components/CustomLightBox/CustomLightBox";
 import { Swiper, SwiperSlide } from "swiper/react";

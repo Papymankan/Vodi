@@ -398,6 +398,7 @@ export const fetchEpisodeVideos = createAsyncThunk(
       });
   }
 );
+
 export const fetchEpisodeImages = createAsyncThunk(
   "Series/fetchEpisodeImages",
   async ({ id, season, episode }) => {
@@ -429,10 +430,40 @@ export const fetchEpisodeImages = createAsyncThunk(
   }
 );
 
+export const fetchSeriesWithGenre = createAsyncThunk(
+  "Series/fetchSeriesWithGenre",
+  async ({ id, page }) => {
+    return fetch(
+      BaseUrl +
+        "discover/tv?" +
+        ApiKey +
+        "&with_genres=" +
+        id +
+        "&page=" +
+        page,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {
     loading: true,
+    loadingMore: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -497,6 +528,16 @@ const slice = createSlice({
       .addCase(fetchEpisodeImages.fulfilled, (state, action) => {
         return { ...state, EpisodeImages: action.payload };
       })
+      .addCase(fetchSeriesWithGenre.fulfilled, (state, action) => {
+        return {
+          ...state,
+          loadingMore: false,
+          SeriessWithGenre: action.payload,
+        };
+      })
+      .addCase(fetchSeriesWithGenre.pending, (state, action) => {
+        return { ...state, loadingMore: true };
+      });
   },
 });
 
