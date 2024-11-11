@@ -236,7 +236,7 @@ export default function NavBar() {
                     {MovieGenres &&
                       MovieGenres.map((genre) => (
                         <a
-                          href={"/movie/genre/" + genre.id}
+                          href={"/movies/genre/" + genre.id}
                           className="py-1 text-sm hover:text-[#24baef] duration-200 tracking-tight line-clamp-1"
                         >
                           {genre.name}
@@ -254,7 +254,7 @@ export default function NavBar() {
                     {SerieGenres &&
                       SerieGenres.map((genre) => (
                         <a
-                          href={"/serie/genre/" + genre.id}
+                          href={"/series/genre/" + genre.id}
                           className="py-1 text-sm hover:text-[#24baef] duration-200 line-clamp-1  tracking-tight"
                         >
                           {genre.name}

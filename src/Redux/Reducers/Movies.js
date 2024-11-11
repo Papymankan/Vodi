@@ -56,8 +56,8 @@ export const fetchTopYearMovies = createAsyncThunk(
 
 export const fetchTrendingMovies = createAsyncThunk(
   "Movies/fetchTrendingMovies",
-  async () => {
-    return fetch(BaseUrl + "trending/movie/day" + "?" + ApiKey, {
+  async ({time}) => {
+    return fetch(BaseUrl + "trending/movie/" + time + "?" + ApiKey, {
       method: "GET",
       headers: {
         accept: "application/json",
