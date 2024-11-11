@@ -24,8 +24,6 @@ export default function GenreMovies() {
 
   useEffect(() => {
     if (MoviesWithGenre) {
-      console.log(moviesList, MoviesWithGenre.results);
-
       setMoviesList([...moviesList, ...MoviesWithGenre.results]);
     }
   }, [MoviesWithGenre]);
@@ -99,7 +97,7 @@ export default function GenreMovies() {
                   Genre
                 </h1>
                 <h4 className="text-gray-500 font-montserrat text-xs sm:text-sm">
-                  Total Results : 24039
+                  Total Results : {MoviesWithGenre.total_results}
                 </h4>
               </div>
 

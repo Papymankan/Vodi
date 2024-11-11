@@ -172,12 +172,12 @@ export default function Home() {
   }, [LandingMovies, LandingSeries]);
 
   useEffect(() => {
-    Store.dispatch(fetchTopYearMovies());
-    Store.dispatch(fetchTrendingMovies({time : "day"}));
+    Store.dispatch(fetchTopYearMovies({ year: 2024 , page : 1}));
+    Store.dispatch(fetchTrendingMovies({ time: "day" }));
     Store.dispatch(fetchLandingMovies());
 
-    Store.dispatch(fetchTopYearSeries());
-    Store.dispatch(fetchTrendingSeries({time : "day"}));
+    Store.dispatch(fetchTopYearSeries({ year: 2024 , page : 1}));
+    Store.dispatch(fetchTrendingSeries({ time: "day" }));
     Store.dispatch(fetchLandingSeries());
   }, []);
 
@@ -309,7 +309,10 @@ export default function Home() {
               >
                 Today
               </a>
-              <a href="/movies/trending/week" className="text-sm  hover:text-cyan duration-200">
+              <a
+                href="/movies/trending/week"
+                className="text-sm  hover:text-cyan duration-200"
+              >
                 This Week
               </a>
             </div>
@@ -743,7 +746,10 @@ export default function Home() {
               >
                 Today
               </a>
-              <a href="/series/trending/week" className="text-sm  hover:text-cyan duration-200">
+              <a
+                href="/series/trending/week"
+                className="text-sm  hover:text-cyan duration-200"
+              >
                 This Week
               </a>
             </div>

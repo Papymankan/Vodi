@@ -1,29 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Loader from "../../Components/Loader/Loader";
 import Footer from "../../Components/Footer/Footer";
+import { useParams } from "react-router-dom";
+import { fetchTopYearMovies } from "../../Redux/Reducers/Movies";
 import { useSelector } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
-import Loader from "../../Components/Loader/Loader";
-import { fetchTrendingMovies } from "../../Redux/Reducers/Movies";
-import { useParams } from "react-router-dom";
 import Store from "../../Redux/Store";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-export default function TrendingMovies() {
+export default function TopYearMovies() {
+  const [page, setPage] = useState(1);
+  const [year, setYear] = useState(2024);
+  const [years, setYears] = useState({});
+  const [moviesList, setMoviesList] = useState([]);
   const params = useParams();
 
   useEffect(() => {
-    if (params.time) {
-      Store.dispatch(fetchTrendingMovies({ time: params.time }));
+    if (year && page) {
+      Store.dispatch(fetchTopYearMovies({ year, page }));
     }
-  }, [params]);
+  }, [year, page]);
 
-  const TrendingMovies = useSelector((state) => state.Movies.TrendingMovies);
+  useEffect(() => {
+    let arr = [];
+    for (let i = 1970; i < 2025; i++) {
+      arr.push(i);
+    }
+    arr.reverse()
+    setYears([...arr]);
+  }, []);
+
+  const TopYearMoviesList = useSelector((state) => state.Movies.TopYearMovies);
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
+  const loadingMore = useSelector((state) => state.Movies.loadingMore);
+
+  useEffect(() => {
+    if (TopYearMoviesList) {
+      setMoviesList([...moviesList, ...TopYearMoviesList.results]);
+    }
+  }, [TopYearMoviesList]);
+
+  const handleChange = (event) => {
+    setYear(event.target.value);
+    setPage(1);
+    setMoviesList([]);
+  };
 
 
   return (
     <>
       <NavBar />
-      {MovieGenres && (
+      {MovieGenres && TopYearMoviesList && (
         <>
           <div className="container mx-auto px-4 flex flex-col items-center ">
             {/* BreadCrumb */}
@@ -64,25 +91,48 @@ export default function TrendingMovies() {
                 href="#"
                 className="hover:text-cyan z-20 duration-200 text-white"
               >
-                Trending Movies
+                {year} Top Movies
               </a>
             </div>
 
             {/* Header */}
             <div className="w-full flex flex-col items-center mt-6">
               <h1 className="font-montserrat text-base xs:text-lg sm:text-2xl text-gray-400">
-                <span className="text-cyan">
-                  {params.time == "day" ? "Today" : "Week"}
-                </span>
-                's Trending Movies
+                <span className="text-cyan">{year}</span>'s Top Movies
               </h1>
+              <h4 className="text-gray-500 font-montserrat text-xs sm:text-sm">
+                Total Results : {TopYearMoviesList.total_results}
+              </h4>
+
+              <FormControl variant="filled" className="year_input">
+                <InputLabel id="demo-simple-select-filled-label">
+                  Year
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-filled-label"
+                  id="demo-simple-select-filled"
+                  value={year}
+                  onChange={handleChange}
+                >
+                  {/* {YearItems()} */}
+
+                  {years.map((year) => (
+                    <MenuItem value={year}>{year}</MenuItem>
+                  ))}
+
+                  {/* <MenuItem value={2024}>2024</MenuItem>
+                  <MenuItem value={2023}>2023</MenuItem>
+                  <MenuItem value={2022}>2022</MenuItem>
+                  <MenuItem value={2021}>2021</MenuItem> */}
+                </Select>
+              </FormControl>
             </div>
 
             {/* Movies */}
-            {TrendingMovies ? (
+            {moviesList.length > 0 ? (
               <div className="mt-16 w-full grid lg:grid-cols-6 md:grid-cols-5 xs:grid-cols-4 grid-cols-3 lg:gap-4 gap-3">
-                {TrendingMovies.length > 0 &&
-                  TrendingMovies.map((movie) => {
+                {moviesList.length > 0 &&
+                  moviesList.map((movie) => {
                     if (movie.poster_path) {
                       return (
                         <div className="w-full">
@@ -125,6 +175,14 @@ export default function TrendingMovies() {
                 <Loader />
               </div>
             )}
+
+            <button
+              className=" text-sm font-montserrat text-white px-4 py-2 bg-cyan rounded-md my-8"
+              onClick={() => setPage(page + 1)}
+              disabled={loadingMore}
+            >
+              {loadingMore ? "... Loading" : "More Movies"}
+            </button>
           </div>
 
           <Footer />

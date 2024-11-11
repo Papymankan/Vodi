@@ -33,9 +33,16 @@ export const fetchLandingMovies = createAsyncThunk(
 
 export const fetchTopYearMovies = createAsyncThunk(
   "Movies/fetchTopYearMovies",
-  async () => {
+  async ({ year, page }) => {
     return fetch(
-      BaseUrl + "discover/movie" + "?" + ApiKey + "&" + "year=2024",
+      BaseUrl +
+        "discover/movie" +
+        "?" +
+        ApiKey +
+        "&year=" +
+        year +
+        "&page=" +
+        page,
       {
         method: "GET",
         headers: {
@@ -49,14 +56,16 @@ export const fetchTopYearMovies = createAsyncThunk(
         }
       })
       .then((data) => {
-        return data.results;
+        console.log(data);
+        
+        return data;
       });
   }
 );
 
 export const fetchTrendingMovies = createAsyncThunk(
   "Movies/fetchTrendingMovies",
-  async ({time}) => {
+  async ({ time }) => {
     return fetch(BaseUrl + "trending/movie/" + time + "?" + ApiKey, {
       method: "GET",
       headers: {
@@ -357,7 +366,10 @@ const slice = createSlice({
         return { ...state, LandingMovies: action.payload };
       })
       .addCase(fetchTopYearMovies.fulfilled, (state, action) => {
-        return { ...state, TopYearMovies: action.payload };
+        return { ...state, loadingMore: false, TopYearMovies: action.payload };
+      })
+      .addCase(fetchTopYearMovies.pending, (state, action) => {
+        return { ...state, loadingMore: true };
       })
       .addCase(fetchMovieGenres.fulfilled, (state, action) => {
         return { ...state, MovieGenres: action.payload };

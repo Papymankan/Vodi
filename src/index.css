@@ -208,3 +208,35 @@ body{
 }
 
 /* episode section */
+
+/* Top Year Movies */
+
+.year_input{
+  color: white !important;
+  margin-top: 10px !important;
+  width: 100px;
+}
+
+.year_input>label{
+  @apply text-gray-500
+}
+.year_input>div{
+  color: white !important;
+  font-size: 15px !important;
+}
+
+.year_input>div>svg{
+  color: white !important;
+}
+
+@media (max-width: 768px) {
+  .year_input>label{
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .year_input>div{
+    color: white !important;
+    font-size: 13px !important;
+  }
+}
+/* Top Year Movies */
