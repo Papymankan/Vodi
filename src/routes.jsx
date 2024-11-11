@@ -5,6 +5,7 @@ import Home from "./Pages/Home/Home.jsx"
 import MovieDetail from "./Pages/MovieDetail/MovieDetail.jsx"
 import SerieDetail from "./Pages/SerieDetail/SerieDetail.jsx"
 import TrendingMovies from "./Pages/TrendingMovies/TrendingMovies.jsx"
+import TrendingSeries from "./Pages/TrendingSeries/TrendingSeries.jsx"
 
 
 const routes = [
@@ -15,6 +16,7 @@ const routes = [
     { path: '/movies/genre/:genreId', element: <GenreMovies /> },
     { path: '/series/genre/:genreId', element: <GenreSeries /> },
     { path: '/movies/trending/:time', element: <TrendingMovies /> },
+    { path: '/series/trending/:time', element: <TrendingSeries /> },
 ]
 
 export default routes

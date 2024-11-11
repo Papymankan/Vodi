@@ -177,7 +177,7 @@ export default function Home() {
     Store.dispatch(fetchLandingMovies());
 
     Store.dispatch(fetchTopYearSeries());
-    Store.dispatch(fetchTrendingSeries());
+    Store.dispatch(fetchTrendingSeries({time : "day"}));
     Store.dispatch(fetchLandingSeries());
   }, []);
 
@@ -738,12 +738,12 @@ export default function Home() {
             <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
             <div className="flex items-center justify-between space-x-12 py-6">
               <a
-                href="#"
+                href="/series/trending/day"
                 className="text-sm text-cyan hover:text-cyan duration-200"
               >
                 Today
               </a>
-              <a href="#" className="text-sm  hover:text-cyan duration-200">
+              <a href="/series/trending/week" className="text-sm  hover:text-cyan duration-200">
                 This Week
               </a>
             </div>
