@@ -5,6 +5,7 @@ import Home from "./Pages/Home/Home.jsx"
 import MovieDetail from "./Pages/MovieDetail/MovieDetail.jsx"
 import SerieDetail from "./Pages/SerieDetail/SerieDetail.jsx"
 import TopYearMovies from "./Pages/TopYearMovies/TopYearMovies.jsx"
+import TopYearSeries from "./Pages/TopYearSeries/TopYearSeries.jsx"
 import TrendingMovies from "./Pages/TrendingMovies/TrendingMovies.jsx"
 import TrendingSeries from "./Pages/TrendingSeries/TrendingSeries.jsx"
 
@@ -19,6 +20,7 @@ const routes = [
     { path: '/movies/trending/:time', element: <TrendingMovies /> },
     { path: '/series/trending/:time', element: <TrendingSeries /> },
     { path: '/movies/top-year', element: <TopYearMovies /> },
+    { path: '/series/top-year', element: <TopYearSeries /> },
 ]
 
 export default routes

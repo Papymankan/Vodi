@@ -69,6 +69,7 @@ export default function Home() {
 
   // Movies ----------------------------------
   const TopYearMovies = useSelector((state) => state.Movies.TopYearMovies);
+  console.log(TopYearMovies);
 
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
 
@@ -101,7 +102,6 @@ export default function Home() {
   const TopRatedMovie = useSelector((state) => state.Movies.TopRatedMovie);
 
   const LandingMovies = useSelector((state) => state.Movies.LandingMovies);
-  // console.log(LandingMovies);
 
   // Movies ----------------------------------
 
@@ -692,9 +692,9 @@ export default function Home() {
                 },
               }}
             >
-              {TopYearMovies &&
-                TopYearMovies.length > 0 &&
-                TopYearMovies.map((movie) => (
+              {TopYearMovies && TopYearMovies.results &&
+                TopYearMovies.results.length > 0 &&
+                TopYearMovies.results.map((movie) => (
                   <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
                     <a
                       href={"/movie/" + movie.id}
@@ -1126,9 +1126,9 @@ export default function Home() {
                 },
               }}
             >
-              {TopYearSeries &&
-                TopYearSeries.length > 0 &&
-                TopYearSeries.map((serie) => (
+              {TopYearSeries && TopYearSeries.results &&
+                TopYearSeries.results.length > 0 &&
+                TopYearSeries.results.map((serie) => (
                   <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
                     <a
                       href={"/serie/" + serie.id}

@@ -29,9 +29,17 @@ export const fetchLandingSeries = createAsyncThunk(
 
 export const fetchTopYearSeries = createAsyncThunk(
   "Series/fetchTopYearSeries",
-  async () => {
+  async ({ year, page }) => {
     return fetch(
-      BaseUrl + "discover/tv" + "?" + ApiKey + "&" + "first_air_date_year=2024",
+      BaseUrl +
+        "discover/tv" +
+        "?" +
+        ApiKey +
+        "&" +
+        "first_air_date_year=" +
+        year +
+        "&page=" +
+        page,
       {
         method: "GET",
         headers: {
@@ -45,14 +53,14 @@ export const fetchTopYearSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        return data.results;
+        return data;
       });
   }
 );
 
 export const fetchTrendingSeries = createAsyncThunk(
   "Series/fetchTrendingSeries",
-  async ({time}) => {
+  async ({ time }) => {
     return fetch(BaseUrl + "trending/tv/" + time + "?" + ApiKey, {
       method: "GET",
       headers: {
@@ -472,7 +480,10 @@ const slice = createSlice({
         return { ...state, LandingSeries: action.payload };
       })
       .addCase(fetchTopYearSeries.fulfilled, (state, action) => {
-        return { ...state, TopYearSeries: action.payload };
+        return { ...state, loadingMore: false, TopYearSeries: action.payload };
+      })
+      .addCase(fetchTopYearSeries.pending, (state, action) => {
+        return { ...state, loadingMore: true };
       })
       .addCase(fetchSerieGenres.fulfilled, (state, action) => {
         return { ...state, SerieGenres: action.payload };
