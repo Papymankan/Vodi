@@ -4,7 +4,7 @@ import { useRoutes } from "react-router-dom";
 import Store from "./Redux/Store.js";
 import {
   fetchMovieGenres,
-  fetchPopularMovies,
+  fetchPopularMovie,
   fetchTheaterMovies,
   fetchTopRatedMovie,
   fetchUpcomingMovies,
@@ -23,7 +23,7 @@ export default function App() {
   useEffect(() => {
     Store.dispatch(fetchMovieGenres());
     Store.dispatch(fetchTopRatedMovie());
-    Store.dispatch(fetchPopularMovies());
+    Store.dispatch(fetchPopularMovie());
     Store.dispatch(fetchTheaterMovies());
     Store.dispatch(fetchUpcomingMovies());
 

@@ -3,6 +3,7 @@ import GenreMovies from "./Pages/GenreMovies/GenreMovies.jsx"
 import GenreSeries from "./Pages/GenreSeries/GenreSeries.jsx"
 import Home from "./Pages/Home/Home.jsx"
 import MovieDetail from "./Pages/MovieDetail/MovieDetail.jsx"
+import PopularMovies from "./Pages/PopularMovies/PopularMovies.jsx"
 import SerieDetail from "./Pages/SerieDetail/SerieDetail.jsx"
 import TopYearMovies from "./Pages/TopYearMovies/TopYearMovies.jsx"
 import TopYearSeries from "./Pages/TopYearSeries/TopYearSeries.jsx"
@@ -21,6 +22,7 @@ const routes = [
     { path: '/series/trending/:time', element: <TrendingSeries /> },
     { path: '/movies/top-year', element: <TopYearMovies /> },
     { path: '/series/top-year', element: <TopYearSeries /> },
+    { path: '/movies/popular', element: <PopularMovies /> },
 ]
 
 export default routes

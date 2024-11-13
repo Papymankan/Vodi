@@ -8,13 +8,8 @@ import Footer from "../../Components/Footer/Footer";
 import Store from "../../Redux/Store";
 import {
   fetchLandingMovies,
-  fetchMovieGenres,
-  fetchPopularMovies,
-  fetchTheaterMovies,
-  fetchTopRatedMovie,
   fetchTopYearMovies,
   fetchTrendingMovies,
-  fetchUpcomingMovies,
 } from "../../Redux/Reducers/Movies";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
@@ -172,11 +167,11 @@ export default function Home() {
   }, [LandingMovies, LandingSeries]);
 
   useEffect(() => {
-    Store.dispatch(fetchTopYearMovies({ year: 2024 , page : 1}));
+    Store.dispatch(fetchTopYearMovies({ year: 2024, page: 1 }));
     Store.dispatch(fetchTrendingMovies({ time: "day" }));
     Store.dispatch(fetchLandingMovies());
 
-    Store.dispatch(fetchTopYearSeries({ year: 2024 , page : 1}));
+    Store.dispatch(fetchTopYearSeries({ year: 2024, page: 1 }));
     Store.dispatch(fetchTrendingSeries({ time: "day" }));
     Store.dispatch(fetchLandingSeries());
   }, []);
@@ -692,7 +687,8 @@ export default function Home() {
                 },
               }}
             >
-              {TopYearMovies && TopYearMovies.results &&
+              {TopYearMovies &&
+                TopYearMovies.results &&
                 TopYearMovies.results.length > 0 &&
                 TopYearMovies.results.map((movie) => (
                   <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
@@ -1126,7 +1122,8 @@ export default function Home() {
                 },
               }}
             >
-              {TopYearSeries && TopYearSeries.results &&
+              {TopYearSeries &&
+                TopYearSeries.results &&
                 TopYearSeries.results.length > 0 &&
                 TopYearSeries.results.map((serie) => (
                   <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
