@@ -12,7 +12,7 @@ import {
 import {
   fetchAirTodaySeries,
   fetchOnAirSeries,
-  fetchPopularSeries,
+  fetchPopularSerie,
   fetchSerieGenres,
   fetchTopRatedSerie,
 } from "./Redux/Reducers/Series.js";
@@ -29,7 +29,7 @@ export default function App() {
 
     Store.dispatch(fetchSerieGenres());
     Store.dispatch(fetchTopRatedSerie());
-    Store.dispatch(fetchPopularSeries());
+    Store.dispatch(fetchPopularSerie());
     Store.dispatch(fetchAirTodaySeries());
     Store.dispatch(fetchOnAirSeries());
   }, []);

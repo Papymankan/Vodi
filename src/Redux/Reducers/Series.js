@@ -118,8 +118,8 @@ export const fetchSerieGenres = createAsyncThunk(
   }
 );
 
-export const fetchPopularSeries = createAsyncThunk(
-  "Series/fetchPopularSeries",
+export const fetchPopularSerie = createAsyncThunk(
+  "Series/fetchPopularSerie",
   async () => {
     return fetch(BaseUrl + "discover/tv" + "?" + ApiKey, {
       method: "GET",
@@ -133,7 +133,29 @@ export const fetchPopularSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        return data.results;
+        return data.results[0];
+      });
+  }
+);
+
+export const fetchPopularSeries = createAsyncThunk(
+  "Series/fetchPopularSeries",
+  async ({ page }) => {
+    return fetch(BaseUrl + "discover/tv" + "?" + ApiKey + "&page=" + page, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        
+        return data;
       });
   }
 );
@@ -485,18 +507,30 @@ const slice = createSlice({
       .addCase(fetchTopYearSeries.pending, (state, action) => {
         return { ...state, loadingMore: true };
       })
+
       .addCase(fetchSerieGenres.fulfilled, (state, action) => {
         return { ...state, SerieGenres: action.payload };
       })
+
       .addCase(fetchTrendingSeries.fulfilled, (state, action) => {
         return { ...state, TrendingSeries: action.payload };
       })
+
       .addCase(fetchTopRatedSerie.fulfilled, (state, action) => {
         return { ...state, TopRatedSerie: action.payload };
       })
-      .addCase(fetchPopularSeries.fulfilled, (state, action) => {
-        return { ...state, PopularSeries: action.payload };
+
+      .addCase(fetchPopularSerie.fulfilled, (state, action) => {
+        return { ...state, PopularSerie: action.payload };
       })
+
+      .addCase(fetchPopularSeries.fulfilled, (state, action) => {
+        return { ...state, loadingMore: false, PopularSeries: action.payload };
+      })
+      .addCase(fetchPopularSeries.pending, (state, action) => {
+        return { ...state, loadingMore: true };
+      })
+
       .addCase(fetchAirTodaySeries.fulfilled, (state, action) => {
         return { ...state, AirTodaySeries: action.payload };
       })

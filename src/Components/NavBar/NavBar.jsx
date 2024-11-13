@@ -14,7 +14,7 @@ export default function NavBar() {
 
   const TopRatedSerie = useSelector((state) => state.Series.TopRatedSerie);
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
-  const PopularSeries = useSelector((state) => state.Series.PopularSeries);
+  const PopularSerie = useSelector((state) => state.Series.PopularSerie);
   const AirTodaySeries = useSelector((state) => state.Series.AirTodaySeries);
   const OnAirSeries = useSelector((state) => state.Series.OnAirSeries);
 
@@ -524,24 +524,24 @@ export default function NavBar() {
           >
             <div className="container mx-auto flex space-x-4 px-2">
               {/* Most Popular Series */}
-              {PopularSeries && (
+              {PopularSerie && (
                 <div className="border-r-2 py-2">
                   <h3 className="font-semibold pb-2">Most Popular Series</h3>
                   <div className="flex mt-3 space-x-4">
                     <img
-                      src={ImageBaseUrl + PopularSeries[0].poster_path}
+                      src={ImageBaseUrl + PopularSerie.poster_path}
                       alt=""
                       className="h-44"
                     />
                     <div className="max-w-52  pr-4">
                       <p className="text-slate-700 text-sm line-clamp-1">
                         {SerieGenres &&
-                          PopularSeries[0].genre_ids.map((id, index) => {
+                          PopularSerie.genre_ids.map((id, index) => {
                             let genre = SerieGenres.find(
                               (genre) => genre.id == id
                             );
                             if (
-                              PopularSeries[0].genre_ids.length ==
+                              PopularSerie.genre_ids.length ==
                               index + 1
                             ) {
                               return <span>{genre.name}</span>;
@@ -550,14 +550,14 @@ export default function NavBar() {
                           })}
                       </p>
                       <h3 className="font-semibold pb-1 line-clamp-1">
-                        {PopularSeries[0].name}
+                        {PopularSerie.name}
                       </h3>
                       <p className="line-clamp-5 text-xs">
-                        "{PopularSeries[0].overview}"
+                        "{PopularSerie.overview}"
                       </p>
                       <div className="flex items-center justify-between pr-6">
                         <a
-                          href={"/serie/" + PopularSeries[0].id}
+                          href={"/serie/" + PopularSerie.id}
                           className="text-[#24baef]  py-5 hover:scale-105 duration-200 text-sm font-bold"
                         >
                           Explore
