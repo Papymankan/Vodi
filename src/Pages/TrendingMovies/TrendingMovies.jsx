@@ -6,6 +6,7 @@ import Loader from "../../Components/Loader/Loader";
 import { fetchTrendingMovies } from "../../Redux/Reducers/Movies";
 import { useParams } from "react-router-dom";
 import Store from "../../Redux/Store";
+import MoviesList from "../../Components/MoviesList/MoviesList";
 
 export default function TrendingMovies() {
   const params = useParams();
@@ -80,46 +81,7 @@ export default function TrendingMovies() {
 
             {/* Movies */}
             {TrendingMovies ? (
-              <div className="mt-16 w-full grid lg:grid-cols-6 md:grid-cols-5 xs:grid-cols-4 grid-cols-3 lg:gap-4 gap-3">
-                {TrendingMovies.length > 0 &&
-                  TrendingMovies.map((movie) => {
-                    if (movie.poster_path) {
-                      return (
-                        <div className="w-full">
-                          <a
-                            href={"/movie/" + movie.id}
-                            className="relative w-full h-full"
-                          >
-                            <img
-                              src={
-                                "https://image.tmdb.org/t/p/w300" +
-                                movie.poster_path
-                              }
-                              alt=""
-                              className="w-full h-full"
-                            />
-                            <div className="text-slate-300 w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                              <p className="text-xs font-light line-clamp-1 text-start w-full">
-                                {MovieGenres &&
-                                  movie.genre_ids &&
-                                  movie.genre_ids.length > 0 &&
-                                  movie.genre_ids.map((id) => {
-                                    let genre = MovieGenres.find(
-                                      (genre) => genre.id == id
-                                    );
-                                    return <span>{genre.name}, </span>;
-                                  })}
-                              </p>
-                              <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
-                                {movie.title}
-                              </p>
-                            </div>
-                          </a>
-                        </div>
-                      );
-                    }
-                  })}
-              </div>
+              <MoviesList moviesList={TrendingMovies} MovieGenres={MovieGenres} />
             ) : (
               <div className="w-full h-lvh">
                 <Loader />
