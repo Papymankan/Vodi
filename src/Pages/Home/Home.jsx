@@ -726,7 +726,7 @@ export default function Home() {
           </div>
 
           <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
-            <a href="#" className="hover:text-cyan duration-200">
+            <a href="/movies/top-year" className="hover:text-cyan duration-200">
               VIEW ALL
             </a>
           </div>
@@ -1163,7 +1163,7 @@ export default function Home() {
           </div>
 
           <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
-            <a href="#" className="hover:text-cyan duration-200">
+            <a href="/series/top-year" className="hover:text-cyan duration-200">
               VIEW ALL
             </a>
           </div>

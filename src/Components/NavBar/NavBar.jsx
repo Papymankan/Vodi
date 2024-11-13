@@ -216,7 +216,7 @@ export default function NavBar() {
 
         {/* SunMenus */}
 
-        {/* Browse */}
+        {/* Genres */}
         {subMenu == "genres" && (
           <div
             className="w-full overflow-hidden shadow-lg top-16 py-4 bg-[#f6f7f9] absolute font-opensans md:block hidden z-20"
