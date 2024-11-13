@@ -33,7 +33,7 @@ export default function GenreMovies() {
   return (
     <>
       <NavBar />
-      {(MoviesWithGenre && MovieGenres) ? (
+      {MoviesWithGenre && MovieGenres ? (
         <>
           <div className="container mx-auto px-4 flex flex-col items-center ">
             {/* BreadCrumb */}
@@ -153,15 +153,17 @@ export default function GenreMovies() {
                   {loadingMore ? "... Loading" : "More Movies"}
                 </button>
               </>
-            ) : <Loader/>
-          }
+            ) : (
+              <Loader />
+            )}
           </div>
-
         </>
-      ) : <Loader/>
-      
-    }
-    <Footer />
+      ) : (
+        <div className="w-full h-lvh">
+          <Loader />
+        </div>
+      )}
+      <Footer />
     </>
   );
 }

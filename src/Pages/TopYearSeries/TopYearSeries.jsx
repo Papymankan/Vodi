@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../../Components/Footer/Footer";
 import NavBar from "../../Components/NavBar/NavBar";
+import SeriesList from "../../Components/SeriesList/SeriesList";
 import Store from "../../Redux/Store";
 import { fetchTopYearSeries } from "../../Redux/Reducers/Series";
 import { useSelector } from "react-redux";
@@ -47,7 +48,7 @@ export default function TopYearSeries() {
   return (
     <>
       <NavBar />
-      {SerieGenres && TopYearSeriesList && (
+      {SerieGenres && TopYearSeriesList ? (
         <>
           <div className="container mx-auto px-4 flex flex-col items-center ">
             {/* BreadCrumb */}
@@ -114,68 +115,34 @@ export default function TopYearSeries() {
                   {years.map((year) => (
                     <MenuItem value={year}>{year}</MenuItem>
                   ))}
-
                 </Select>
               </FormControl>
             </div>
 
             {/* Series */}
             {seriesList.length > 0 ? (
-              <div className="mt-16 w-full grid lg:grid-cols-6 md:grid-cols-5 xs:grid-cols-4 grid-cols-3 lg:gap-4 gap-3">
-                {seriesList.length > 0 &&
-                  seriesList.map((serie) => {
-                    if (serie.poster_path) {
-                      return (
-                        <div className="w-full">
-                          <a
-                            href={"/serie/" + serie.id}
-                            className="relative w-full h-full"
-                          >
-                            <img
-                              src={
-                                "https://image.tmdb.org/t/p/w300" +
-                                serie.poster_path
-                              }
-                              alt=""
-                              className="w-full h-full"
-                            />
-                            <div className="text-slate-300 w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                              <p className="text-xs font-light line-clamp-1 text-start w-full">
-                                {SerieGenres &&
-                                  serie.genre_ids &&
-                                  serie.genre_ids.length > 0 &&
-                                  serie.genre_ids.map((id) => {
-                                    let genre = SerieGenres.find(
-                                      (genre) => genre.id == id
-                                    );
-                                    return <span>{genre.name}, </span>;
-                                  })}
-                              </p>
-                              <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
-                                {serie.name}
-                              </p>
-                            </div>
-                          </a>
-                        </div>
-                      );
-                    }
-                  })}
-              </div>
+              <>
+                <SeriesList seriesList={seriesList} SerieGenres={SerieGenres} />
+
+                <button
+                  className=" text-sm font-montserrat text-white px-4 py-2 bg-cyan rounded-md my-8"
+                  onClick={() => setPage(page + 1)}
+                  disabled={loadingMore}
+                >
+                  {loadingMore ? "... Loading" : "More Series"}
+                </button>
+              </>
             ) : (
               <div className="w-full h-lvh">
                 <Loader />
               </div>
             )}
-
-            <button
-              className=" text-sm font-montserrat text-white px-4 py-2 bg-cyan rounded-md my-8"
-              onClick={() => setPage(page + 1)}
-              disabled={loadingMore}
-            >
-              {loadingMore ? "... Loading" : "More Series"}
-            </button>
           </div>
         </>
+      ) : (
+        <div className="w-full h-lvh">
+          <Loader />
+        </div>
       )}
       <Footer />
     </>

@@ -122,7 +122,11 @@ export default function GenreSeries() {
 
           <Footer />
         </>
-      ) : <Loader />
+      ) : (
+        <div className="w-full h-lvh">
+          <Loader />
+        </div>
+      )
     }
     </>
   );
