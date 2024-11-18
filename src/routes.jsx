@@ -6,6 +6,7 @@ import MovieDetail from "./Pages/MovieDetail/MovieDetail.jsx"
 import PopularMovies from "./Pages/PopularMovies/PopularMovies.jsx"
 import PopularSeries from "./Pages/PopularSeries/PopularSeries.jsx"
 import SerieDetail from "./Pages/SerieDetail/SerieDetail.jsx"
+import TopRatedMovies from "./Pages/TopRatedMovies/TopRatedMovies.jsx"
 import TopRatedSeries from "./Pages/TopRatedSeries/TopRatedSeries.jsx"
 import TopYearMovies from "./Pages/TopYearMovies/TopYearMovies.jsx"
 import TopYearSeries from "./Pages/TopYearSeries/TopYearSeries.jsx"
@@ -26,6 +27,7 @@ const routes = [
     { path: '/series/top-year', element: <TopYearSeries /> },
     { path: '/movies/popular', element: <PopularMovies /> },
     { path: '/series/popular', element: <PopularSeries /> },
+    { path: '/movies/top-rated', element: <TopRatedMovies /> },
     { path: '/series/top-rated', element: <TopRatedSeries /> },
 ]
 

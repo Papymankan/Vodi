@@ -373,7 +373,7 @@ export default function NavBar() {
                         >
                           Explore
                         </a>
-                        <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                        <a href="/movies/top-rated" className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
                           More
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -388,7 +388,7 @@ export default function NavBar() {
                               d="M1 1l8 8 8-8"
                             />
                           </svg>
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -617,7 +617,7 @@ export default function NavBar() {
                         >
                           Explore
                         </a>
-                        <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                        <a href="/series/top-rated" className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
                           More
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -632,7 +632,7 @@ export default function NavBar() {
                               d="M1 1l8 8 8-8"
                             />
                           </svg>
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
