@@ -193,13 +193,16 @@ export const fetchPopularMovies = createAsyncThunk(
 
 export const fetchTheaterMovies = createAsyncThunk(
   "Movies/fetchTheaterMovies",
-  async ({page}) => {
-    return fetch(BaseUrl + "movie/now_playing" + "?" + ApiKey + "&page=" + page, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    })
+  async ({ page }) => {
+    return fetch(
+      BaseUrl + "movie/now_playing" + "?" + ApiKey + "&page=" + page,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -213,8 +216,8 @@ export const fetchTheaterMovies = createAsyncThunk(
 
 export const fetchUpcomingMovies = createAsyncThunk(
   "Movies/fetchUpcomingMovies",
-  async () => {
-    return fetch(BaseUrl + "movie/upcoming" + "?" + ApiKey, {
+  async ({ page }) => {
+    return fetch(BaseUrl + "movie/upcoming" + "?" + ApiKey + "&page=" + page, {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -226,7 +229,7 @@ export const fetchUpcomingMovies = createAsyncThunk(
         }
       })
       .then((data) => {
-        return data.results;
+        return data;
       });
   }
 );
@@ -456,8 +459,12 @@ const slice = createSlice({
       })
 
       .addCase(fetchUpcomingMovies.fulfilled, (state, action) => {
-        return { ...state, UpcomingMovies: action.payload };
+        return { ...state, loadingMore: false, UpcomingMovies: action.payload };
       })
+      .addCase(fetchUpcomingMovies.pending, (state, action) => {
+        return { ...state, loadingMore: true };
+      })
+
       .addCase(fetchMovieDetails.fulfilled, (state, action) => {
         return { ...state, MovieDetails: action.payload };
       })

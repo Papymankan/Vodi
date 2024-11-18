@@ -19,7 +19,7 @@ export default function NavBar() {
       setTheaterMoviesList(TheaterMovies.results)
     }
     if(UpcomingMovies && upcomingMoviesList.length == 0){
-      setUpcomingMoviesList(UpcomingMovies)
+      setUpcomingMoviesList(UpcomingMovies.results)
     }
   } , [TheaterMovies , UpcomingMovies])
 
@@ -466,7 +466,7 @@ export default function NavBar() {
                   <div className="">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold">Upcomming Movies</h3>
-                      <a href="/movies/upcomming"  className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      <a href="/movies/upcoming"  className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
                         More
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

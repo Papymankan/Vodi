@@ -13,6 +13,7 @@ import TopYearMovies from "./Pages/TopYearMovies/TopYearMovies.jsx"
 import TopYearSeries from "./Pages/TopYearSeries/TopYearSeries.jsx"
 import TrendingMovies from "./Pages/TrendingMovies/TrendingMovies.jsx"
 import TrendingSeries from "./Pages/TrendingSeries/TrendingSeries.jsx"
+import UpcomingMovies from "./Pages/UpcomingMovies/UpcomingMovies.jsx"
 
 
 const routes = [
@@ -39,6 +40,7 @@ const routes = [
     { path: '/series/top-rated', element: <TopRatedSeries /> },
 
     { path: '/movies/in-theatre', element: <TheatreMovies /> },
+    { path: '/movies/upcoming', element: <UpcomingMovies /> },
 ]
 
 export default routes
