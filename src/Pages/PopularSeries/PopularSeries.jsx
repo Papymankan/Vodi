@@ -96,7 +96,7 @@ export default function PopularSeries() {
                   onClick={() => setPage(page + 1)}
                   disabled={loadingMore}
                 >
-                  {loadingMore ? "... Loading" : "More Movies"}
+                  {loadingMore ? "... Loading" : "More Series"}
                 </button>
               </>
             ) : (

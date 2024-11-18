@@ -35,9 +35,9 @@ export default function NavBar() {
     if (AirTodaySeries && airTodayList.length == 0) {
       setAirTodayList(AirTodaySeries.results);
     }
-    // if (OnAirSeries && onTheAir.length == 0) {
-    //   setOnTheAir(OnAirSeries.results);
-    // }
+    if (OnAirSeries && onTheAir.length == 0) {
+      setOnTheAir(OnAirSeries.results);
+    }
   }, [AirTodaySeries, OnAirSeries]);
 
   return (
@@ -735,7 +735,7 @@ export default function NavBar() {
                 )}
 
                 {/* On the air */}
-                {/* {OnAirSeries && onTheAir.length > 0 && (
+                {OnAirSeries && onTheAir.length > 0 && (
                   <div className="">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold">On the Air</h3>
@@ -790,7 +790,7 @@ export default function NavBar() {
                         ))}
                     </div>
                   </div>
-                )} */}
+                )}
               </div>
             </div>
           </div>

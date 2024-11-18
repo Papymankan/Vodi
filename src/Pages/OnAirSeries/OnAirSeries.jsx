@@ -1,36 +1,34 @@
 import React, { useEffect, useState } from "react";
-import Loader from "../../Components/Loader/Loader";
 import Footer from "../../Components/Footer/Footer";
+import Loader from "../../Components/Loader/Loader";
 import SeriesList from "../../Components/SeriesList/SeriesList";
+import NavBar from "../../Components/NavBar/NavBar";
 import { useSelector } from "react-redux";
 import Store from "../../Redux/Store";
-import { fetchTopRatedSeries } from "../../Redux/Reducers/Series";
-import NavBar from "../../Components/NavBar/NavBar";
+import { fetchOnAirSeries } from "../../Redux/Reducers/Series";
 
-export default function TopRatedSeries() {
-  const [page, setPage] = useState(1);
-  const [seriesList, setSeriesList] = useState([]);
+export default function OnAirSeries() {
 
-  const SerieGenres = useSelector((state) => state.Series.SerieGenres);
-
-  useEffect(() => {
-    if (SerieGenres && page) {
-      Store.dispatch(fetchTopRatedSeries({ page }));
-    }
-  }, [SerieGenres, page]);
-
-  const TopRatedSeries = useSelector((state) => state.Series.TopRatedSeries);
-
+    const [page, setPage] = useState(2);
+    const [seriesList, setSeriesList] = useState([]);
   
+    const SerieGenres = useSelector((state) => state.Series.SerieGenres);
   
-  const loadingMore = useSelector((state) => state.Series.loadingMore);
+    useEffect(() => {
+      if (SerieGenres && page > 2) {
+        Store.dispatch(fetchOnAirSeries({ page }));
+      }
+    }, [SerieGenres, page]);
   
-  useEffect(() => {
-    if (TopRatedSeries) {
-      console.log(TopRatedSeries);
-      setSeriesList([...seriesList, ...TopRatedSeries.results]);
-    }
-  }, [TopRatedSeries]);
+    const OnAirSeries = useSelector((state) => state.Series.OnAirSeries);
+    const loadingMore = useSelector((state) => state.Series.loadingMore);
+    
+    useEffect(() => {
+      if (OnAirSeries) {
+        setSeriesList([...seriesList, ...OnAirSeries.results]);
+      }
+    }, [OnAirSeries]);
+
 
   return (
     <>
@@ -76,24 +74,22 @@ export default function TopRatedSeries() {
                 href="#"
                 className="hover:text-cyan z-20 duration-200 text-white"
               >
-                Top rated series
+                On air series
               </a>
             </div>
 
             {/* Header */}
             <div className="w-full flex flex-col items-center mt-6">
               <h1 className="font-montserrat text-base xs:text-lg sm:text-2xl text-gray-400">
-                Top Rated series
+                On The Air Series
               </h1>
               <h4 className="text-gray-500 font-montserrat text-xs sm:text-sm">
-                Total Results : {TopRatedSeries && TopRatedSeries.total_results}
+                Total Results : {OnAirSeries && OnAirSeries.total_results}
               </h4>
             </div>
 
             {/* Series */}
-            {seriesList &&
-            seriesList &&
-            seriesList.length > 0 ? (
+            {seriesList && seriesList && seriesList.length > 0 ? (
               <>
                 <SeriesList seriesList={seriesList} SerieGenres={SerieGenres} />
 

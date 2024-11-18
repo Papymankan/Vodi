@@ -112,7 +112,7 @@ export default function GenreSeries() {
                   onClick={() => setPage(page + 1)}
                   disabled={loadingMore}
                 >
-                  {loadingMore ? "... Loading" : "More Movies"}
+                  {loadingMore ? "... Loading" : "More Series"}
                 </button>
               </>
             ) : (

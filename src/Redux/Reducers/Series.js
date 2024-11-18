@@ -213,7 +213,7 @@ export const fetchAirTodaySeries = createAsyncThunk(
 
 export const fetchOnAirSeries = createAsyncThunk(
   "Series/fetchOnAirSeries",
-  async ({page}) => {
+  async ({ page }) => {
     return fetch(BaseUrl + "tv/on_the_air" + "?" + ApiKey + "&page=" + page, {
       method: "GET",
       headers: {
@@ -226,7 +226,7 @@ export const fetchOnAirSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        return data.results;
+        return data;
       });
   }
 );
@@ -570,15 +570,19 @@ const slice = createSlice({
       })
 
       .addCase(fetchAirTodaySeries.fulfilled, (state, action) => {
-        return { ...state,loadingMore: false, AirTodaySeries: action.payload };
+        return { ...state, loadingMore: false, AirTodaySeries: action.payload };
       })
       .addCase(fetchAirTodaySeries.pending, (state, action) => {
         return { ...state, loadingMore: true };
       })
 
       .addCase(fetchOnAirSeries.fulfilled, (state, action) => {
-        return { ...state,  OnAirSeries: action.payload };
+        return { ...state, loadingMore: false, OnAirSeries: action.payload };
       })
+      .addCase(fetchOnAirSeries.pending, (state, action) => {
+        return { ...state, loadingMore: true };
+      })
+
       .addCase(fetchSerieDetails.fulfilled, (state, action) => {
         return { ...state, SerieDetails: action.payload };
       })

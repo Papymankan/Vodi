@@ -4,6 +4,7 @@ import GenreMovies from "./Pages/GenreMovies/GenreMovies.jsx"
 import GenreSeries from "./Pages/GenreSeries/GenreSeries.jsx"
 import Home from "./Pages/Home/Home.jsx"
 import MovieDetail from "./Pages/MovieDetail/MovieDetail.jsx"
+import OnAirSeries from "./Pages/OnAirSeries/OnAirSeries.jsx"
 import PopularMovies from "./Pages/PopularMovies/PopularMovies.jsx"
 import PopularSeries from "./Pages/PopularSeries/PopularSeries.jsx"
 import SerieDetail from "./Pages/SerieDetail/SerieDetail.jsx"
@@ -44,6 +45,7 @@ const routes = [
     { path: '/movies/upcoming', element: <UpcomingMovies /> },
 
     { path: '/series/airing-today', element: <AirTodaySeries /> },
+    { path: '/series/on-air', element: <OnAirSeries /> },
 ]
 
 export default routes

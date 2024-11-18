@@ -10,13 +10,13 @@ import { fetchAirTodaySeries } from '../../Redux/Reducers/Series';
 
 export default function AirTodaySeries() {
 
-    const [page, setPage] = useState(2);
+    const [page, setPage] = useState(1);
     const [seriesList, setSeriesList] = useState([]);
   
     const SerieGenres = useSelector((state) => state.Series.SerieGenres);
   
     useEffect(() => {
-      if (SerieGenres && page > 2) {
+      if (SerieGenres && page > 1) {
         Store.dispatch(fetchAirTodaySeries({ page }));
       }
     }, [SerieGenres, page]);
@@ -101,7 +101,7 @@ export default function AirTodaySeries() {
                       onClick={() => setPage(page + 1)}
                       disabled={loadingMore}
                     >
-                      {loadingMore ? "... Loading" : "More Movies"}
+                      {loadingMore ? "... Loading" : "More Series"}
                     </button>
                   </>
                 ) : (
