@@ -296,10 +296,7 @@ export default function NavBar() {
                             let genre = MovieGenres.find(
                               (genre) => genre.id == id
                             );
-                            if (
-                              PopularMovie.genre_ids.length ==
-                              index + 1
-                            ) {
+                            if (PopularMovie.genre_ids.length == index + 1) {
                               return <span>{genre.name}</span>;
                             }
                             return <span>{genre.name}, </span>;
@@ -318,7 +315,7 @@ export default function NavBar() {
                         >
                           Explore
                         </a>
-                        <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                        <a href="/movies/popular" className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
                           More
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -333,7 +330,7 @@ export default function NavBar() {
                               d="M1 1l8 8 8-8"
                             />
                           </svg>
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -540,10 +537,7 @@ export default function NavBar() {
                             let genre = SerieGenres.find(
                               (genre) => genre.id == id
                             );
-                            if (
-                              PopularSerie.genre_ids.length ==
-                              index + 1
-                            ) {
+                            if (PopularSerie.genre_ids.length == index + 1) {
                               return <span>{genre.name}</span>;
                             }
                             return <span>{genre.name}, </span>;
@@ -562,7 +556,10 @@ export default function NavBar() {
                         >
                           Explore
                         </a>
-                        <button className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                        <a
+                          href="/series/popular"
+                          className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200"
+                        >
                           More
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -577,7 +574,7 @@ export default function NavBar() {
                               d="M1 1l8 8 8-8"
                             />
                           </svg>
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../../Components/NavBar/NavBar";
 import Loader from "../../Components/Loader/Loader";
 import Footer from "../../Components/Footer/Footer";
 import SeriesList from "../../Components/SeriesList/SeriesList";
 import { useSelector } from "react-redux";
-import { fetchPopularSeries } from "../../Redux/Reducers/Series";
 import Store from "../../Redux/Store";
+import { fetchTopRatedSeries } from "../../Redux/Reducers/Series";
+import NavBar from "../../Components/NavBar/NavBar";
 
-export default function PopularSeries() {
+export default function TopRatedSeries() {
   const [page, setPage] = useState(1);
   const [seriesList, setSeriesList] = useState([]);
 
@@ -15,18 +15,22 @@ export default function PopularSeries() {
 
   useEffect(() => {
     if (SerieGenres && page) {
-      Store.dispatch(fetchPopularSeries({ page }));
+      Store.dispatch(fetchTopRatedSeries({ page }));
     }
   }, [SerieGenres, page]);
 
-  const PopularSeries = useSelector((state) => state.Series.PopularSeries);
-  const loadingMore = useSelector((state) => state.Series.loadingMore);
+  const TopRatedSeries = useSelector((state) => state.Series.TopRatedSeries);
 
+  
+  
+  const loadingMore = useSelector((state) => state.Series.loadingMore);
+  
   useEffect(() => {
-    if (PopularSeries) {
-      setSeriesList([...seriesList, ...PopularSeries.results]);
+    if (TopRatedSeries) {
+      console.log(TopRatedSeries);
+      setSeriesList([...seriesList, ...TopRatedSeries.results]);
     }
-  }, [PopularSeries]);
+  }, [TopRatedSeries]);
 
   return (
     <>
@@ -72,19 +76,21 @@ export default function PopularSeries() {
                 href="#"
                 className="hover:text-cyan z-20 duration-200 text-white"
               >
-                Popular series
+                Top rated series
               </a>
             </div>
 
             {/* Header */}
             <div className="w-full flex flex-col items-center mt-6">
               <h1 className="font-montserrat text-base xs:text-lg sm:text-2xl text-gray-400">
-                Most popular series
+                Top Rated series
               </h1>
             </div>
 
             {/* Series */}
-            {seriesList && seriesList.length > 0 ? (
+            {seriesList &&
+            seriesList &&
+            seriesList.length > 0 ? (
               <>
                 <SeriesList seriesList={seriesList} SerieGenres={SerieGenres} />
 

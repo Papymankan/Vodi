@@ -97,7 +97,9 @@ export default function PopularMovies() {
                 </button>
               </>
             ) : (
-              <Loader />
+              <div className="h-svh">
+                <Loader />
+              </div>
             )}
           </div>
 

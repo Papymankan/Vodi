@@ -98,6 +98,28 @@ export const fetchTopRatedSerie = createAsyncThunk(
   }
 );
 
+export const fetchTopRatedSeries = createAsyncThunk(
+  "Series/fetchTopRatedSeries",
+  async ({page}) => {
+    return fetch(BaseUrl + "discover/tv" + "?" + ApiKey + "&page=" + page + "&sort_by=vote_count.desc", {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {        
+        console.log(data);
+        
+        return data;
+      });
+  }
+);
+
 export const fetchSerieGenres = createAsyncThunk(
   "Series/fetchSerieGenres",
   async () => {
@@ -518,6 +540,13 @@ const slice = createSlice({
 
       .addCase(fetchTopRatedSerie.fulfilled, (state, action) => {
         return { ...state, TopRatedSerie: action.payload };
+      })
+
+      .addCase(fetchTopRatedSeries.fulfilled, (state, action) => {
+        return { ...state, loadingMore: false, TopRatedSeries: action.payload };
+      })
+      .addCase(fetchTopRatedSeries.pending, (state, action) => {
+        return { ...state, loadingMore: true };
       })
 
       .addCase(fetchPopularSerie.fulfilled, (state, action) => {
