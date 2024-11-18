@@ -30,8 +30,8 @@ export default function App() {
     Store.dispatch(fetchSerieGenres());
     Store.dispatch(fetchTopRatedSerie());
     Store.dispatch(fetchPopularSerie());
-    Store.dispatch(fetchAirTodaySeries());
-    Store.dispatch(fetchOnAirSeries());
+    Store.dispatch(fetchAirTodaySeries({page:1}));
+    Store.dispatch(fetchOnAirSeries({page:2}));
   }, []);
 
   return <>{router}</>;

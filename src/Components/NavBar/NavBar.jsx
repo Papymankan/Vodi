@@ -7,6 +7,8 @@ export default function NavBar() {
   const [subMenu, setSubMenu] = useState("");
   const [theaterMoviesList, setTheaterMoviesList] = useState([]);
   const [upcomingMoviesList, setUpcomingMoviesList] = useState([]);
+  const [airTodayList, setAirTodayList] = useState([]);
+  const [onTheAir, setOnTheAir] = useState([]);
 
   const TopRatedMovie = useSelector((state) => state.Movies.TopRatedMovie);
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
@@ -14,20 +16,29 @@ export default function NavBar() {
   const TheaterMovies = useSelector((state) => state.Movies.TheaterMovies);
   const UpcomingMovies = useSelector((state) => state.Movies.UpcomingMovies);
 
-  useEffect(()=>{
-    if(TheaterMovies && theaterMoviesList.length == 0){
-      setTheaterMoviesList(TheaterMovies.results)
+  useEffect(() => {
+    if (TheaterMovies && theaterMoviesList.length == 0) {
+      setTheaterMoviesList(TheaterMovies.results);
     }
-    if(UpcomingMovies && upcomingMoviesList.length == 0){
-      setUpcomingMoviesList(UpcomingMovies.results)
+    if (UpcomingMovies && upcomingMoviesList.length == 0) {
+      setUpcomingMoviesList(UpcomingMovies.results);
     }
-  } , [TheaterMovies , UpcomingMovies])
+  }, [TheaterMovies, UpcomingMovies]);
 
   const TopRatedSerie = useSelector((state) => state.Series.TopRatedSerie);
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
   const PopularSerie = useSelector((state) => state.Series.PopularSerie);
   const AirTodaySeries = useSelector((state) => state.Series.AirTodaySeries);
   const OnAirSeries = useSelector((state) => state.Series.OnAirSeries);
+
+  useEffect(() => {
+    if (AirTodaySeries && airTodayList.length == 0) {
+      setAirTodayList(AirTodaySeries.results);
+    }
+    // if (OnAirSeries && onTheAir.length == 0) {
+    //   setOnTheAir(OnAirSeries.results);
+    // }
+  }, [AirTodaySeries, OnAirSeries]);
 
   return (
     <>
@@ -326,7 +337,10 @@ export default function NavBar() {
                         >
                           Explore
                         </a>
-                        <a href="/movies/popular" className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                        <a
+                          href="/movies/popular"
+                          className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200"
+                        >
                           More
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -384,7 +398,10 @@ export default function NavBar() {
                         >
                           Explore
                         </a>
-                        <a href="/movies/top-rated" className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                        <a
+                          href="/movies/top-rated"
+                          className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200"
+                        >
                           More
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -412,7 +429,10 @@ export default function NavBar() {
                   <div className="py-2">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold">Movies In Theatres</h3>
-                      <a href="/movies/in-theatre" className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      <a
+                        href="/movies/in-theatre"
+                        className="text-xs font-bold flex items-center hover:opacity-60 duration-200"
+                      >
                         More
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -465,8 +485,11 @@ export default function NavBar() {
                 {UpcomingMovies && upcomingMoviesList.length > 0 && (
                   <div className="">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-semibold">Upcomming Movies</h3>
-                      <a href="/movies/upcoming"  className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      <h3 className="font-semibold">Upcoming Movies</h3>
+                      <a
+                        href="/movies/upcoming"
+                        className="text-xs font-bold flex items-center hover:opacity-60 duration-200"
+                      >
                         More
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -628,7 +651,10 @@ export default function NavBar() {
                         >
                           Explore
                         </a>
-                        <a href="/series/top-rated" className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200">
+                        <a
+                          href="/series/top-rated"
+                          className="text-xs font-bold flex items-center py-5 hover:opacity-60 duration-200"
+                        >
                           More
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -652,11 +678,14 @@ export default function NavBar() {
 
               <div className=" flex-1">
                 {/* Airing today */}
-                {AirTodaySeries && (
+                {AirTodaySeries && airTodayList.length > 0 && (
                   <div className="py-2">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold">Airing Today</h3>
-                      <a href="/series/airing-today" className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      <a
+                        href="/series/airing-today"
+                        className="text-xs font-bold flex items-center hover:opacity-60 duration-200"
+                      >
                         More
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -674,8 +703,8 @@ export default function NavBar() {
                       </a>
                     </div>
                     <div className="flex items-center py-3 space-x-4">
-                      {AirTodaySeries &&
-                        AirTodaySeries.slice(0, 4).map((serie, index) => (
+                      {airTodayList &&
+                        airTodayList.slice(0, 4).map((serie, index) => (
                           <div
                             className={` ${index == 2 && "lg:flex hidden"} ${
                               index == 3 && "xl:flex hidden"
@@ -706,11 +735,14 @@ export default function NavBar() {
                 )}
 
                 {/* On the air */}
-                {OnAirSeries && (
+                {/* {OnAirSeries && onTheAir.length > 0 && (
                   <div className="">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold">On the Air</h3>
-                      <a  href="/series/on-air"  className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      <a
+                        href="/series/on-air"
+                        className="text-xs font-bold flex items-center hover:opacity-60 duration-200"
+                      >
                         More
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -729,8 +761,8 @@ export default function NavBar() {
                     </div>
 
                     <div className="flex items-center py-3 space-x-4">
-                      {OnAirSeries &&
-                        OnAirSeries.slice(0, 4).map((serie, index) => (
+                      {onTheAir &&
+                        onTheAir.slice(0, 4).map((serie, index) => (
                           <div
                             className={` ${index == 2 && "lg:flex hidden"} ${
                               index == 3 && "xl:flex hidden"
@@ -758,7 +790,7 @@ export default function NavBar() {
                         ))}
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           </div>

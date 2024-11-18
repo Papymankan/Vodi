@@ -1,3 +1,4 @@
+import AirTodaySeries from "./Pages/AirTodaySeries/AirTodaySeries.jsx"
 import EpisodeDetail from "./Pages/EpisodeDetail/EpisodeDetail.jsx"
 import GenreMovies from "./Pages/GenreMovies/GenreMovies.jsx"
 import GenreSeries from "./Pages/GenreSeries/GenreSeries.jsx"
@@ -41,6 +42,8 @@ const routes = [
 
     { path: '/movies/in-theatre', element: <TheatreMovies /> },
     { path: '/movies/upcoming', element: <UpcomingMovies /> },
+
+    { path: '/series/airing-today', element: <AirTodaySeries /> },
 ]
 
 export default routes

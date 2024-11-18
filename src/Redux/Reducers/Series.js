@@ -100,21 +100,30 @@ export const fetchTopRatedSerie = createAsyncThunk(
 
 export const fetchTopRatedSeries = createAsyncThunk(
   "Series/fetchTopRatedSeries",
-  async ({page}) => {
-    return fetch(BaseUrl + "discover/tv" + "?" + ApiKey + "&page=" + page + "&sort_by=vote_count.desc", {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    })
+  async ({ page }) => {
+    return fetch(
+      BaseUrl +
+        "discover/tv" +
+        "?" +
+        ApiKey +
+        "&page=" +
+        page +
+        "&sort_by=vote_count.desc",
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
       .then((res) => {
         if (res.ok) {
           return res.json();
         }
       })
-      .then((data) => {        
+      .then((data) => {
         console.log(data);
-        
+
         return data;
       });
   }
@@ -176,7 +185,7 @@ export const fetchPopularSeries = createAsyncThunk(
       })
       .then((data) => {
         console.log(data);
-        
+
         return data;
       });
   }
@@ -184,8 +193,8 @@ export const fetchPopularSeries = createAsyncThunk(
 
 export const fetchAirTodaySeries = createAsyncThunk(
   "Series/fetchAirTodaySeries",
-  async () => {
-    return fetch(BaseUrl + "tv/airing_today" + "?" + ApiKey, {
+  async ({ page }) => {
+    return fetch(BaseUrl + "tv/airing_today" + "?" + ApiKey + "&page=" + page, {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -197,15 +206,15 @@ export const fetchAirTodaySeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        return data.results;
+        return data;
       });
   }
 );
 
 export const fetchOnAirSeries = createAsyncThunk(
   "Series/fetchOnAirSeries",
-  async () => {
-    return fetch(BaseUrl + "tv/on_the_air" + "?" + ApiKey + "&page=2", {
+  async ({page}) => {
+    return fetch(BaseUrl + "tv/on_the_air" + "?" + ApiKey + "&page=" + page, {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -561,10 +570,14 @@ const slice = createSlice({
       })
 
       .addCase(fetchAirTodaySeries.fulfilled, (state, action) => {
-        return { ...state, AirTodaySeries: action.payload };
+        return { ...state,loadingMore: false, AirTodaySeries: action.payload };
       })
+      .addCase(fetchAirTodaySeries.pending, (state, action) => {
+        return { ...state, loadingMore: true };
+      })
+
       .addCase(fetchOnAirSeries.fulfilled, (state, action) => {
-        return { ...state, OnAirSeries: action.payload };
+        return { ...state,  OnAirSeries: action.payload };
       })
       .addCase(fetchSerieDetails.fulfilled, (state, action) => {
         return { ...state, SerieDetails: action.payload };
