@@ -1,41 +1,40 @@
 import React, { useEffect, useState } from "react";
-import Loader from "../../Components/Loader/Loader";
 import Footer from "../../Components/Footer/Footer";
-import SeriesList from "../../Components/SeriesList/SeriesList";
+import Loader from "../../Components/Loader/Loader";
+import NavBar from "../../Components/NavBar/NavBar";
+import MoviesList from "../../Components/MoviesList/MoviesList";
 import { useSelector } from "react-redux";
 import Store from "../../Redux/Store";
-import { fetchTopRatedSeries } from "../../Redux/Reducers/Series";
-import NavBar from "../../Components/NavBar/NavBar";
+import { fetchTheaterMovies } from "../../Redux/Reducers/Movies";
 
-export default function TopRatedSeries() {
-  const [page, setPage] = useState(1);
-  const [seriesList, setSeriesList] = useState([]);
+export default function TheatreMovies() {
 
-  const SerieGenres = useSelector((state) => state.Series.SerieGenres);
-
-  useEffect(() => {
-    if (SerieGenres && page) {
-      Store.dispatch(fetchTopRatedSeries({ page }));
-    }
-  }, [SerieGenres, page]);
-
-  const TopRatedSeries = useSelector((state) => state.Series.TopRatedSeries);
-
+    const [page, setPage] = useState(1);
+    const [moviesList, setMoviesList] = useState([]);
   
+    const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
   
-  const loadingMore = useSelector((state) => state.Series.loadingMore);
+    useEffect(() => {
+      if (MovieGenres && page > 1) {
+        Store.dispatch(fetchTheaterMovies({ page }));
+      }
+    }, [MovieGenres, page]);
   
-  useEffect(() => {
-    if (TopRatedSeries) {
-      console.log(TopRatedSeries);
-      setSeriesList([...seriesList, ...TopRatedSeries.results]);
-    }
-  }, [TopRatedSeries]);
+    const TheaterMovies = useSelector((state) => state.Movies.TheaterMovies);
+    console.log(TheaterMovies);
+    
+    const loadingMore = useSelector((state) => state.Movies.loadingMore);
+    
+    useEffect(() => {
+        if (TheaterMovies) {
+          setMoviesList([...moviesList, ...TheaterMovies.results]);
+      }
+    }, [TheaterMovies]);
 
   return (
     <>
       <NavBar />
-      {SerieGenres && (
+      {MovieGenres &&  (
         <>
           <div className="container mx-auto px-4 flex flex-col items-center ">
             {/* BreadCrumb */}
@@ -57,7 +56,7 @@ export default function TopRatedSeries() {
                 />
               </svg>
               <a href="#" className="hover:text-cyan z-20 duration-200">
-                Series
+                Movies
               </a>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -76,26 +75,24 @@ export default function TopRatedSeries() {
                 href="#"
                 className="hover:text-cyan z-20 duration-200 text-white"
               >
-                Top rated series
+                Theatre movies
               </a>
             </div>
 
             {/* Header */}
             <div className="w-full flex flex-col items-center mt-6">
               <h1 className="font-montserrat text-base xs:text-lg sm:text-2xl text-gray-400">
-                Top Rated series
+                Movies in Theatre
               </h1>
               <h4 className="text-gray-500 font-montserrat text-xs sm:text-sm">
-                Total Results : {TopRatedSeries && TopRatedSeries.total_results}
+                Total Results : {TheaterMovies && TheaterMovies.total_results}
               </h4>
             </div>
 
-            {/* Series */}
-            {seriesList &&
-            seriesList &&
-            seriesList.length > 0 ? (
+            {/* Movies */}
+            {moviesList && moviesList.length > 0 ? (
               <>
-                <SeriesList seriesList={seriesList} SerieGenres={SerieGenres} />
+                <MoviesList moviesList={moviesList} MovieGenres={MovieGenres} />
 
                 <button
                   className=" text-sm font-montserrat text-white px-4 py-2 bg-cyan rounded-md my-8"

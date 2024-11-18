@@ -6,6 +6,7 @@ import MovieDetail from "./Pages/MovieDetail/MovieDetail.jsx"
 import PopularMovies from "./Pages/PopularMovies/PopularMovies.jsx"
 import PopularSeries from "./Pages/PopularSeries/PopularSeries.jsx"
 import SerieDetail from "./Pages/SerieDetail/SerieDetail.jsx"
+import TheatreMovies from "./Pages/TheatreMovies/TheatreMovies.jsx"
 import TopRatedMovies from "./Pages/TopRatedMovies/TopRatedMovies.jsx"
 import TopRatedSeries from "./Pages/TopRatedSeries/TopRatedSeries.jsx"
 import TopYearMovies from "./Pages/TopYearMovies/TopYearMovies.jsx"
@@ -16,19 +17,28 @@ import TrendingSeries from "./Pages/TrendingSeries/TrendingSeries.jsx"
 
 const routes = [
     { path: '/', element: <Home /> },
+
     { path: '/movie/:id', element: <MovieDetail /> },
     { path: '/serie/:id', element: <SerieDetail /> },
+
     { path: '/serie/:id/:season/:episode', element: <EpisodeDetail /> },
+
     { path: '/movies/genre/:genreId', element: <GenreMovies /> },
     { path: '/series/genre/:genreId', element: <GenreSeries /> },
+
     { path: '/movies/trending/:time', element: <TrendingMovies /> },
     { path: '/series/trending/:time', element: <TrendingSeries /> },
+
     { path: '/movies/top-year', element: <TopYearMovies /> },
     { path: '/series/top-year', element: <TopYearSeries /> },
+
     { path: '/movies/popular', element: <PopularMovies /> },
     { path: '/series/popular', element: <PopularSeries /> },
+
     { path: '/movies/top-rated', element: <TopRatedMovies /> },
     { path: '/series/top-rated', element: <TopRatedSeries /> },
+
+    { path: '/movies/in-theatre', element: <TheatreMovies /> },
 ]
 
 export default routes

@@ -24,7 +24,7 @@ export default function App() {
     Store.dispatch(fetchMovieGenres());
     Store.dispatch(fetchTopRatedMovie());
     Store.dispatch(fetchPopularMovie());
-    Store.dispatch(fetchTheaterMovies());
+    Store.dispatch(fetchTheaterMovies({page:1}));
     Store.dispatch(fetchUpcomingMovies());
 
     Store.dispatch(fetchSerieGenres());

@@ -1,16 +1,27 @@
 import { Avatar } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 
 export default function NavBar() {
   const [subMenu, setSubMenu] = useState("");
+  const [theaterMoviesList, setTheaterMoviesList] = useState([]);
+  const [upcomingMoviesList, setUpcomingMoviesList] = useState([]);
 
   const TopRatedMovie = useSelector((state) => state.Movies.TopRatedMovie);
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
   const PopularMovie = useSelector((state) => state.Movies.PopularMovie);
   const TheaterMovies = useSelector((state) => state.Movies.TheaterMovies);
   const UpcomingMovies = useSelector((state) => state.Movies.UpcomingMovies);
+
+  useEffect(()=>{
+    if(TheaterMovies && theaterMoviesList.length == 0){
+      setTheaterMoviesList(TheaterMovies.results)
+    }
+    if(UpcomingMovies && upcomingMoviesList.length == 0){
+      setUpcomingMoviesList(UpcomingMovies)
+    }
+  } , [TheaterMovies , UpcomingMovies])
 
   const TopRatedSerie = useSelector((state) => state.Series.TopRatedSerie);
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
@@ -397,11 +408,11 @@ export default function NavBar() {
 
               <div className=" flex-1">
                 {/* Now Playing */}
-                {TheaterMovies && (
+                {TheaterMovies && theaterMoviesList.length > 0 && (
                   <div className="py-2">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold">Movies In Theatres</h3>
-                      <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      <a href="/movies/in-theatre" className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
                         More
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -416,11 +427,11 @@ export default function NavBar() {
                             d="M1 1l8 8 8-8"
                           />
                         </svg>
-                      </button>
+                      </a>
                     </div>
                     <div className="flex items-center py-3 space-x-4">
-                      {TheaterMovies &&
-                        TheaterMovies.slice(0, 4).map((movie, index) => (
+                      {theaterMoviesList &&
+                        theaterMoviesList.slice(0, 4).map((movie, index) => (
                           <div
                             className={` ${index == 2 && "lg:flex hidden"} ${
                               index == 3 && "xl:flex hidden"
@@ -451,11 +462,11 @@ export default function NavBar() {
                 )}
 
                 {/* Upcomming */}
-                {UpcomingMovies && (
+                {UpcomingMovies && upcomingMoviesList.length > 0 && (
                   <div className="">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold">Upcomming Movies</h3>
-                      <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      <a href="/movies/upcomming"  className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
                         More
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -470,11 +481,11 @@ export default function NavBar() {
                             d="M1 1l8 8 8-8"
                           />
                         </svg>
-                      </button>
+                      </a>
                     </div>
                     <div className="flex items-center py-3 space-x-4">
-                      {UpcomingMovies &&
-                        UpcomingMovies.slice(1, 5).map((movie, index) => (
+                      {upcomingMoviesList &&
+                        upcomingMoviesList.slice(1, 5).map((movie, index) => (
                           <div
                             className={` ${index == 2 && "lg:flex hidden"} ${
                               index == 3 && "xl:flex hidden"
@@ -645,7 +656,7 @@ export default function NavBar() {
                   <div className="py-2">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold">Airing Today</h3>
-                      <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      <a href="/series/airing-today" className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
                         More
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -660,7 +671,7 @@ export default function NavBar() {
                             d="M1 1l8 8 8-8"
                           />
                         </svg>
-                      </button>
+                      </a>
                     </div>
                     <div className="flex items-center py-3 space-x-4">
                       {AirTodaySeries &&
@@ -699,7 +710,7 @@ export default function NavBar() {
                   <div className="">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold">On the Air</h3>
-                      <button className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
+                      <a  href="/series/on-air"  className="text-xs font-bold flex items-center hover:opacity-60 duration-200">
                         More
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -714,7 +725,7 @@ export default function NavBar() {
                             d="M1 1l8 8 8-8"
                           />
                         </svg>
-                      </button>
+                      </a>
                     </div>
 
                     <div className="flex items-center py-3 space-x-4">

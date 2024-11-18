@@ -8,26 +8,25 @@ import Store from "../../Redux/Store";
 import { fetchTopRatedMovies } from "../../Redux/Reducers/Movies";
 
 export default function TopRatedMovies() {
+  const [page, setPage] = useState(1);
+  const [moviesList, setMoviesList] = useState([]);
 
-    const [page, setPage] = useState(1);
-    const [moviesList, setMoviesList] = useState([]);
-  
-    const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
-  
-    useEffect(() => {
-      if (MovieGenres && page) {
-        Store.dispatch(fetchTopRatedMovies({ page }));
-      }
-    }, [MovieGenres, page]);
-  
-    const TopRatedMovies = useSelector((state) => state.Movies.TopRatedMovies);
-    const loadingMore = useSelector((state) => state.Movies.loadingMore);
-  
-    useEffect(() => {
-      if (TopRatedMovies) {
-        setMoviesList([...moviesList, ...TopRatedMovies.results]);
-      }
-    }, [TopRatedMovies]);
+  const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
+
+  useEffect(() => {
+    if (MovieGenres && page) {
+      Store.dispatch(fetchTopRatedMovies({ page }));
+    }
+  }, [MovieGenres, page]);
+
+  const TopRatedMovies = useSelector((state) => state.Movies.TopRatedMovies);
+  const loadingMore = useSelector((state) => state.Movies.loadingMore);
+
+  useEffect(() => {
+    if (TopRatedMovies) {
+      setMoviesList([...moviesList, ...TopRatedMovies.results]);
+    }
+  }, [TopRatedMovies]);
 
   return (
     <>
@@ -80,8 +79,11 @@ export default function TopRatedMovies() {
             {/* Header */}
             <div className="w-full flex flex-col items-center mt-6">
               <h1 className="font-montserrat text-base xs:text-lg sm:text-2xl text-gray-400">
-               Top Rated Movies
+                Top Rated Movies
               </h1>
+              <h4 className="text-gray-500 font-montserrat text-xs sm:text-sm">
+                Total Results : {TopRatedMovies && TopRatedMovies.total_results}
+              </h4>
             </div>
 
             {/* Movies */}

@@ -81,6 +81,9 @@ export default function PopularSeries() {
               <h1 className="font-montserrat text-base xs:text-lg sm:text-2xl text-gray-400">
                 Most popular series
               </h1>
+              <h4 className="text-gray-500 font-montserrat text-xs sm:text-sm">
+                Total Results : {PopularSeries && PopularSeries.total_results}
+              </h4>
             </div>
 
             {/* Series */}
