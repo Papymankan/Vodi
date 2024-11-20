@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import MoviesReducer from "./Reducers/Movies";
 import SeriesReducer from "./Reducers/Series";
+import AuthReducer from "./Reducers/Auth";
 
 export default configureStore({
     reducer:{
         Movies:MoviesReducer,
-        Series:SeriesReducer
+        Series:SeriesReducer,
+        Auth:AuthReducer,
     }
 })
 

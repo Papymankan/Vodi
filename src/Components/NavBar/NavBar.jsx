@@ -184,7 +184,7 @@ export default function NavBar() {
 
             {/* Profile */}
             <div
-              className="flex items-center space-x-1 cursor-pointer relative py-4"
+              className="hidden items-center space-x-1 cursor-pointer relative py-4"
               onMouseEnter={() => {
                 setSubMenu("profile");
               }}
@@ -209,9 +209,9 @@ export default function NavBar() {
             </div>
 
             {/* Login */}
-            <button className="hidden p-2 hover:opacity-50 duration-200">
+            <a href="/login" className=" p-2 hover:opacity-50 duration-200">
               Login
-            </button>
+            </a>
 
             {/* Profile DropDown */}
             {subMenu == "profile" && (
