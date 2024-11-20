@@ -6,20 +6,20 @@ import { useSelector } from "react-redux";
 import { fetchRequestToken } from "../../Redux/Reducers/Auth";
 
 export default function Login() {
-  useEffect(() => {
-    Store.dispatch(fetchRequestToken());
-  }, []);
+  // useEffect(() => {
+  //   Store.dispatch(fetchRequestToken());
+  // }, []);
 
-  const ReqToken = useSelector((state) => state.Auth.ReqToken);
+  // const ReqToken = useSelector((state) => state.Auth.ReqToken);
 
-  useEffect(() => {
-    if (ReqToken && ReqToken.success) 
-      // Store.dispatch();
-    console.log("a");
+  // useEffect(() => {
+  //   if (ReqToken && ReqToken.success) 
+  //     // Store.dispatch();
+  //   console.log("a");
     
-  }, [ReqToken]);
+  // }, [ReqToken]);
 
-  console.log(ReqToken);
+  // console.log(ReqToken);
 
   return (
     <>

@@ -16,7 +16,9 @@ export const fetchRequestToken = createAsyncThunk(
         }
       })
       .then((data) => {
-        return data;
+        console.log(data);
+
+        return data.request_token;
       });
   }
 );
@@ -24,14 +26,17 @@ export const fetchRequestToken = createAsyncThunk(
 const slice = createSlice({
   name: "Auth",
   initialState: {
-    loading: true,
-    loadingMore: false,
+    sessionId: null,
+    loading: false,
+    error: null,
+    authenticated: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchRequestToken.fulfilled, (state, action) => {
-        return { ...state, loading: false, ReqToken: action.payload };
+        console.log(action.payload);
+        return { ...state, loading: false, RequestToken: action.payload };
       })
       .addCase(fetchRequestToken.pending, (state, action) => {
         return { ...state, loading: true };
