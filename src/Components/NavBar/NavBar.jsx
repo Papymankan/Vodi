@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import Store from "../../Redux/Store";
-import { fetchRequestToken, fetchSessionId } from "../../Redux/Reducers/Auth";
+import {
+  fetchAccountDetail,
+  fetchRequestToken,
+  fetchSessionId,
+} from "../../Redux/Reducers/Auth";
 
 export default function NavBar() {
   const [subMenu, setSubMenu] = useState("");
@@ -47,33 +51,35 @@ export default function NavBar() {
   };
 
   const RequestToken = useSelector((state) => state.Auth.RequestToken);
-  
+
   useEffect(() => {
     if (RequestToken) {
       window.location.href = `https://www.themoviedb.org/authenticate/${RequestToken}?redirect_to=http://localhost:5173`;
     }
   }, [RequestToken]);
-  
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const approved = urlParams.get("approved");
     const token = urlParams.get("request_token");
-    
-    console.log(approved , token);
-    
+
+    console.log(approved, token);
+
     if (approved === "true" && token) {
       console.log("redirected");
-      Store.dispatch(fetchSessionId({requestToken : token}))
+      Store.dispatch(fetchSessionId({ requestToken: token }));
     }
-  }, [])
-  
-  useEffect(() => {
-    let sessionId = localStorage.getItem("sessionId")
+  }, []);
 
-    if(sessionId){      
-      // Store.dispatch()
+  useEffect(() => {
+    let sessionId = localStorage.getItem("sessionId");
+
+    if (sessionId) {
+      Store.dispatch(fetchAccountDetail({ SessionId: sessionId }));
     }
-  }, [])
+  }, []);
+
+  const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
   return (
     <>
@@ -217,39 +223,45 @@ export default function NavBar() {
               </svg>
             </div>
 
-            {/* Profile */}
-            <div
-              className="hidden items-center space-x-1 cursor-pointer relative py-4"
-              onMouseEnter={() => {
-                setSubMenu("profile");
-              }}
-              onMouseLeave={() => {
-                setSubMenu("");
-              }}
-            >
-              <Avatar sx={{ width: 32, height: 32 }}>H</Avatar>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="12"
-                className="scale-50"
-              >
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="3"
-                  d="M1 1l8 8 8-8"
-                />
-              </svg>
-            </div>
-
-            {/* Login */}
-            <button
-              onClick={HandleLogin}
-              className=" p-2 hover:opacity-50 duration-200"
-            >
-              Login
-            </button>
+            {AccountDetail ? (
+              <>
+                {/* Profile */}
+                <div
+                  className="flex items-center space-x-1 cursor-pointer relative py-4"
+                  onMouseEnter={() => {
+                    setSubMenu("profile");
+                  }}
+                  onMouseLeave={() => {
+                    setSubMenu("");
+                  }}
+                >
+                  <Avatar sx={{ width: 32, height: 32 }}>H</Avatar>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="12"
+                    className="scale-50"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      d="M1 1l8 8 8-8"
+                    />
+                  </svg>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Login */}
+                <button
+                  onClick={HandleLogin}
+                  className=" p-2 hover:opacity-50 duration-200"
+                >
+                  Login
+                </button>
+              </>
+            )}
 
             {/* Profile DropDown */}
             {subMenu == "profile" && (

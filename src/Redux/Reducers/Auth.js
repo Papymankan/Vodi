@@ -23,11 +23,30 @@ export const fetchRequestToken = createAsyncThunk(
   }
 );
 
+export const fetchAccountDetail = createAsyncThunk(
+  "Auth/fetchAccountDetail",
+  async ({ SessionId }) => {
+    return fetch(BaseUrl + "account?" + ApiKey + "&session_id=" + SessionId, {
+      method: "GET",
+      headers: {
+        "accept": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  }
+);
+
 export const fetchSessionId = createAsyncThunk(
   "Auth/fetchSessionId",
   async ({ requestToken }) => {
-    console.log(requestToken);
-
     return fetch(BaseUrl + "authentication/session/new?" + ApiKey, {
       method: "POST",
       headers: {
@@ -36,15 +55,11 @@ export const fetchSessionId = createAsyncThunk(
       body: JSON.stringify({ request_token: requestToken }),
     })
       .then((res) => {
-        console.log(res);
-
         if (res.ok) {
           return res.json();
         }
       })
       .then((data) => {
-        console.log(data);
-
         localStorage.setItem("sessionId", data.session_id);
         window.location.href = `http://localhost:5173`;
         return data.session_id;
@@ -78,6 +93,18 @@ const slice = createSlice({
         };
       })
       .addCase(fetchSessionId.pending, (state, action) => {
+        return { ...state, loading: true };
+      })
+
+      .addCase(fetchAccountDetail.fulfilled, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          authenticated: true,
+          AccountDetail: action.payload,
+        };
+      })
+      .addCase(fetchAccountDetail.pending, (state, action) => {
         return { ...state, loading: true };
       });
   },
