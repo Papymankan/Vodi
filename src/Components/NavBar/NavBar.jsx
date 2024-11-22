@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import Store from "../../Redux/Store";
-import { fetchRequestToken } from "../../Redux/Reducers/Auth";
+import { fetchRequestToken, fetchSessionId } from "../../Redux/Reducers/Auth";
 
 export default function NavBar() {
   const [subMenu, setSubMenu] = useState("");
@@ -47,14 +47,33 @@ export default function NavBar() {
   };
 
   const RequestToken = useSelector((state) => state.Auth.RequestToken);
-
+  
   useEffect(() => {
     if (RequestToken) {
-      console.log(RequestToken);
-      console.log("B");
       window.location.href = `https://www.themoviedb.org/authenticate/${RequestToken}?redirect_to=http://localhost:5173`;
     }
   }, [RequestToken]);
+  
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const approved = urlParams.get("approved");
+    const token = urlParams.get("request_token");
+    
+    console.log(approved , token);
+    
+    if (approved === "true" && token) {
+      console.log("redirected");
+      Store.dispatch(fetchSessionId({requestToken : token}))
+    }
+  }, [])
+  
+  useEffect(() => {
+    let sessionId = localStorage.getItem("sessionId")
+
+    if(sessionId){      
+      // Store.dispatch()
+    }
+  }, [])
 
   return (
     <>

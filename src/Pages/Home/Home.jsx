@@ -64,7 +64,6 @@ export default function Home() {
 
   // Movies ----------------------------------
   const TopYearMovies = useSelector((state) => state.Movies.TopYearMovies);
-  console.log(TopYearMovies);
 
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
 
@@ -88,7 +87,6 @@ export default function Home() {
           }
         }
       }
-      console.log(arr);
 
       setTrendingMoviesRandom(arr);
     }
@@ -354,8 +352,6 @@ export default function Home() {
             {TrendingMoviesRandom &&
               TrendingMoviesRandom.length > 0 &&
               TrendingMoviesRandom.map((movie, index) => {
-                console.log(movie);
-
                 if (index == 0) {
                   return true;
                 }
