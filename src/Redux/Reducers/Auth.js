@@ -78,7 +78,7 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchRequestToken.fulfilled, (state, action) => {
-        return { ...state, loading: false, RequestToken: action.payload };
+        return { ...state, RequestToken: action.payload };
       })
       .addCase(fetchRequestToken.pending, (state, action) => {
         return { ...state, loading: true };

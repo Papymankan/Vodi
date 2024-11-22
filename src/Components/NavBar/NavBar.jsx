@@ -8,6 +8,7 @@ import {
   fetchRequestToken,
   fetchSessionId,
 } from "../../Redux/Reducers/Auth";
+import FullScreenLoader from "../FullScreenLoader/FullScreenLoader";
 
 export default function NavBar() {
   const [subMenu, setSubMenu] = useState("");
@@ -63,10 +64,7 @@ export default function NavBar() {
     const approved = urlParams.get("approved");
     const token = urlParams.get("request_token");
 
-    console.log(approved, token);
-
     if (approved === "true" && token) {
-      console.log("redirected");
       Store.dispatch(fetchSessionId({ requestToken: token }));
     }
   }, []);
@@ -80,6 +78,8 @@ export default function NavBar() {
   }, []);
 
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
+
+  const loading = useSelector((state) => state.Auth.loading);
 
   return (
     <>
@@ -846,6 +846,8 @@ export default function NavBar() {
           </div>
         )}
       </div>
+
+      {loading && <FullScreenLoader />}
     </>
   );
 }
