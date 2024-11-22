@@ -7,6 +7,7 @@ import {
   fetchAccountDetail,
   fetchRequestToken,
   fetchSessionId,
+  logout,
 } from "../../Redux/Reducers/Auth";
 import FullScreenLoader from "../FullScreenLoader/FullScreenLoader";
 
@@ -278,8 +279,8 @@ export default function NavBar() {
                 <button className="w-full text-black text-left hover:bg-slate-200 duration-200 p-2">
                   Watchlist
                 </button>
-                <button className="w-full text-black text-left hover:bg-slate-200 duration-200 p-2">
-                  Watchlist
+                <button className="w-full text-red-600 text-left hover:bg-slate-200 duration-200 p-2" onClick={()=>{Store.dispatch(logout())}}>
+                  Logout
                 </button>
               </div>
             )}

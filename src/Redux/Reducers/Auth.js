@@ -74,7 +74,13 @@ const slice = createSlice({
     error: null,
     authenticated: false,
   },
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.authenticated = false;
+      localStorage.removeItem("sessionId")
+      window.location.href = `http://localhost:5173`;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchRequestToken.fulfilled, (state, action) => {
@@ -88,7 +94,6 @@ const slice = createSlice({
         return {
           ...state,
           loading: false,
-          authenticated: true,
           SessionId: action.payload,
         };
       })
@@ -110,4 +115,6 @@ const slice = createSlice({
   },
 });
 
+
+export const { logout } = slice.actions;
 export default slice.reducer;
