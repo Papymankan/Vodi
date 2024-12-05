@@ -16,7 +16,7 @@ import TopYearSeries from "./Pages/TopYearSeries/TopYearSeries.jsx"
 import TrendingMovies from "./Pages/TrendingMovies/TrendingMovies.jsx"
 import TrendingSeries from "./Pages/TrendingSeries/TrendingSeries.jsx"
 import UpcomingMovies from "./Pages/UpcomingMovies/UpcomingMovies.jsx"
-import Login from "./Pages/Login/Login.jsx"
+import Profile from "./Pages/Profile/Profile.jsx"
 
 
 const routes = [
@@ -48,7 +48,7 @@ const routes = [
     { path: '/series/airing-today', element: <AirTodaySeries /> },
     { path: '/series/on-air', element: <OnAirSeries /> },
 
-    { path: '/login', element: <Login /> },
+    { path: '/profile', element: <Profile /> },
 ]
 
 export default routes

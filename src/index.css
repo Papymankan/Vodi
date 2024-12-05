@@ -240,3 +240,14 @@ body{
   }
 }
 /* Top Year Movies */
+/* Profile */
+
+.Profile_Drop{
+  background: url("/img/Profile_Drop.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+}
+
+
+/* Profile */

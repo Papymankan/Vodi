@@ -227,7 +227,8 @@ export default function NavBar() {
             {AccountDetail ? (
               <>
                 {/* Profile */}
-                <div
+                <a
+                href="/profile"
                   className="flex items-center space-x-1 cursor-pointer relative py-4"
                   onMouseEnter={() => {
                     setSubMenu("profile");
@@ -235,8 +236,9 @@ export default function NavBar() {
                   onMouseLeave={() => {
                     setSubMenu("");
                   }}
+                  
                 >
-                  <Avatar sx={{ width: 32, height: 32 }}>H</Avatar>
+                  <Avatar sx={{ width: 32, height: 32 }}>{AccountDetail.username[0].toUpperCase()}</Avatar>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -250,7 +252,7 @@ export default function NavBar() {
                       d="M1 1l8 8 8-8"
                     />
                   </svg>
-                </div>
+                </a>
               </>
             ) : (
               <>
