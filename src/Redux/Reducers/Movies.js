@@ -437,7 +437,42 @@ export const AddToWatchList = createAsyncThunk(
       })
       .then((data) => {
         console.log(data);
+        return data;
+      });
+  }
+);
 
+export const AddToFavorite = createAsyncThunk(
+  "Movies/AddToFavorite",
+  async ({ accountId, movieId }) => {
+    return fetch(
+      BaseUrl +
+        "account/" +
+        accountId +
+        "/favorite?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId"),
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          media_type: "movie",
+          media_id: movieId,
+          favorite: true,
+        }),
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
         return data;
       });
   }
@@ -533,7 +568,8 @@ const slice = createSlice({
       })
       .addCase(fetchMoviesWithGenre.pending, (state, action) => {
         return { ...state, loadingMore: true };
-      });
+      })
+
   },
 });
 
