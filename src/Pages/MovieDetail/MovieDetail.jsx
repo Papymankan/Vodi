@@ -4,6 +4,7 @@ import Footer from "../../Components/Footer/Footer";
 import BackDrop from "../../Components/BackDrop/BackDrop";
 import { useParams } from "react-router-dom";
 import {
+  AddToWatchList,
   fetchMovieCrews,
   fetchMovieDetails,
   fetchMovieImages,
@@ -105,6 +106,10 @@ export default function MovieDetail() {
 
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
 
+  const authenticated = useSelector((state) => state.Auth.authenticated);
+
+  const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
+
   useEffect(() => {
     if (MovieVideos) {
       MovieVideos.some((video) => {
@@ -136,6 +141,14 @@ export default function MovieDetail() {
   window.addEventListener("resize", CheckWidth);
 
   useEffect(CheckWidth, []);
+
+  const addToWatchListHandler = () => {
+    if (authenticated) {
+      Store.dispatch(AddToWatchList({accountId : AccountDetail.id , movieId : params.id}))
+    } else {
+      alert("Login please");
+    }
+  };
 
   return (
     <>
@@ -335,7 +348,10 @@ export default function MovieDetail() {
               {/* Landing Actions */}
               <div className="w-full flex items-center py-0 sm:py-4 justify-between z-20">
                 <div className="flex items-center space-x-4 w-full xs:w-auto font-montserrat z-20">
-                  <button className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2">
+                  <button
+                    className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2"
+                    onClick={addToWatchListHandler}
+                  >
                     + WatchList
                   </button>
                   <button className="py-3 px-5 rounded-full text-white bg-green-400 xs:w-auto w-1/2">
