@@ -3,6 +3,7 @@ import NavBar from "../../Components/NavBar/NavBar";
 import { useParams } from "react-router-dom";
 import Store from "../../Redux/Store";
 import {
+  AddToWatchList,
   fetchEpisodeImages,
   fetchEpisodeVideos,
   fetchRecommandSeries,
@@ -106,6 +107,18 @@ export default function EpisodeDetail() {
       );
     }
   }, [SerieDetails, selectedSeason]);
+
+  const authenticated = useSelector((state) => state.Auth.authenticated);
+
+  const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
+
+  const addToWatchListHandler = () => {
+    if (authenticated) {
+      Store.dispatch(AddToWatchList({accountId : AccountDetail.id , serieId : params.id}))
+    } else {
+      alert("Login please");
+    }
+  };
 
   return (
     <>
@@ -300,7 +313,7 @@ export default function EpisodeDetail() {
               {/* Landing Actions */}
               <div className="w-full flex items-center py-0 sm:py-4 justify-between z-20">
                 <div className="flex items-center space-x-4 w-full xs:w-auto font-montserrat z-20">
-                  <button className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2">
+                  <button className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2" onClick={addToWatchListHandler}>
                     + WatchList
                   </button>
                   <button className="py-3 px-5 rounded-full text-white bg-green-400 xs:w-auto w-1/2">

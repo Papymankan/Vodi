@@ -520,6 +520,43 @@ export const fetchSeriesWithGenre = createAsyncThunk(
   }
 );
 
+export const AddToWatchList = createAsyncThunk(
+  "Movies/AddToWatchList",
+  async ({ accountId, serieId }) => {
+    return fetch(
+      BaseUrl +
+        "account/" +
+        accountId +
+        "/watchlist?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId"),
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          media_type: "tv",
+          media_id: serieId,
+          watchlist: true,
+        }),
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {
