@@ -16,6 +16,7 @@ import {
   fetchPopularSerie,
   fetchSerieGenres,
   fetchTopRatedSerie,
+  fetchWatchListSeries,
 } from "./Redux/Reducers/Series.js";
 import { useSelector } from "react-redux";
 
@@ -44,6 +45,7 @@ export default function App() {
   useEffect(() => {
     if (authenticated) {
       Store.dispatch(fetchWatchListMovies({ accountId: AccountDetail.id, page:1}));
+      Store.dispatch(fetchWatchListSeries({ accountId: AccountDetail.id, page:1}));
     }
   }, [authenticated, AccountDetail]);
 

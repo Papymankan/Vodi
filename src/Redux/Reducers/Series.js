@@ -593,6 +593,39 @@ export const AddToFavorite = createAsyncThunk(
   }
 );
 
+export const fetchWatchListSeries = createAsyncThunk(
+  "Series/fetchWatchListSeries",
+  async ({ accountId, page }) => {
+    return fetch(
+      BaseUrl +
+        "account/" +
+        accountId +
+        "/watchlist/tv?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId") +
+        "&page=" +
+        page,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {
@@ -701,6 +734,12 @@ const slice = createSlice({
       })
       .addCase(fetchSeriesWithGenre.pending, (state, action) => {
         return { ...state, loadingMore: true };
+      })
+      .addCase(fetchWatchListSeries.fulfilled, (state, action) => {
+        return {
+          ...state,
+          WatchListSeries: action.payload,
+        };
       });
   },
 });
