@@ -478,6 +478,41 @@ export const AddToFavorite = createAsyncThunk(
   }
 );
 
+export const fetchWatchListMovies = createAsyncThunk(
+  "Movies/fetchWatchListMovies",
+  async ({ accountId, page }) => {
+    return fetch(
+      BaseUrl +
+        "account/" +
+        accountId +
+        "/watchlist/movies?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId") +
+        "&page=" +
+        page,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        console.log(res);
+
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {
@@ -569,7 +604,12 @@ const slice = createSlice({
       .addCase(fetchMoviesWithGenre.pending, (state, action) => {
         return { ...state, loadingMore: true };
       })
-
+      .addCase(fetchWatchListMovies.fulfilled, (state, action) => {
+        return {
+          ...state,
+          WatchListMovies: action.payload,
+        };
+      });
   },
 });
 

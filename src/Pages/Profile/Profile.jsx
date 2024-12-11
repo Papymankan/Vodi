@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 export default function Login() {
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
+  const WatchListMovies = useSelector((state) => state.Movies.WatchListMovies);
+
   return (
     <>
       <NavBar />
@@ -33,7 +35,7 @@ export default function Login() {
                       Watchlist <br className="xs:block lg:hidden hidden" /> Movies :
                     </h2>
                     <h2 className="xl:text-lg lg:text-base sm:text-sm text-xs text-center rounded-full lg:py-2 lg:px-4 px-3 py-1.5 bg-[#bdbdbd] inline-block self-center">
-                      1322
+                      {WatchListMovies && WatchListMovies.total_results}
                     </h2>
                   </div>
                   <a
