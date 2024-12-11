@@ -626,6 +626,39 @@ export const fetchWatchListSeries = createAsyncThunk(
   }
 );
 
+export const fetchFavoriteSeries = createAsyncThunk(
+  "Series/fetchFavoriteSeries",
+  async ({ accountId, page }) => {
+    return fetch(
+      BaseUrl +
+        "account/" +
+        accountId +
+        "/favorite/tv?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId") +
+        "&page=" +
+        page,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {
@@ -737,7 +770,10 @@ const slice = createSlice({
       })
       .addCase(fetchWatchListSeries.fulfilled, (state, action) => {
         return { ...state, WatchListSeries: action.payload };
-      });
+      })
+      .addCase(fetchFavoriteSeries.fulfilled, (state, action) => {
+        return { ...state, FavoriteSeries: action.payload };
+      })
   },
 });
 

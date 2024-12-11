@@ -13,6 +13,7 @@ import {
 } from "./Redux/Reducers/Movies.js";
 import {
   fetchAirTodaySeries,
+  fetchFavoriteSeries,
   fetchOnAirSeries,
   fetchPopularSerie,
   fetchSerieGenres,
@@ -48,6 +49,7 @@ export default function App() {
       Store.dispatch(fetchWatchListMovies({ accountId: AccountDetail.id, page:1}));
       Store.dispatch(fetchWatchListSeries({ accountId: AccountDetail.id, page:1}));
       Store.dispatch(fetchFavoriteMovies({ accountId: AccountDetail.id, page:1}));
+      Store.dispatch(fetchFavoriteSeries({ accountId: AccountDetail.id, page:1}));
     }
   }, [authenticated, AccountDetail]);
 
