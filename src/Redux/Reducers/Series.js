@@ -659,6 +659,39 @@ export const fetchFavoriteSeries = createAsyncThunk(
   }
 );
 
+export const fetchRatedSeries = createAsyncThunk(
+  "Series/fetchRatedSeries",
+  async ({ accountId, page }) => {
+    return fetch(
+      BaseUrl +
+        "account/" +
+        accountId +
+        "/rated/tv?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId") +
+        "&page=" +
+        page,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {
@@ -773,6 +806,9 @@ const slice = createSlice({
       })
       .addCase(fetchFavoriteSeries.fulfilled, (state, action) => {
         return { ...state, FavoriteSeries: action.payload };
+      })
+      .addCase(fetchRatedSeries.fulfilled, (state, action) => {
+        return { ...state, RatedSeries: action.payload };
       })
   },
 });

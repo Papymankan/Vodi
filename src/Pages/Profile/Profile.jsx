@@ -8,14 +8,13 @@ export default function Login() {
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
   const WatchListMovies = useSelector((state) => state.Movies.WatchListMovies);
-  
   const WatchListSeries = useSelector((state) => state.Series.WatchListSeries);
   
   const FavoriteMovies = useSelector((state) => state.Movies.FavoriteMovies);
-  
   const FavoriteSeries = useSelector((state) => state.Series.FavoriteSeries);
 
   const RatedMovies = useSelector((state) => state.Movies.RatedMovies);
+  const RatedSeries = useSelector((state) => state.Series.RatedSeries);
   return (
     <>
       <NavBar />
@@ -42,7 +41,7 @@ export default function Login() {
                       Watchlist <br className="xs:block lg:hidden hidden" /> Movies :
                     </h2>
                     <h2 className="xl:text-lg lg:text-base sm:text-sm text-xs text-center rounded-full lg:py-2 lg:px-4 px-3 py-1.5 bg-[#bdbdbd] inline-block self-center">
-                      {WatchListMovies && WatchListMovies.total_results}
+                      {WatchListMovies ? WatchListMovies.total_results : "loading..."}
                     </h2>
                   </div>
                   <a
@@ -72,7 +71,7 @@ export default function Login() {
                       Watchlist <br className="xs:block lg:hidden hidden" /> Series :
                     </h2>
                     <h2 className="xl:text-lg lg:text-base sm:text-sm text-xs text-center rounded-full lg:py-2 lg:px-4 px-3 py-1.5 bg-[#bdbdbd] inline-block self-center">
-                      {WatchListSeries && WatchListSeries.total_results}
+                      {WatchListSeries ? WatchListSeries.total_results : "loading..."}
                     </h2>
                   </div>
                   <a
@@ -104,7 +103,7 @@ export default function Login() {
                       Favorite <br className="xs:block lg:hidden hidden" /> Movies :
                     </h2>
                     <h2 className="xl:text-lg lg:text-base sm:text-sm text-xs text-center rounded-full lg:py-2 lg:px-4 px-3 py-1.5 bg-[#bdbdbd] inline-block self-center">
-                      {FavoriteMovies && FavoriteMovies.total_results}
+                      {FavoriteMovies ? FavoriteMovies.total_results : "loading..."}
                     </h2>
                   </div>
                   <a
@@ -134,7 +133,7 @@ export default function Login() {
                       Favorite <br className="xs:block lg:hidden hidden" /> Series :
                     </h2>
                     <h2 className="xl:text-lg lg:text-base sm:text-sm text-xs text-center rounded-full lg:py-2 lg:px-4 px-3 py-1.5 bg-[#bdbdbd] inline-block self-center">
-                      {FavoriteSeries && FavoriteSeries.total_results}
+                      {FavoriteSeries ? FavoriteSeries.total_results : "loading..."}
                     </h2>
                   </div>
                   <a
@@ -166,7 +165,7 @@ export default function Login() {
                       Rated <br className="xs:block lg:hidden hidden" /> Movies :
                     </h2>
                     <h2 className="xl:text-lg lg:text-base sm:text-sm text-xs text-center rounded-full lg:py-2 lg:px-4 px-3 py-1.5 bg-[#bdbdbd] inline-block self-center">
-                      {RatedMovies && RatedMovies.total_results}
+                      {RatedMovies ? RatedMovies.total_results : "loading..."}
                     </h2>
                   </div>
                   <a
@@ -193,10 +192,10 @@ export default function Login() {
                 <div className="lg:w-full xs:w-1/2 w-full flex items-center justify-between my-4">
                   <div className=" flex items-center space-x-2">
                     <h2 className="xl:text-lg sm:text-sm text-xs font-bold">
-                      Rated <br className="xs:block lg:hidden hidden" /> Movies :
+                      Rated <br className="xs:block lg:hidden hidden" /> Series :
                     </h2>
                     <h2 className="xl:text-lg lg:text-base sm:text-sm text-xs text-center rounded-full lg:py-2 lg:px-4 px-3 py-1.5 bg-[#bdbdbd] inline-block self-center">
-                      1322
+                      {RatedSeries ? RatedSeries.total_results : "loading..."}
                     </h2>
                   </div>
                   <a
