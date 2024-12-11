@@ -548,6 +548,41 @@ export const fetchFavoriteMovies = createAsyncThunk(
   }
 );
 
+export const fetchRatedMovies = createAsyncThunk(
+  "Movies/fetchRatedMovies",
+  async ({ accountId, page }) => {
+    return fetch(
+      BaseUrl +
+        "account/" +
+        accountId +
+        "/rated/movies?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId") +
+        "&page=" +
+        page,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        console.log(res);
+
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {
@@ -640,16 +675,13 @@ const slice = createSlice({
         return { ...state, loadingMore: true };
       })
       .addCase(fetchWatchListMovies.fulfilled, (state, action) => {
-        return {
-          ...state,
-          WatchListMovies: action.payload,
-        };
+        return { ...state, WatchListMovies: action.payload };
       })
       .addCase(fetchFavoriteMovies.fulfilled, (state, action) => {
-        return {
-          ...state,
-          FavoriteMovies: action.payload,
-        };
+        return { ...state, FavoriteMovies: action.payload };
+      })
+      .addCase(fetchRatedMovies.fulfilled, (state, action) => {
+        return { ...state, RatedMovies: action.payload };
       })
   },
 });

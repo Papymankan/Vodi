@@ -6,6 +6,7 @@ import {
   fetchFavoriteMovies,
   fetchMovieGenres,
   fetchPopularMovie,
+  fetchRatedMovies,
   fetchTheaterMovies,
   fetchTopRatedMovie,
   fetchUpcomingMovies,
@@ -50,6 +51,7 @@ export default function App() {
       Store.dispatch(fetchWatchListSeries({ accountId: AccountDetail.id, page:1}));
       Store.dispatch(fetchFavoriteMovies({ accountId: AccountDetail.id, page:1}));
       Store.dispatch(fetchFavoriteSeries({ accountId: AccountDetail.id, page:1}));
+      Store.dispatch(fetchRatedMovies({ accountId: AccountDetail.id, page:1}));
     }
   }, [authenticated, AccountDetail]);
 
