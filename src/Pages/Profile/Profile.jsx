@@ -8,7 +8,10 @@ export default function Login() {
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
   const WatchListMovies = useSelector((state) => state.Movies.WatchListMovies);
-
+  
+  const WatchListSeries = useSelector((state) => state.Series.WatchListSeries);
+  
+  const FavoriteMovies = useSelector((state) => state.Movies.FavoriteMovies);
   return (
     <>
       <NavBar />
@@ -62,10 +65,10 @@ export default function Login() {
                 <div className="lg:w-full xs:w-1/2 w-full flex items-center justify-between my-4">
                   <div className=" flex items-center space-x-2">
                     <h2 className="xl:text-lg sm:text-sm text-xs font-bold">
-                      Watchlist <br className="xs:block lg:hidden hidden" /> Movies :
+                      Watchlist <br className="xs:block lg:hidden hidden" /> Series :
                     </h2>
                     <h2 className="xl:text-lg lg:text-base sm:text-sm text-xs text-center rounded-full lg:py-2 lg:px-4 px-3 py-1.5 bg-[#bdbdbd] inline-block self-center">
-                      1322
+                      {WatchListSeries && WatchListSeries.total_results}
                     </h2>
                   </div>
                   <a
@@ -97,7 +100,7 @@ export default function Login() {
                       Favorite <br className="xs:block lg:hidden hidden" /> Movies :
                     </h2>
                     <h2 className="xl:text-lg lg:text-base sm:text-sm text-xs text-center rounded-full lg:py-2 lg:px-4 px-3 py-1.5 bg-[#bdbdbd] inline-block self-center">
-                      1322
+                      {FavoriteMovies && FavoriteMovies.total_results}
                     </h2>
                   </div>
                   <a

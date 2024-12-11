@@ -3,6 +3,7 @@ import routes from "./routes.jsx";
 import { useRoutes } from "react-router-dom";
 import Store from "./Redux/Store.js";
 import {
+  fetchFavoriteMovies,
   fetchMovieGenres,
   fetchPopularMovie,
   fetchTheaterMovies,
@@ -46,6 +47,7 @@ export default function App() {
     if (authenticated) {
       Store.dispatch(fetchWatchListMovies({ accountId: AccountDetail.id, page:1}));
       Store.dispatch(fetchWatchListSeries({ accountId: AccountDetail.id, page:1}));
+      Store.dispatch(fetchFavoriteMovies({ accountId: AccountDetail.id, page:1}));
     }
   }, [authenticated, AccountDetail]);
 

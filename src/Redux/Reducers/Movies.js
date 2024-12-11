@@ -513,6 +513,41 @@ export const fetchWatchListMovies = createAsyncThunk(
   }
 );
 
+export const fetchFavoriteMovies = createAsyncThunk(
+  "Movies/fetchFavoriteMovies",
+  async ({ accountId, page }) => {
+    return fetch(
+      BaseUrl +
+        "account/" +
+        accountId +
+        "/favorite/movies?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId") +
+        "&page=" +
+        page,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        console.log(res);
+
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {
@@ -609,7 +644,13 @@ const slice = createSlice({
           ...state,
           WatchListMovies: action.payload,
         };
-      });
+      })
+      .addCase(fetchFavoriteMovies.fulfilled, (state, action) => {
+        return {
+          ...state,
+          FavoriteMovies: action.payload,
+        };
+      })
   },
 });
 

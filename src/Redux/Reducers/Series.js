@@ -620,7 +620,7 @@ export const fetchWatchListSeries = createAsyncThunk(
       })
       .then((data) => {
         console.log(data);
-        
+
         return data;
       });
   }
@@ -736,10 +736,7 @@ const slice = createSlice({
         return { ...state, loadingMore: true };
       })
       .addCase(fetchWatchListSeries.fulfilled, (state, action) => {
-        return {
-          ...state,
-          WatchListSeries: action.payload,
-        };
+        return { ...state, WatchListSeries: action.payload };
       });
   },
 });
