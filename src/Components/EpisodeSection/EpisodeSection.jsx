@@ -9,7 +9,6 @@ export default function EpisodeSection({
   loading,
   params,
 }) {
-  console.log(SerieDetails, selectedSeason, setSelectedSeason, SerieSeason);
 
   return (
     <>

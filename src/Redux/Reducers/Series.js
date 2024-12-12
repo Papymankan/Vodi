@@ -122,8 +122,6 @@ export const fetchTopRatedSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        
-
         return data;
       });
   }
@@ -184,8 +182,6 @@ export const fetchPopularSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        
-
         return data;
       });
   }
@@ -366,8 +362,6 @@ export const fetchSerieSeason = createAsyncThunk(
         }
       })
       .then((data) => {
-        
-
         return data;
       });
   }
@@ -422,8 +416,6 @@ export const fetchSerieEpisode = createAsyncThunk(
         }
       })
       .then((data) => {
-        
-
         return data;
       });
   }
@@ -550,8 +542,6 @@ export const AddToWatchList = createAsyncThunk(
         }
       })
       .then((data) => {
-        
-
         return data;
       });
   }
@@ -583,11 +573,11 @@ export const AddToFavorite = createAsyncThunk(
     )
       .then((res) => {
         if (res.ok) {
+          window.location.reload();
           return res.json();
         }
       })
       .then((data) => {
-        
         return data;
       });
   }
@@ -619,8 +609,6 @@ export const fetchWatchListSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        
-
         return data;
       });
   }
@@ -652,8 +640,6 @@ export const fetchFavoriteSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        
-
         return data;
       });
   }
@@ -685,10 +671,48 @@ export const fetchRatedSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        
-
         return data;
       });
+  }
+);
+
+export const fetchIsInFavorites = createAsyncThunk(
+  "Series/fetchIsInFavorites",
+  async ({ accountId, movieId, totalPages }) => {
+    let page = 1;
+    let isThere = false;
+
+    while (totalPages >= page) {
+      const response = await fetch(
+        BaseUrl +
+          "account/" +
+          accountId +
+          "/favorite/tv?" +
+          ApiKey +
+          "&session_id=" +
+          localStorage.getItem("sessionId") +
+          "&page=" +
+          page,
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data.results.some((movie) => movie.id === movieId)) {
+          isThere = true;
+          break;
+        }
+      }
+      page++;
+    }
+
+    return isThere;
   }
 );
 
@@ -810,6 +834,9 @@ const slice = createSlice({
       .addCase(fetchRatedSeries.fulfilled, (state, action) => {
         return { ...state, RatedSeries: action.payload };
       })
+      .addCase(fetchIsInFavorites.fulfilled, (state, action) => {
+        return { ...state, IsInFavorites: action.payload };
+      });
   },
 });
 
