@@ -436,7 +436,6 @@ export const AddToWatchList = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
         return data;
       });
   }
@@ -468,11 +467,11 @@ export const AddToFavorite = createAsyncThunk(
     )
       .then((res) => {
         if (res.ok) {
+          window.location.reload()
           return res.json();
         }
       })
       .then((data) => {
-        console.log(data);
         return data;
       });
   }
@@ -499,15 +498,11 @@ export const fetchWatchListMovies = createAsyncThunk(
       }
     )
       .then((res) => {
-        console.log(res);
-
         if (res.ok) {
           return res.json();
         }
       })
       .then((data) => {
-        console.log(data);
-
         return data;
       });
   }
@@ -534,15 +529,11 @@ export const fetchFavoriteMovies = createAsyncThunk(
       }
     )
       .then((res) => {
-        console.log(res);
-
         if (res.ok) {
           return res.json();
         }
       })
       .then((data) => {
-        console.log(data);
-
         return data;
       });
   }
@@ -569,17 +560,53 @@ export const fetchRatedMovies = createAsyncThunk(
       }
     )
       .then((res) => {
-        console.log(res);
-
         if (res.ok) {
           return res.json();
         }
       })
       .then((data) => {
-        console.log(data);
-
         return data;
       });
+  }
+);
+
+export const fetchIsInFavorites = createAsyncThunk(
+  "Movies/fetchIsInFavorites",
+  async ({ accountId, movieId, totalPages }) => {
+    let page = 1;
+    let isThere = false;
+
+    while (totalPages >= page) {
+      const response = await fetch(
+        BaseUrl +
+          "account/" +
+          accountId +
+          "/favorite/movies?" +
+          ApiKey +
+          "&session_id=" +
+          localStorage.getItem("sessionId") +
+          "&page=" +
+          page,
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data.results.some((movie) => movie.id === movieId)) {
+          isThere = true;
+          break;
+        }
+      }
+      page++;
+    }
+
+    return isThere;
   }
 );
 
@@ -683,6 +710,9 @@ const slice = createSlice({
       .addCase(fetchRatedMovies.fulfilled, (state, action) => {
         return { ...state, RatedMovies: action.payload };
       })
+      .addCase(fetchIsInFavorites.fulfilled, (state, action) => {
+        return { ...state, IsInFavorites: action.payload };
+      });
   },
 });
 

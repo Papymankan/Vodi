@@ -122,7 +122,7 @@ export const fetchTopRatedSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
+        
 
         return data;
       });
@@ -184,7 +184,7 @@ export const fetchPopularSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
+        
 
         return data;
       });
@@ -366,7 +366,7 @@ export const fetchSerieSeason = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
+        
 
         return data;
       });
@@ -422,7 +422,7 @@ export const fetchSerieEpisode = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
+        
 
         return data;
       });
@@ -550,7 +550,7 @@ export const AddToWatchList = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
+        
 
         return data;
       });
@@ -587,7 +587,7 @@ export const AddToFavorite = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
+        
         return data;
       });
   }
@@ -619,7 +619,7 @@ export const fetchWatchListSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
+        
 
         return data;
       });
@@ -652,7 +652,7 @@ export const fetchFavoriteSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
+        
 
         return data;
       });
@@ -685,7 +685,7 @@ export const fetchRatedSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        console.log(data);
+        
 
         return data;
       });
