@@ -9,7 +9,6 @@ export default function EpisodeSection({
   loading,
   params,
 }) {
-
   return (
     <>
       {SerieSeason &&
@@ -47,9 +46,10 @@ export default function EpisodeSection({
                     <div className="w-full rounded-xl p-1.5 sm:p-3 bg-[#222632] flex items-center">
                       <img
                         src={
-                          episode.still_path ?
-                          "https://image.tmdb.org/t/p/w300" + episode.still_path : 
-                          "/img/istockphoto-1409329028-612x612.jpg"
+                          episode.still_path
+                            ? "https://image.tmdb.org/t/p/w300" +
+                              episode.still_path
+                            : "/img/istockphoto-1409329028-612x612.jpg"
                         }
                         alt=""
                         className="sm:h-44 sm:w-80 xs:w-52 w-40 rounded-xl episode-img"
@@ -124,7 +124,14 @@ export default function EpisodeSection({
                           </button>
 
                           <a
-                            href=""
+                            href={
+                              `/serie/` +
+                              params.id +
+                              "/" +
+                              SerieSeason.season_number +
+                              "/" +
+                              episode.episode_number
+                            }
                             className="flex xs:hidden text-cyan text-[10px] font-montserrat"
                           >
                             Explore

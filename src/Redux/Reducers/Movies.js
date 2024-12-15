@@ -432,6 +432,7 @@ export const AddToWatchList = createAsyncThunk(
     )
       .then((res) => {
         if (res.ok) {
+          window.location.reload()
           return res.json();
         }
       })
@@ -610,6 +611,46 @@ export const fetchIsInFavorites = createAsyncThunk(
   }
 );
 
+export const fetchIsInWatchList = createAsyncThunk(
+  "Movies/fetchIsInWatchList",
+  async ({ accountId, movieId, totalPages }) => {
+    let page = 1;
+    let isThere = false;
+
+    while (totalPages >= page) {
+      const response = await fetch(
+        BaseUrl +
+          "account/" +
+          accountId +
+          "/watchlist/movies?" +
+          ApiKey +
+          "&session_id=" +
+          localStorage.getItem("sessionId") +
+          "&page=" +
+          page,
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data.results.some((movie) => movie.id === movieId)) {
+          isThere = true;
+          break;
+        }
+      }
+      page++;
+    }
+
+    return isThere;
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {
@@ -712,6 +753,9 @@ const slice = createSlice({
       })
       .addCase(fetchIsInFavorites.fulfilled, (state, action) => {
         return { ...state, IsInFavorites: action.payload };
+      })
+      .addCase(fetchIsInWatchList.fulfilled, (state, action) => {
+        return { ...state, IsInWatchList: action.payload };
       });
   },
 });

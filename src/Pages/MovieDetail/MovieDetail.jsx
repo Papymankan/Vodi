@@ -7,6 +7,7 @@ import {
   AddToFavorite,
   AddToWatchList,
   fetchIsInFavorites,
+  fetchIsInWatchList,
   fetchMovieCrews,
   fetchMovieDetails,
   fetchMovieImages,
@@ -124,6 +125,8 @@ export default function MovieDetail() {
 
   const FavoriteMovies = useSelector((state) => state.Movies.FavoriteMovies);
 
+  const WatchListMovies = useSelector((state) => state.Movies.WatchListMovies);
+
   useEffect(() => {
     if (authenticated && MovieDetails && FavoriteMovies) {
       console.log("fetch");
@@ -137,7 +140,25 @@ export default function MovieDetail() {
     }
   }, [authenticated, MovieDetails, FavoriteMovies]);
 
+  useEffect(() => {
+    if (authenticated && MovieDetails && WatchListMovies) {
+      console.log("fetch");
+      Store.dispatch(
+        fetchIsInWatchList({
+          accountId: AccountDetail.id,
+          movieId: MovieDetails.id,
+          totalPages: WatchListMovies.total_pages,
+        })
+      );
+    }
+  }, [authenticated, MovieDetails, WatchListMovies]);
+
   const IsInFavorites = useSelector((state) => state.Movies.IsInFavorites);
+
+  const IsInWatchList = useSelector((state) => state.Movies.IsInWatchList);
+
+  console.log(IsInWatchList);
+  
 
   const CheckWidth = () => {
     if (window.innerWidth > 1486) {
@@ -260,6 +281,7 @@ export default function MovieDetail() {
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
+                      className="cursor-pointer"
                       onClick={() => {
                         if (IsInFavorites == false) {
                           addToFavoriteHandler();
@@ -392,13 +414,30 @@ export default function MovieDetail() {
               {/* Landing Actions */}
               <div className="w-full flex items-center py-0 sm:py-4 justify-between z-20">
                 <div className="flex items-center space-x-4 w-full xs:w-auto font-montserrat z-20">
-                  <button
-                    className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2"
-                    onClick={addToWatchListHandler}
-                  >
-                    + WatchList
-                  </button>
-                  <button className="py-3 px-5 rounded-full text-white bg-green-400 xs:w-auto w-1/2">
+                  {IsInWatchList == undefined ? (
+                    <button
+                      className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2 xs:text-base text-xs"
+                      disabled
+                    >
+                      loading...
+                    </button>
+                  ) : IsInWatchList ? (
+                    <button
+                      className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2 xs:text-base text-xs"
+                      // onClick={() => addToWatchListHandler}
+                    >
+                      delete in WatchList
+                    </button>
+                  ) : (
+                    <button
+                      className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2 xs:text-base text-xs"
+                      onClick={addToWatchListHandler}
+                    >
+                      + WatchList
+                    </button>
+                  )}
+
+                  <button className="py-3 px-5 rounded-full text-white bg-green-400 xs:w-auto w-1/2 xs:text-base text-xs">
                     + My Lists
                   </button>
                 </div>
@@ -510,25 +549,25 @@ export default function MovieDetail() {
                 {MovieDetails && (
                   <div className="w-full flex flex-wrap items-center py-2">
                     {MovieDetails.budget > 0 && (
-                      <>
+                      <div className="flex items-center mr-5">
                         <h3 className="font-bold xs:text-base text-sm">
                           Budget :
                         </h3>
                         <span className="mx-2 xs:text-base text-sm">
                           {MovieDetails.budget.toLocaleString()}
                         </span>
-                      </>
+                      </div>
                     )}
 
                     {MovieDetails.revenue > 0 && (
-                      <>
-                        <h3 className="font-bold ml-5 xs:text-base text-sm">
+                      <div className="flex items-center">
+                        <h3 className="font-bold xs:text-base text-sm">
                           Revenue :
                         </h3>
                         <span className="mx-2 xs:text-base text-sm">
                           {MovieDetails.revenue.toLocaleString()}
                         </span>
-                      </>
+                      </div>
                     )}
                   </div>
                 )}
