@@ -8,6 +8,7 @@ import {
   fetchEpisodeImages,
   fetchEpisodeVideos,
   fetchIsInFavorites,
+  fetchIsInWatchList,
   fetchRecommandSeries,
   fetchSerieDetails,
   fetchSerieEpisode,
@@ -116,6 +117,8 @@ export default function EpisodeDetail() {
 
   const FavoriteSeries = useSelector((state) => state.Series.FavoriteSeries);
 
+  const WatchListSeries = useSelector((state) => state.Series.WatchListSeries);
+
   useEffect(() => {
     if (authenticated && SerieDetails && FavoriteSeries) {
       console.log("fetch");
@@ -129,7 +132,22 @@ export default function EpisodeDetail() {
     }
   }, [authenticated, SerieDetails, FavoriteSeries]);
 
+  useEffect(() => {
+    if (authenticated && SerieDetails && WatchListSeries) {
+      console.log("fetch");
+      Store.dispatch(
+        fetchIsInWatchList({
+          accountId: AccountDetail.id,
+          serieId: SerieDetails.id,
+          totalPages: WatchListSeries.total_pages,
+        })
+      );
+    }
+  }, [authenticated, SerieDetails, WatchListSeries]);
+
   const IsInFavorites = useSelector((state) => state.Series.IsInFavorites);
+
+  const IsInWatchList = useSelector((state) => state.Series.IsInWatchList);
 
   const addToWatchListHandler = () => {
     if (authenticated) {
@@ -141,10 +159,36 @@ export default function EpisodeDetail() {
     }
   };
 
+  const removeFromWatchListHandler = () => {
+    if (authenticated) {
+      Store.dispatch(
+        AddToWatchList({
+          accountId: AccountDetail.id,
+          serieId: params.id,
+          remove: true,
+        })
+      );
+    } else {
+      alert("Login please");
+    }
+  };
+
   const addToFavoriteHandler = () => {
     if (authenticated) {
       Store.dispatch(
         AddToFavorite({ accountId: AccountDetail.id, serieId: params.id })
+      );
+    } else alert("Login please");
+  };
+
+  const removeFromFavoriteHandler = () => {
+    if (authenticated) {
+      Store.dispatch(
+        AddToFavorite({
+          accountId: AccountDetail.id,
+          serieId: params.id,
+          remove: true,
+        })
       );
     } else alert("Login please");
   };
@@ -210,6 +254,7 @@ export default function EpisodeDetail() {
                       height="24"
                       viewBox="0 0 24 24"
                       className="cursor-pointer"
+                      onClick={removeFromFavoriteHandler}
                     >
                       <path
                         fill="red"
@@ -273,6 +318,8 @@ export default function EpisodeDetail() {
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
+                          className="cursor-pointer"
+                          onClick={removeFromFavoriteHandler}
                         >
                           <path
                             fill="red"
@@ -359,12 +406,29 @@ export default function EpisodeDetail() {
               {/* Landing Actions */}
               <div className="w-full flex items-center py-0 sm:py-4 justify-between z-20">
                 <div className="flex items-center space-x-4 w-full xs:w-auto font-montserrat z-20">
-                  <button
-                    className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2"
-                    onClick={addToWatchListHandler}
-                  >
-                    + WatchList
-                  </button>
+                  {IsInWatchList == undefined ? (
+                    <button
+                      className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2 xs:text-base text-xs"
+                      disabled
+                    >
+                      loading...
+                    </button>
+                  ) : IsInWatchList ? (
+                    <button
+                      className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2 xs:text-base text-xs"
+                      onClick={removeFromWatchListHandler}
+                    >
+                      delete in WatchList
+                    </button>
+                  ) : (
+                    <button
+                      className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2 xs:text-base text-xs"
+                      onClick={addToWatchListHandler}
+                    >
+                      + WatchList
+                    </button>
+                  )}
+
                   <button className="py-3 px-5 rounded-full text-white bg-green-400 xs:w-auto w-1/2">
                     + My Lists
                   </button>
