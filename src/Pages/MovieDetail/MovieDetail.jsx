@@ -190,6 +190,16 @@ export default function MovieDetail() {
     }
   };
 
+  const removeFromWatchListHandler = () => {
+    if (authenticated) {
+      Store.dispatch(
+        AddToWatchList({ accountId: AccountDetail.id, movieId: params.id , remove : true})
+      );
+    } else {
+      alert("Login please");
+    }
+  };
+
   const addToFavoriteHandler = () => {
     if (authenticated) {
       Store.dispatch(
@@ -422,7 +432,7 @@ export default function MovieDetail() {
                   ) : IsInWatchList ? (
                     <button
                       className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2 xs:text-base text-xs"
-                      // onClick={() => addToWatchListHandler}
+                      onClick={removeFromWatchListHandler}
                     >
                       delete in WatchList
                     </button>

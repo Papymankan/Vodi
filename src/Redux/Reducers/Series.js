@@ -514,7 +514,7 @@ export const fetchSeriesWithGenre = createAsyncThunk(
 
 export const AddToWatchList = createAsyncThunk(
   "Movies/AddToWatchList",
-  async ({ accountId, serieId }) => {
+  async ({ accountId, serieId, remove }) => {
     return fetch(
       BaseUrl +
         "account/" +
@@ -532,7 +532,7 @@ export const AddToWatchList = createAsyncThunk(
         body: JSON.stringify({
           media_type: "tv",
           media_id: serieId,
-          watchlist: true,
+          watchlist: remove ? false : true,
         }),
       }
     )
@@ -552,7 +552,7 @@ export const AddToWatchList = createAsyncThunk(
 
 export const AddToFavorite = createAsyncThunk(
   "Movies/AddToFavorite",
-  async ({ accountId, serieId }) => {
+  async ({ accountId, serieId, remove }) => {
     return fetch(
       BaseUrl +
         "account/" +
@@ -570,7 +570,7 @@ export const AddToFavorite = createAsyncThunk(
         body: JSON.stringify({
           media_type: "tv",
           media_id: serieId,
-          favorite: true,
+          favorite: remove ? false : true,
         }),
       }
     )
@@ -725,20 +725,19 @@ export const fetchIsInWatchList = createAsyncThunk(
     let page = 1;
     let isThere = false;
 
-    console.log(serieId , totalPages);
-    
-    
+    console.log(serieId, totalPages);
+
     while (totalPages >= page) {
       const response = await fetch(
         BaseUrl +
-        "account/" +
-        accountId +
-        "/watchlist/tv?" +
-        ApiKey +
-        "&session_id=" +
-        localStorage.getItem("sessionId") +
-        "&page=" +
-        page,
+          "account/" +
+          accountId +
+          "/watchlist/tv?" +
+          ApiKey +
+          "&session_id=" +
+          localStorage.getItem("sessionId") +
+          "&page=" +
+          page,
         {
           method: "GET",
           headers: {
@@ -746,7 +745,7 @@ export const fetchIsInWatchList = createAsyncThunk(
           },
         }
       );
-      
+
       if (response.ok) {
         const data = await response.json();
         console.log(data);

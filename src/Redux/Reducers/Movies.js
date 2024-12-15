@@ -408,7 +408,7 @@ export const fetchMoviesWithGenre = createAsyncThunk(
 
 export const AddToWatchList = createAsyncThunk(
   "Movies/AddToWatchList",
-  async ({ accountId, movieId }) => {
+  async ({ accountId, movieId, remove }) => {
     return fetch(
       BaseUrl +
         "account/" +
@@ -426,13 +426,13 @@ export const AddToWatchList = createAsyncThunk(
         body: JSON.stringify({
           media_type: "movie",
           media_id: movieId,
-          watchlist: true,
+          watchlist: remove ? false : true,
         }),
       }
     )
       .then((res) => {
         if (res.ok) {
-          window.location.reload()
+          window.location.reload();
           return res.json();
         }
       })
@@ -468,7 +468,7 @@ export const AddToFavorite = createAsyncThunk(
     )
       .then((res) => {
         if (res.ok) {
-          window.location.reload()
+          window.location.reload();
           return res.json();
         }
       })
