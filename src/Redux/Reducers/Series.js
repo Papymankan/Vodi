@@ -538,6 +538,9 @@ export const AddToWatchList = createAsyncThunk(
     )
       .then((res) => {
         if (res.ok) {
+          window.location.reload();
+          console.log(res);
+
           return res.json();
         }
       })
@@ -716,6 +719,50 @@ export const fetchIsInFavorites = createAsyncThunk(
   }
 );
 
+export const fetchIsInWatchList = createAsyncThunk(
+  "Series/fetchIsInWatchList",
+  async ({ accountId, serieId, totalPages }) => {
+    let page = 1;
+    let isThere = false;
+
+    console.log(serieId , totalPages);
+    
+    
+    while (totalPages >= page) {
+      const response = await fetch(
+        BaseUrl +
+        "account/" +
+        accountId +
+        "/watchlist/tv?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId") +
+        "&page=" +
+        page,
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+
+        if (data.results.some((serie) => serie.id === serieId)) {
+          isThere = true;
+          break;
+        }
+      }
+      page++;
+    }
+
+    return isThere;
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {
@@ -836,6 +883,9 @@ const slice = createSlice({
       })
       .addCase(fetchIsInFavorites.fulfilled, (state, action) => {
         return { ...state, IsInFavorites: action.payload };
+      })
+      .addCase(fetchIsInWatchList.fulfilled, (state, action) => {
+        return { ...state, IsInWatchList: action.payload };
       });
   },
 });

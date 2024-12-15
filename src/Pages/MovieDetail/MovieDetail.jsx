@@ -156,8 +156,6 @@ export default function MovieDetail() {
   const IsInFavorites = useSelector((state) => state.Movies.IsInFavorites);
 
   const IsInWatchList = useSelector((state) => state.Movies.IsInWatchList);
-
-  console.log(IsInWatchList);
   
 
   const CheckWidth = () => {
