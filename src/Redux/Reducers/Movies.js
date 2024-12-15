@@ -444,7 +444,7 @@ export const AddToWatchList = createAsyncThunk(
 
 export const AddToFavorite = createAsyncThunk(
   "Movies/AddToFavorite",
-  async ({ accountId, movieId }) => {
+  async ({ accountId, movieId, remove }) => {
     return fetch(
       BaseUrl +
         "account/" +
@@ -462,7 +462,7 @@ export const AddToFavorite = createAsyncThunk(
         body: JSON.stringify({
           media_type: "movie",
           media_id: movieId,
-          favorite: true,
+          favorite: remove ? false : true,
         }),
       }
     )

@@ -205,6 +205,18 @@ export default function SerieDetail() {
       );
     } else alert("Login please");
   };
+
+  const removeFromFavoriteHandler = () => {
+    if (authenticated) {
+      Store.dispatch(
+        AddToFavorite({
+          accountId: AccountDetail.id,
+          serieId: params.id,
+          remove: true,
+        })
+      );
+    } else alert("Login please");
+  };
   return (
     <>
       <NavBar />
@@ -275,6 +287,7 @@ export default function SerieDetail() {
                       height="24"
                       viewBox="0 0 24 24"
                       className="cursor-pointer"
+                      onClick={removeFromFavoriteHandler}
                     >
                       <path
                         fill="red"
@@ -339,6 +352,8 @@ export default function SerieDetail() {
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
+                          className="cursor-pointer"
+                          onClick={removeFromFavoriteHandler}
                         >
                           <path
                             fill="red"
@@ -444,7 +459,7 @@ export default function SerieDetail() {
                   ) : IsInWatchList ? (
                     <button
                       className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2 xs:text-base text-xs"
-                        onClick={removeFromWatchListHandler}
+                      onClick={removeFromWatchListHandler}
                     >
                       delete in WatchList
                     </button>

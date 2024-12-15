@@ -208,6 +208,14 @@ export default function MovieDetail() {
     } else alert("Login please");
   };
 
+  const removeFromFavoriteHandler = () => {
+    if (authenticated) {
+      Store.dispatch(
+        AddToFavorite({ accountId: AccountDetail.id, movieId: params.id , remove : true})
+      );
+    } else alert("Login please");
+  };
+
   return (
     <>
       <NavBar />
@@ -277,6 +285,8 @@ export default function MovieDetail() {
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
+                      className="cursor-pointer"
+                      onClick={removeFromFavoriteHandler}
                     >
                       <path
                         fill="red"
@@ -341,6 +351,8 @@ export default function MovieDetail() {
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
+                          className="cursor-pointer"
+                          onClick={removeFromFavoriteHandler}
                         >
                           <path
                             fill="red"
