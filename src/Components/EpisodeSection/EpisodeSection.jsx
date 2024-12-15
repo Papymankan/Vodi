@@ -112,16 +112,7 @@ export default function EpisodeSection({
                             Explore
                           </a>
 
-                          <button
-                            className="px-2 hidden xs:flex items-center sm:px-4 text-center text-[10px] sm:text-xs py-1 xs:py-2 border border-cyan text-cyan 
-                    rounded-md hover:bg-cyan hover:text-white duration-200 ml-2"
-                          >
-                            + WatchList
-                          </button>
-
-                          <button className="px-2 hidden xs:flex items-center sm:px-4 text-center text-[10px] sm:text-xs py-1 xs:py-2 border border-green-400 text-green-400 rounded-md hover:bg-green-400 hover:text-white duration-200 ml-2">
-                            + My Lists
-                          </button>
+                          
 
                           <a
                             href={

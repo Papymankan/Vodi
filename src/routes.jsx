@@ -17,6 +17,7 @@ import TrendingMovies from "./Pages/TrendingMovies/TrendingMovies.jsx"
 import TrendingSeries from "./Pages/TrendingSeries/TrendingSeries.jsx"
 import UpcomingMovies from "./Pages/UpcomingMovies/UpcomingMovies.jsx"
 import Profile from "./Pages/Profile/Profile.jsx"
+import WatchListMovies from "./Pages/WatchListMovies/WatchListMovies.jsx"
 
 
 const routes = [
@@ -49,6 +50,7 @@ const routes = [
     { path: '/series/on-air', element: <OnAirSeries /> },
 
     { path: '/profile', element: <Profile /> },
+    { path: '/watchlist/movie', element: <WatchListMovies /> },
 ]
 
 export default routes

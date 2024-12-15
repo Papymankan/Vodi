@@ -743,7 +743,14 @@ const slice = createSlice({
         return { ...state, loadingMore: true };
       })
       .addCase(fetchWatchListMovies.fulfilled, (state, action) => {
-        return { ...state, WatchListMovies: action.payload };
+        return {
+          ...state,
+          WatchListMovies: action.payload,
+          loadingMore: false,
+        };
+      })
+      .addCase(fetchWatchListMovies.pending, (state, action) => {
+        return { ...state, loadingMore: true };
       })
       .addCase(fetchFavoriteMovies.fulfilled, (state, action) => {
         return { ...state, FavoriteMovies: action.payload };

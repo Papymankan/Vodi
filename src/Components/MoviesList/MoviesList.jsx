@@ -35,6 +35,7 @@ export default function MoviesList({moviesList , MovieGenres}) {
                     </p>
                   </div>
                 </a>
+                
               </div>
             );
           }
