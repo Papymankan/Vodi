@@ -1,40 +1,41 @@
 import React, { useEffect, useState } from "react";
-import Loader from "../../Components/Loader/Loader";
-import Footer from "../../Components/Footer/Footer";
-import MoviesList from "../../Components/MoviesList/MoviesList";
 import { useSelector } from "react-redux";
+import { fetchWatchListSeries } from "../../Redux/Reducers/Series";
+import Footer from "../../Components/Footer/Footer";
+import Loader from "../../Components/Loader/Loader";
+import SeriesList from "../../Components/SeriesList/SeriesList";
 import NavBar from "../../Components/NavBar/NavBar";
-import { fetchWatchListMovies } from "../../Redux/Reducers/Movies";
 
-export default function WatchListMovies() {
+export default function WatchListSeries() {
   const [page, setPage] = useState(1);
-  const [moviesList, setMoviesList] = useState([]);
+  const [seriesList, setSeriesList] = useState([]);
 
-  const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
+  const SerieGenres = useSelector((state) => state.Series.SerieGenres);
+
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
   useEffect(() => {
-    if (MovieGenres && page > 1 && WatchListMovies.total_pages >= page) {
-      Store.dispatch(fetchWatchListMovies({ accountId: AccountDetail.id , page }));
+    if (SerieGenres && page > 1 && WatchListSeries.total_pages >= page) {
+      Store.dispatch(
+        fetchWatchListSeries({ accountId: AccountDetail.id, page })
+      );
     }
-  }, [MovieGenres, page]);
+  }, [SerieGenres, page]);
 
-  const WatchListMovies = useSelector((state) => state.Movies.WatchListMovies);
+  const WatchListSeries = useSelector((state) => state.Series.WatchListSeries);
 
-  console.log(WatchListMovies);
-
-  const loadingMore = useSelector((state) => state.Movies.loadingMore);
+  const loadingMore = useSelector((state) => state.Series.loadingMore);
 
   useEffect(() => {
-    if (WatchListMovies) {
-      setMoviesList([...moviesList, ...WatchListMovies.results]);
+    if (WatchListSeries) {
+      setSeriesList([...seriesList, ...WatchListSeries.results]);
     }
-  }, [WatchListMovies]);
+  }, [WatchListSeries]);
 
   return (
     <>
       <NavBar />
-      {MovieGenres && (
+      {SerieGenres && (
         <>
           <div className="container mx-auto px-4 flex flex-col items-center pb-20">
             {/* BreadCrumb */}
@@ -56,7 +57,7 @@ export default function WatchListMovies() {
                 />
               </svg>
               <a href="#" className="hover:text-cyan z-20 duration-200">
-                Movies
+                Series
               </a>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -75,32 +76,32 @@ export default function WatchListMovies() {
                 href="#"
                 className="hover:text-cyan z-20 duration-200 text-white"
               >
-                Watchlist movies
+                Watchlist Series
               </a>
             </div>
 
             {/* Header */}
             <div className="w-full flex flex-col items-center mt-6">
               <h1 className="font-montserrat text-base xs:text-lg sm:text-2xl text-gray-400">
-                Movies in your
+                Series in your
                 <span className="font-bold text-cyan"> Watchlist </span>
               </h1>
               <h4 className="text-gray-500 font-montserrat text-xs sm:text-sm">
                 Total Results :{" "}
-                {WatchListMovies && WatchListMovies.total_results}
+                {WatchListSeries && WatchListSeries.total_results}
               </h4>
             </div>
 
             {/* Movies */}
-            {WatchListMovies ? (
-              moviesList.length > 0 ? (
+            {WatchListSeries ? (
+              seriesList.length > 0 ? (
                 <>
-                  <MoviesList
-                    moviesList={moviesList}
-                    MovieGenres={MovieGenres}
+                  <SeriesList
+                    seriesList={seriesList}
+                    SerieGenres={SerieGenres}
                   />
 
-                  {WatchListMovies.total_pages > page && (
+                  {WatchListSeries.total_pages > page && (
                     <button
                       className="text-sm font-montserrat text-white px-4 py-2 bg-cyan rounded-md my-8"
                       onClick={() => setPage(page + 1)}
@@ -113,13 +114,13 @@ export default function WatchListMovies() {
               ) : (
                 <div className="not_found w-full flex pt-16 font-montserrat flex-col">
                   <h1 className="text-white sm:text-4xl text-2xl font-semibold px-10 w-full text-center sm:text-left">
-                    No movies found !! 😥
+                    No Series found !! 😥
                   </h1>
                   <h1 className="text-white sm:text-2xl font-semibold px-10 w-full text-center sm:text-left">
-                    unfortunately There is no movies in your watchlist
+                    unfortunately There is no Series in your watchlist
                   </h1>
                   <p className="text-slate-300 mt-6 sm:text-lg text-sm font-semibold px-10 w-full text-center sm:text-left">
-                    But do not worry you can add any movie you like to your
+                    But do not worry you can add any serie you like to your
                     watchlist 😊
                   </p>
                 </div>
