@@ -1,42 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { fetchWatchListSeries } from "../../Redux/Reducers/Series";
 import Footer from "../../Components/Footer/Footer";
 import Loader from "../../Components/Loader/Loader";
-import SeriesList from "../../Components/SeriesList/SeriesList";
+import MoviesList from "../../Components/MoviesList/MoviesList";
 import NavBar from "../../Components/NavBar/NavBar";
+import { useSelector } from "react-redux";
+import { fetchFavoriteMovies } from "../../Redux/Reducers/Movies";
 import Store from "../../Redux/Store";
 
-export default function WatchListSeries() {
+export default function FavoriteMovies() {
   const [page, setPage] = useState(1);
-  const [seriesList, setSeriesList] = useState([]);
+  const [moviesList, setMoviesList] = useState([]);
 
-  const SerieGenres = useSelector((state) => state.Series.SerieGenres);
-
+  const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
   useEffect(() => {
-    if (SerieGenres && page > 1 && WatchListSeries.total_pages >= page) {
+    if (MovieGenres && page > 1 && FavoriteMovies.total_pages >= page) {
       Store.dispatch(
-        fetchWatchListSeries({ accountId: AccountDetail.id, page })
+        fetchFavoriteMovies({ accountId: AccountDetail.id, page })
       );
     }
-  }, [SerieGenres, page]);
+  }, [MovieGenres, page]);
 
-  const WatchListSeries = useSelector((state) => state.Series.WatchListSeries);
+  const FavoriteMovies = useSelector((state) => state.Movies.FavoriteMovies);
 
-  const loadingMore = useSelector((state) => state.Series.loadingMore);
+  const loadingMore = useSelector((state) => state.Movies.loadingMore);
 
   useEffect(() => {
-    if (WatchListSeries) {
-      setSeriesList([...seriesList, ...WatchListSeries.results]);
+    if (FavoriteMovies) {
+      setMoviesList([...moviesList, ...FavoriteMovies.results]);
     }
-  }, [WatchListSeries]);
+  }, [FavoriteMovies]);
 
   return (
     <>
       <NavBar />
-      {SerieGenres && (
+      {MovieGenres && (
         <>
           <div className="container mx-auto px-4 flex flex-col items-center pb-20">
             {/* BreadCrumb */}
@@ -58,7 +57,7 @@ export default function WatchListSeries() {
                 />
               </svg>
               <a href="#" className="hover:text-cyan z-20 duration-200">
-                Series
+                Movies
               </a>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -77,32 +76,32 @@ export default function WatchListSeries() {
                 href="#"
                 className="hover:text-cyan z-20 duration-200 text-white"
               >
-                Watchlist Series
+                Favorite movies
               </a>
             </div>
 
             {/* Header */}
             <div className="w-full flex flex-col items-center mt-6">
               <h1 className="font-montserrat text-base xs:text-lg sm:text-2xl text-gray-400">
-                Series in your
+                Movies in your
                 <span className="font-bold text-cyan"> Watchlist </span>
               </h1>
               <h4 className="text-gray-500 font-montserrat text-xs sm:text-sm">
                 Total Results :{" "}
-                {WatchListSeries && WatchListSeries.total_results}
+                {FavoriteMovies && FavoriteMovies.total_results}
               </h4>
             </div>
 
             {/* Movies */}
-            {WatchListSeries ? (
-              seriesList.length > 0 ? (
+            {FavoriteMovies ? (
+              moviesList.length > 0 ? (
                 <>
-                  <SeriesList
-                    seriesList={seriesList}
-                    SerieGenres={SerieGenres}
+                  <MoviesList
+                    moviesList={moviesList}
+                    MovieGenres={MovieGenres}
                   />
 
-                  {WatchListSeries.total_pages > page && (
+                  {FavoriteMovies.total_pages > page && (
                     <button
                       className="text-sm font-montserrat text-white px-4 py-2 bg-cyan rounded-md my-8"
                       onClick={() => setPage(page + 1)}
@@ -115,13 +114,13 @@ export default function WatchListSeries() {
               ) : (
                 <div className="not_found w-full flex pt-16 font-montserrat flex-col">
                   <h1 className="text-white sm:text-4xl text-2xl font-semibold px-10 w-full text-center sm:text-left">
-                    No Series found !! 😥
+                    No movies found !! 😥
                   </h1>
                   <h1 className="text-white sm:text-2xl font-semibold px-10 w-full text-center sm:text-left">
-                    unfortunately There is no Series in your watchlist
+                    unfortunately There is no movies in your watchlist
                   </h1>
                   <p className="text-slate-300 mt-6 sm:text-lg text-sm font-semibold px-10 w-full text-center sm:text-left">
-                    But do not worry you can add any serie you like to your
+                    But do not worry you can add any movie you like to your
                     watchlist 😊
                   </p>
                 </div>

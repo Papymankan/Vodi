@@ -5,6 +5,7 @@ import MoviesList from "../../Components/MoviesList/MoviesList";
 import { useSelector } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import { fetchWatchListMovies } from "../../Redux/Reducers/Movies";
+import Store from "../../Redux/Store";
 
 export default function WatchListMovies() {
   const [page, setPage] = useState(1);

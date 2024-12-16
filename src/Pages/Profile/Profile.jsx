@@ -75,7 +75,7 @@ export default function Login() {
                     </h2>
                   </div>
                   <a
-                    href="#"
+                    href="/watchlist/serie"
                     className="text-xs text-cyan flex items-center duration-200 hover:scale-105"
                   >
                     See All

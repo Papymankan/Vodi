@@ -753,7 +753,10 @@ const slice = createSlice({
         return { ...state, loadingMore: true };
       })
       .addCase(fetchFavoriteMovies.fulfilled, (state, action) => {
-        return { ...state, FavoriteMovies: action.payload };
+        return { ...state, FavoriteMovies: action.payload, loadingMore: false };
+      })
+      .addCase(fetchFavoriteMovies.pending, (state, action) => {
+        return { ...state, loadingMore: true };
       })
       .addCase(fetchRatedMovies.fulfilled, (state, action) => {
         return { ...state, RatedMovies: action.payload };
