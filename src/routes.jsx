@@ -20,6 +20,7 @@ import Profile from "./Pages/Profile/Profile.jsx"
 import WatchListMovies from "./Pages/WatchListMovies/WatchListMovies.jsx"
 import WatchListSeries from "./Pages/WatchListSeries/WatchListSeries.jsx"
 import FavoriteMovies from "./Pages/FavoriteMovies/FavoriteMovies.jsx"
+import FavoriteSeries from "./Pages/FavoriteSeries/FavoriteSeries.jsx"
 
 
 const routes = [
@@ -57,6 +58,7 @@ const routes = [
     { path: '/watchlist/serie', element: <WatchListSeries /> },
  
     { path: '/favorite/movie', element: <FavoriteMovies /> },
+    { path: '/favorite/serie', element: <FavoriteSeries /> },
 ]
 
 export default routes

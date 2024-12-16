@@ -882,7 +882,10 @@ const slice = createSlice({
         return { ...state, loadingMore: true };
       })
       .addCase(fetchFavoriteSeries.fulfilled, (state, action) => {
-        return { ...state, FavoriteSeries: action.payload };
+        return { ...state, FavoriteSeries: action.payload, loadingMore: false };
+      })
+      .addCase(fetchFavoriteSeries.pending, (state, action) => {
+        return { ...state, loadingMore: true };
       })
       .addCase(fetchRatedSeries.fulfilled, (state, action) => {
         return { ...state, RatedSeries: action.payload };
