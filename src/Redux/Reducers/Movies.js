@@ -651,10 +651,47 @@ export const fetchIsInWatchList = createAsyncThunk(
   }
 );
 
+export const RateMovie = createAsyncThunk(
+  "Movies/RateMovie",
+  async ({ movieId, rating }) => {
+    return fetch(
+      BaseUrl +
+        "movie/" +
+        movieId +
+        "/rating?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId"),
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          value: rating,
+        }),
+      }
+    )
+      .then((res) => {
+        console.log(res);
+
+        if (res.ok) {
+          window.location.reload();
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {
     loadingMore: false,
+    fullScreenLoading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -766,6 +803,9 @@ const slice = createSlice({
       })
       .addCase(fetchIsInWatchList.fulfilled, (state, action) => {
         return { ...state, IsInWatchList: action.payload };
+      })
+      .addCase(RateMovie.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
       });
   },
 });

@@ -15,6 +15,7 @@ import {
   fetchMovieVideos,
   fetchRecommandMovies,
   fetchSimilarMovies,
+  RateMovie,
 } from "../../Redux/Reducers/Movies";
 import { useSelector } from "react-redux";
 import Store from "../../Redux/Store";
@@ -31,12 +32,14 @@ import Counter from "yet-another-react-lightbox/plugins/counter";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/counter.css";
 import { Avatar, Box, Modal, Pagination, Slider } from "@mui/material";
+import FullScreenLoader from "../../Components/FullScreenLoader/FullScreenLoader";
 
 export default function MovieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
   const [showImagesLightbox, setShowImagesLightbox] = useState(false);
   const [voteModal, setVoteModal] = useState(false);
+  const [vote, setVote] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [CastsRow, setCastsRow] = useState(8);
   const [BackdropVideo, setBackdropVideo] = useState(null);
@@ -158,6 +161,10 @@ export default function MovieDetail() {
 
   const IsInWatchList = useSelector((state) => state.Movies.IsInWatchList);
 
+  const fullScreenLoading = useSelector(
+    (state) => state.Movies.fullScreenLoading
+  );
+
   const CheckWidth = () => {
     if (window.innerWidth > 1486) {
       setCastsRow(7);
@@ -234,6 +241,10 @@ export default function MovieDetail() {
     p: 4,
     outline: 0,
     borderRadius: "10px",
+  };
+
+  const ratingHandler = () => {
+    Store.dispatch(RateMovie({ movieId: params.id, rating: vote }));
   };
 
   return (
@@ -990,7 +1001,11 @@ export default function MovieDetail() {
             </div>
           )}
 
-          <Modal open={voteModal} onClose={() => setVoteModal(false)}>
+          <Modal
+            open={voteModal}
+            onClose={() => setVoteModal(false)}
+            sx={{ zIndex: 20}}
+          >
             <Box sx={voteModalStyle}>
               <div className="h-full p- text-white font-montserrat sm:w-96 w-[280px] flex flex-col items-start">
                 <div className="flex w-full justify-between items-center">
@@ -1024,9 +1039,8 @@ export default function MovieDetail() {
                 </p>
 
                 <Slider
-                  aria-label="Temperature"
-                  defaultValue={0}
-                  // getAriaValueText={valuetext}
+                  defaultValue={vote}
+                  value={vote}
                   valueLabelDisplay="auto"
                   shiftStep={3}
                   step={1}
@@ -1035,12 +1049,20 @@ export default function MovieDetail() {
                   max={10}
                   className="mt-5"
                   sx={{ color: "#24baef" }}
+                  onChange={(e) => setVote(e.target.value)}
                 />
 
-                <button className="bg-cyan rounded-lg p-2 mt-5 self-end">Submit</button>
+                <button
+                  className="bg-cyan rounded-lg p-2 mt-5 self-end"
+                  onClick={ratingHandler}
+                >
+                  Submit
+                </button>
               </div>
             </Box>
           </Modal>
+
+          {fullScreenLoading && <FullScreenLoader />}
 
           <Footer />
         </>

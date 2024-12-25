@@ -6,7 +6,7 @@ export default function FullScreenLoader() {
   return (
     <div>
       <Backdrop
-        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 10 })}
         open={true}
       >
         <Loader/>
