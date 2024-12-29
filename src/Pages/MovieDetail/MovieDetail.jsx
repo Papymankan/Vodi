@@ -7,6 +7,7 @@ import {
   AddToFavorite,
   AddToWatchList,
   fetchIsInFavorites,
+  fetchIsInRated,
   fetchIsInWatchList,
   fetchMovieCrews,
   fetchMovieDetails,
@@ -75,12 +76,11 @@ export default function MovieDetail() {
 
   const RatedMovies = useSelector((state) => state.Movies.RatedMovies);
 
-  // console.log(RatedMovies);
-  
-
   const IsInFavorites = useSelector((state) => state.Movies.IsInFavorites);
 
   const IsInWatchList = useSelector((state) => state.Movies.IsInWatchList);
+
+  const IsInRated = useSelector((state) => state.Movies.IsInRated);
 
   const fullScreenLoading = useSelector(
     (state) => state.Movies.fullScreenLoading
@@ -144,6 +144,22 @@ export default function MovieDetail() {
     }
   }, [authenticated, MovieDetails, WatchListMovies]);
 
+  useEffect(() => {
+    if (authenticated && MovieDetails && RatedMovies) {
+      Store.dispatch(
+        fetchIsInRated({
+          accountId: AccountDetail.id,
+          movieId: MovieDetails.id,
+          totalPages: RatedMovies.total_pages,
+        })
+      );
+    }
+  }, [authenticated, MovieDetails, RatedMovies]);
+
+  useEffect(() => {
+    setVote(IsInRated);
+  }, [IsInRated]);
+
   useEffect(CheckWidth, []);
 
   // -----------------------------------------------
@@ -164,7 +180,7 @@ export default function MovieDetail() {
     } else {
       setCastsRow(5);
     }
-  };
+  }
 
   const reviewsPageChange = (event, value) => {
     setReviewsPage(value);
@@ -229,7 +245,8 @@ export default function MovieDetail() {
   };
 
   const ratingHandler = () => {
-    Store.dispatch(RateMovie({ movieId: params.id, rating: vote }));
+    if (authenticated)
+      Store.dispatch(RateMovie({ movieId: params.id, rating: vote }));
   };
 
   const onReady = (event) => {
@@ -1048,8 +1065,8 @@ export default function MovieDetail() {
                 </p>
 
                 <Slider
-                  defaultValue={vote}
-                  value={vote}
+                  defaultValue={0}
+                  value={vote ? vote : 0}
                   valueLabelDisplay="auto"
                   shiftStep={3}
                   step={1}
@@ -1061,12 +1078,19 @@ export default function MovieDetail() {
                   onChange={(e) => setVote(e.target.value)}
                 />
 
-                <button
-                  className="bg-cyan rounded-lg p-2 mt-5 self-end"
-                  onClick={ratingHandler}
+                <div
+                  className={`w-full flex ${
+                    IsInRated != undefined ? "justify-between" : "justify-end"
+                  } items-center`}
                 >
-                  Submit
-                </button>
+                  {IsInRated != undefined && <h2>Your vote : {IsInRated}</h2>}
+                  <button
+                    className="bg-cyan rounded-lg p-2 mt-5 self-end"
+                    onClick={ratingHandler}
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
             </Box>
           </Modal>

@@ -654,39 +654,82 @@ export const fetchIsInWatchList = createAsyncThunk(
   }
 );
 
+export const fetchIsInRated = createAsyncThunk(
+  "Movies/fetchIsInRated",
+  async ({ accountId, movieId, totalPages }) => {
+    let page = 1;
+    let rate = undefined;
+
+    while (totalPages >= page) {
+      const response = await fetch(
+        BaseUrl +
+          "account/" +
+          accountId +
+          "/rated/movies?" +
+          ApiKey +
+          "&session_id=" +
+          localStorage.getItem("sessionId") +
+          "&page=" +
+          page,
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+
+        data.results.some((movie) => {
+          if (movie.id === movieId) rate = movie.rating;
+        });
+      }
+
+      page++;
+    }
+
+    return rate;
+  }
+);
+
 export const RateMovie = createAsyncThunk(
   "Movies/RateMovie",
   async ({ movieId, rating }) => {
-    return fetch(
-      BaseUrl +
-        "movie/" +
-        movieId +
-        "/rating?" +
-        ApiKey +
-        "&session_id=" +
-        localStorage.getItem("sessionId"),
-      {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          value: rating,
-        }),
-      }
-    )
-      .then((res) => {
-        console.log(res);
-
-        if (res.ok) {
-          window.location.reload();
-          return res.json();
+        return fetch(
+        BaseUrl +
+          "movie/" +
+          movieId +
+          "/rating?" +
+          ApiKey +
+          "&session_id=" +
+          localStorage.getItem("sessionId"),
+        {
+          method: rating ? "POST" : "DELETE",
+          headers: {
+            accept: "application/json",
+            "content-type": rating ? "application/json" : "",
+          },
+          body: rating
+            ? JSON.stringify({
+                value: rating,
+              })
+            : undefined,
         }
-      })
-      .then((data) => {
-        return data;
-      });
+      )
+        .then((res) => {
+          console.log(res);
+
+          if (res.ok) {
+            window.location.reload();
+            return res.json();
+          }
+        })
+        .then((data) => {
+          return data;
+        });
+    
   }
 );
 
@@ -809,6 +852,9 @@ const slice = createSlice({
       })
       .addCase(fetchIsInWatchList.fulfilled, (state, action) => {
         return { ...state, IsInWatchList: action.payload };
+      })
+      .addCase(fetchIsInRated.fulfilled, (state, action) => {
+        return { ...state, IsInRated: action.payload };
       })
       .addCase(RateMovie.pending, (state, action) => {
         return { ...state, fullScreenLoading: true };
