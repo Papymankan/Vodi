@@ -561,11 +561,14 @@ export const fetchRatedMovies = createAsyncThunk(
       }
     )
       .then((res) => {
+        console.log(res);
         if (res.ok) {
           return res.json();
         }
       })
       .then((data) => {
+        console.log(data);
+
         return data;
       });
   }
@@ -796,7 +799,10 @@ const slice = createSlice({
         return { ...state, loadingMore: true };
       })
       .addCase(fetchRatedMovies.fulfilled, (state, action) => {
-        return { ...state, RatedMovies: action.payload };
+        return { ...state, RatedMovies: action.payload, loadingMore: false };
+      })
+      .addCase(fetchRatedMovies.pending, (state, action) => {
+        return { ...state, loadingMore: true };
       })
       .addCase(fetchIsInFavorites.fulfilled, (state, action) => {
         return { ...state, IsInFavorites: action.payload };

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Loader from "../../Components/Loader/Loader";
-import Footer from "../../Components/Footer/Footer";
-import MoviesList from "../../Components/MoviesList/MoviesList";
-import { useSelector } from "react-redux";
-import NavBar from "../../Components/NavBar/NavBar";
-import { fetchWatchListMovies } from "../../Redux/Reducers/Movies";
+import Footer from "../Footer/Footer";
+import Loader from "../Loader/Loader";
+import SeriesList from "../SeriesList/SeriesList";
+import NavBar from "../NavBar/NavBar";
 import Store from "../../Redux/Store";
+import { fetchRatedMovies } from "../../Redux/Reducers/Movies";
+import MoviesList from "../MoviesList/MoviesList";
+import { useSelector } from "react-redux";
 
-export default function WatchListMovies() {
+export default function RatedMovies() {
   const [page, setPage] = useState(1);
   const [moviesList, setMoviesList] = useState([]);
 
@@ -15,20 +16,20 @@ export default function WatchListMovies() {
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
   useEffect(() => {
-    if (MovieGenres && page > 1 && WatchListMovies.total_pages >= page) {
-      Store.dispatch(fetchWatchListMovies({ accountId: AccountDetail.id , page }));
+    if (MovieGenres && page > 1 && RatedMovies.total_pages >= page) {
+      Store.dispatch(fetchRatedMovies({ accountId: AccountDetail.id, page }));
     }
   }, [MovieGenres, page]);
 
-  const WatchListMovies = useSelector((state) => state.Movies.WatchListMovies);
+  const RatedMovies = useSelector((state) => state.Movies.RatedMovies);  
 
   const loadingMore = useSelector((state) => state.Movies.loadingMore);
 
   useEffect(() => {
-    if (WatchListMovies) {
-      setMoviesList([...moviesList, ...WatchListMovies.results]);
+    if (RatedMovies) {
+      setMoviesList([...moviesList, ...RatedMovies.results]);
     }
-  }, [WatchListMovies]);
+  }, [RatedMovies]);
 
   return (
     <>
@@ -81,17 +82,17 @@ export default function WatchListMovies() {
             {/* Header */}
             <div className="w-full flex flex-col items-center mt-6">
               <h1 className="font-montserrat text-base xs:text-lg sm:text-2xl text-gray-400">
-                Movies in your
-                <span className="font-bold text-cyan"> Watchlist </span>
+                Your
+                <span className="font-bold text-cyan"> Rated </span>
+                Movies
               </h1>
               <h4 className="text-gray-500 font-montserrat text-xs sm:text-sm">
-                Total Results :{" "}
-                {WatchListMovies && WatchListMovies.total_results}
+                Total Results : {RatedMovies && RatedMovies.total_results}
               </h4>
             </div>
 
             {/* Movies */}
-            {WatchListMovies ? (
+            {RatedMovies ? (
               moviesList.length > 0 ? (
                 <>
                   <MoviesList
@@ -99,7 +100,7 @@ export default function WatchListMovies() {
                     MovieGenres={MovieGenres}
                   />
 
-                  {WatchListMovies.total_pages > page && (
+                  {RatedMovies.total_pages > page && (
                     <button
                       className="text-sm font-montserrat text-white px-4 py-2 bg-cyan rounded-md my-8"
                       onClick={() => setPage(page + 1)}

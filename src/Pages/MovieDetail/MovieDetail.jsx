@@ -47,57 +47,9 @@ export default function MovieDetail() {
   const [expandReview, setExpandReview] = useState(0);
   const playerRef = useRef(null);
 
-  const onReady = (event) => {
-    playerRef.current = event.target; // Store the player instance in the ref
-    playerRef.current.mute(); // Start muted
-  };
-
-  const toggleMute = () => {
-    if (playerRef.current) {
-      // Ensure the player is initialized
-      if (isMuted) {
-        playerRef.current.unMute();
-      } else {
-        playerRef.current.mute();
-      }
-      setIsMuted(!isMuted);
-    }
-  };
-
-  const onStateChange = (event) => {
-    if (event.data === 1) {
-      setLoadingBackdrop(false);
-      console.log("playing");
-    }
-  };
-
   const params = useParams();
 
-  useEffect(() => {
-    Store.dispatch(fetchMovieDetails({ id: params.id }));
-  }, [params]);
-
   const MovieDetails = useSelector((state) => state.Movies.MovieDetails);
-
-  useEffect(() => {
-    if (MovieDetails) {
-      Store.dispatch(fetchMovieVideos({ id: params.id }));
-      Store.dispatch(fetchMovieImages({ id: params.id }));
-      Store.dispatch(fetchRecommandMovies({ id: params.id }));
-      Store.dispatch(fetchSimilarMovies({ id: params.id }));
-      Store.dispatch(fetchMovieCrews({ id: params.id }));
-    }
-  }, [MovieDetails]);
-
-  useEffect(() => {
-    if (MovieDetails && reviewsPage) {
-      Store.dispatch(fetchMovieReviews({ id: params.id, page: reviewsPage }));
-    }
-  }, [MovieDetails, reviewsPage]);
-
-  const reviewsPageChange = (event, value) => {
-    setReviewsPage(value);
-  };
 
   const MovieVideos = useSelector((state) => state.Movies.MovieVideos);
 
@@ -117,6 +69,45 @@ export default function MovieDetail() {
 
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
+  const FavoriteMovies = useSelector((state) => state.Movies.FavoriteMovies);
+
+  const WatchListMovies = useSelector((state) => state.Movies.WatchListMovies);
+
+  const RatedMovies = useSelector((state) => state.Movies.RatedMovies);
+
+  // console.log(RatedMovies);
+  
+
+  const IsInFavorites = useSelector((state) => state.Movies.IsInFavorites);
+
+  const IsInWatchList = useSelector((state) => state.Movies.IsInWatchList);
+
+  const fullScreenLoading = useSelector(
+    (state) => state.Movies.fullScreenLoading
+  );
+
+  // -----------------------------------------------
+
+  useEffect(() => {
+    Store.dispatch(fetchMovieDetails({ id: params.id }));
+  }, [params]);
+
+  useEffect(() => {
+    if (MovieDetails) {
+      Store.dispatch(fetchMovieVideos({ id: params.id }));
+      Store.dispatch(fetchMovieImages({ id: params.id }));
+      Store.dispatch(fetchRecommandMovies({ id: params.id }));
+      Store.dispatch(fetchSimilarMovies({ id: params.id }));
+      Store.dispatch(fetchMovieCrews({ id: params.id }));
+    }
+  }, [MovieDetails]);
+
+  useEffect(() => {
+    if (MovieDetails && reviewsPage) {
+      Store.dispatch(fetchMovieReviews({ id: params.id, page: reviewsPage }));
+    }
+  }, [MovieDetails, reviewsPage]);
+
   useEffect(() => {
     if (MovieVideos) {
       MovieVideos.some((video) => {
@@ -126,10 +117,6 @@ export default function MovieDetail() {
       });
     }
   }, [MovieVideos]);
-
-  const FavoriteMovies = useSelector((state) => state.Movies.FavoriteMovies);
-
-  const WatchListMovies = useSelector((state) => state.Movies.WatchListMovies);
 
   useEffect(() => {
     if (authenticated && MovieDetails && FavoriteMovies) {
@@ -157,15 +144,11 @@ export default function MovieDetail() {
     }
   }, [authenticated, MovieDetails, WatchListMovies]);
 
-  const IsInFavorites = useSelector((state) => state.Movies.IsInFavorites);
+  useEffect(CheckWidth, []);
 
-  const IsInWatchList = useSelector((state) => state.Movies.IsInWatchList);
+  // -----------------------------------------------
 
-  const fullScreenLoading = useSelector(
-    (state) => state.Movies.fullScreenLoading
-  );
-
-  const CheckWidth = () => {
+  function CheckWidth() {
     if (window.innerWidth > 1486) {
       setCastsRow(7);
     } else if (window.innerWidth > 1200) {
@@ -183,9 +166,11 @@ export default function MovieDetail() {
     }
   };
 
-  window.addEventListener("resize", CheckWidth);
+  const reviewsPageChange = (event, value) => {
+    setReviewsPage(value);
+  };
 
-  useEffect(CheckWidth, []);
+  window.addEventListener("resize", CheckWidth);
 
   const addToWatchListHandler = () => {
     if (authenticated) {
@@ -245,6 +230,30 @@ export default function MovieDetail() {
 
   const ratingHandler = () => {
     Store.dispatch(RateMovie({ movieId: params.id, rating: vote }));
+  };
+
+  const onReady = (event) => {
+    playerRef.current = event.target; // Store the player instance in the ref
+    playerRef.current.mute(); // Start muted
+  };
+
+  const toggleMute = () => {
+    if (playerRef.current) {
+      // Ensure the player is initialized
+      if (isMuted) {
+        playerRef.current.unMute();
+      } else {
+        playerRef.current.mute();
+      }
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const onStateChange = (event) => {
+    if (event.data === 1) {
+      setLoadingBackdrop(false);
+      console.log("playing");
+    }
   };
 
   return (
@@ -1004,7 +1013,7 @@ export default function MovieDetail() {
           <Modal
             open={voteModal}
             onClose={() => setVoteModal(false)}
-            sx={{ zIndex: 20}}
+            sx={{ zIndex: 20 }}
           >
             <Box sx={voteModalStyle}>
               <div className="h-full p- text-white font-montserrat sm:w-96 w-[280px] flex flex-col items-start">
