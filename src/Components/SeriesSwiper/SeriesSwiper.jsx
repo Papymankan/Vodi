@@ -3,10 +3,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { ImageBaseUrl } from "../../Redux/FetchConfigs";
+import { ImageBaseUrl, ImageLowQualityUrl } from "../../Redux/FetchConfigs";
 import { useSelector } from "react-redux";
 
-export default function SeriesSwiper({ series }) {
+export default function SeriesSwiper({ series, low }) {
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
 
   return (
@@ -36,7 +36,11 @@ export default function SeriesSwiper({ series }) {
             <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
               <a href={"/serie/" + serie.id} className="relative w-full h-full">
                 <img
-                  src={ImageBaseUrl + serie.poster_path}
+                  src={
+                    low
+                      ? ImageLowQualityUrl + serie.poster_path
+                      : ImageBaseUrl + serie.poster_path
+                  }
                   alt=""
                   className="h-full w-full"
                 />

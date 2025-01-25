@@ -262,7 +262,7 @@ export const fetchRecommandSeries = createAsyncThunk(
         }
       })
       .then((data) => {
-        return shuffleArray(data.results);
+        return data;
       });
   }
 );

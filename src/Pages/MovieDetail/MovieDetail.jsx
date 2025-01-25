@@ -34,6 +34,7 @@ import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/counter.css";
 import { Avatar, Box, Modal, Pagination, Slider } from "@mui/material";
 import FullScreenLoader from "../../Components/FullScreenLoader/FullScreenLoader";
+import MoviesSwiper from "../../Components/MoviesSwiper/MoviesSwiper";
 
 export default function MovieDetail() {
   const [isMuted, setIsMuted] = useState(true);
@@ -689,81 +690,28 @@ export default function MovieDetail() {
           </div>
 
           {/* Recommand */}
-          {RecommandMovies && RecommandMovies.length > 0 && (
-            <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
-              <div className="container mx-auto">
-                <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
-                  <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
-                    We Recommanded
-                  </h2>
-                  <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
-                </div>
+          {RecommandMovies &&
+              RecommandMovies.results &&
+            RecommandMovies.results.length > 0 && (
+              <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
+                <div className="container mx-auto">
+                  <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+                    <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+                      We Recommanded
+                    </h2>
+                    <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+                  </div>
 
-                <div className="w-full">
-                  <Swiper
-                    navigation={true}
-                    modules={[Navigation]}
-                    className="mySwiper text-white px-4"
-                    slidesPerView={2}
-                    spaceBetween={20}
-                    slidesPerGroup={1}
-                    breakpoints={{
-                      1200: {
-                        slidesPerView: 6,
-                        slidesPerGroup: 3,
-                      },
-                      768: {
-                        slidesPerView: 4,
-                        slidesPerGroup: 2,
-                      },
-                    }}
-                  >
-                    {RecommandMovies &&
-                      RecommandMovies.map((movie) => {
-                        if (movie.poster_path) {
-                          return (
-                            <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                              <a
-                                href={"/movie/" + movie.id}
-                                className="relative w-full h-full"
-                              >
-                                <img
-                                  src={ImageLowQualityUrl + movie.poster_path}
-                                  alt=""
-                                  className="h-80 w-full"
-                                />
-                                <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                                  <p className="text-slate-300 text-sm font-light line-clamp-1 text-start w-full">
-                                    {MovieGenres &&
-                                      movie.genre_ids &&
-                                      movie.genre_ids.length > 0 &&
-                                      movie.genre_ids.map((id) => {
-                                        let genre = MovieGenres.find(
-                                          (genre) => genre.id == id
-                                        );
-                                        return <span>{genre.name}, </span>;
-                                      })}
-                                  </p>
-                                  <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
-                                    {movie.title}
-                                  </p>
-                                </div>
-                              </a>
-                            </SwiperSlide>
-                          );
-                        }
-                      })}
-                  </Swiper>
-                </div>
+                  <MoviesSwiper movies={RecommandMovies} low />
 
-                <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
-                  <a href="#" className="hover:text-cyan duration-200">
-                    VIEW ALL
-                  </a>
+                  <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+                    <a href="#" className="hover:text-cyan duration-200">
+                      VIEW ALL
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Images */}
           {MovieImages && MovieImages.backdrops.length > 0 && (
@@ -837,7 +785,7 @@ export default function MovieDetail() {
           )}
 
           {/* Simillar */}
-          {SimilarMovies && SimilarMovies.length > 0 && (
+          {SimilarMovies && SimilarMovies.results && SimilarMovies.results.length > 0 && (
             <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
               <div className="container mx-auto">
                 <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
@@ -847,60 +795,7 @@ export default function MovieDetail() {
                   <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
                 </div>
 
-                <div className="w-full">
-                  <Swiper
-                    navigation={true}
-                    modules={[Navigation]}
-                    className="mySwiper text-white px-4"
-                    slidesPerView={2}
-                    spaceBetween={20}
-                    slidesPerGroup={1}
-                    breakpoints={{
-                      1200: {
-                        slidesPerView: 6,
-                        slidesPerGroup: 3,
-                      },
-                      768: {
-                        slidesPerView: 4,
-                        slidesPerGroup: 2,
-                      },
-                    }}
-                  >
-                    {SimilarMovies &&
-                      SimilarMovies.map((movie) => {
-                        if (movie.poster_path) {
-                          return (
-                            <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
-                              <a
-                                href={"/movie/" + movie.id}
-                                className="relative w-full h-full"
-                              >
-                                <img
-                                  src={ImageLowQualityUrl + movie.poster_path}
-                                  alt=""
-                                  className="h-80 w-full"
-                                />
-                                <div className="w-full h-full poster-cover flex justify-end p-3 items-start flex-col group transition-all absolute top-0">
-                                  <p className="text-slate-300 text-sm font-light line-clamp-1 text-start w-full">
-                                    {MovieGenres &&
-                                      movie.genre_ids.map((id) => {
-                                        let genre = MovieGenres.find(
-                                          (genre) => genre.id == id
-                                        );
-                                        return <span>{genre.name}, </span>;
-                                      })}
-                                  </p>
-                                  <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
-                                    {movie.title}
-                                  </p>
-                                </div>
-                              </a>
-                            </SwiperSlide>
-                          );
-                        }
-                      })}
-                  </Swiper>
-                </div>
+                <MoviesSwiper movies={SimilarMovies} low />
 
                 <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
                   <a href="#" className="hover:text-cyan duration-200">

@@ -309,7 +309,7 @@ export const fetchRecommandMovies = createAsyncThunk(
         }
       })
       .then((data) => {
-        return shuffleArray(data.results);
+        return data;
       });
   }
 );
@@ -329,7 +329,7 @@ export const fetchSimilarMovies = createAsyncThunk(
         }
       })
       .then((data) => {
-        return shuffleArray(data.results);
+        return data;
       });
   }
 );

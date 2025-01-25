@@ -3,10 +3,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { ImageBaseUrl } from "../../Redux/FetchConfigs";
+import { ImageBaseUrl, ImageLowQualityUrl } from "../../Redux/FetchConfigs";
 import { useSelector } from "react-redux";
 
-export default function MoviesSwiper({ movies }) {
+export default function MoviesSwiper({ movies, low }) {
   const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
 
   return (
@@ -36,7 +36,11 @@ export default function MoviesSwiper({ movies }) {
             <SwiperSlide className="w-1/2 sm:w-1/4 lg:w-1/6">
               <a href={"/movie/" + movie.id} className="relative w-full h-full">
                 <img
-                  src={ImageBaseUrl + movie.poster_path}
+                  src={
+                    low
+                      ? ImageLowQualityUrl + movie.poster_path
+                      : ImageBaseUrl + movie.poster_path
+                  }
                   alt=""
                   className="h-full w-full"
                 />
