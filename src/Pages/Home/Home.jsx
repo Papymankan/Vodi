@@ -24,6 +24,7 @@ import {
   fetchTrendingSeries,
 } from "../../Redux/Reducers/Series";
 import { shuffleArray } from "../../Funcs";
+import MoviesSwiper from "../../Components/MoviesSwiper/MoviesSwiper";
 
 export default function Home() {
   const [LandingSlides, setLandingSlides] = useState(5);
@@ -664,7 +665,7 @@ export default function Home() {
             <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
           </div>
 
-          <div className="w-full">
+          {/* <div className="w-full">
             <Swiper
               navigation={true}
               modules={[Navigation]}
@@ -715,7 +716,9 @@ export default function Home() {
                   </SwiperSlide>
                 ))}
             </Swiper>
-          </div>
+          </div> */}
+
+          <MoviesSwiper movies={TopYearMovies} />
 
           <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
             <a href="/movies/top-year" className="hover:text-cyan duration-200">
