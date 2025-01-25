@@ -1,40 +1,41 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../Footer/Footer";
-import Loader from "../Loader/Loader";
-import SeriesList from "../SeriesList/SeriesList";
-import NavBar from "../NavBar/NavBar";
-import Store from "../../Redux/Store";
-import { fetchRatedMovies } from "../../Redux/Reducers/Movies";
-import MoviesList from "../MoviesList/MoviesList";
+import Footer from "../../Components/Footer/Footer";
+import Loader from "../../Components/Loader/Loader";
+import MoviesList from "../../Components/MoviesList/MoviesList";
+import NavBar from "../../Components/NavBar/NavBar";
 import { useSelector } from "react-redux";
+import { fetchRatedSeries } from "../../Redux/Reducers/Series";
+import Store from "../../Redux/Store";
+import SeriesList from "../../Components/SeriesList/SeriesList";
 
-export default function RatedMovies() {
+export default function RatedSeries() {
   const [page, setPage] = useState(1);
-  const [moviesList, setMoviesList] = useState([]);
+  const [seriesList, setSeriesList] = useState([]);
 
-  const MovieGenres = useSelector((state) => state.Movies.MovieGenres);
+  const SerieGenres = useSelector((state) => state.Series.SerieGenres);
+
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
   useEffect(() => {
-    if (MovieGenres && page > 1 && RatedMovies.total_pages >= page) {
-      Store.dispatch(fetchRatedMovies({ accountId: AccountDetail.id, page }));
+    if (SerieGenres && page > 1 && RatedSeries.total_pages >= page) {
+      Store.dispatch(fetchRatedSeries({ accountId: AccountDetail.id, page }));
     }
-  }, [MovieGenres, page]);
+  }, [SerieGenres, page]);
 
-  const RatedMovies = useSelector((state) => state.Movies.RatedMovies);  
+  const RatedSeries = useSelector((state) => state.Series.RatedSeries);
 
-  const loadingMore = useSelector((state) => state.Movies.loadingMore);
+  const loadingMore = useSelector((state) => state.Series.loadingMore);
 
   useEffect(() => {
-    if (RatedMovies) {
-      setMoviesList([...moviesList, ...RatedMovies.results]);
+    if (RatedSeries) {
+      setSeriesList([...seriesList, ...RatedSeries.results]);
     }
-  }, [RatedMovies]);
+  }, [RatedSeries]);
 
   return (
     <>
       <NavBar />
-      {MovieGenres && (
+      {SerieGenres && (
         <>
           <div className="container mx-auto px-4 flex flex-col items-center pb-20">
             {/* BreadCrumb */}
@@ -56,7 +57,7 @@ export default function RatedMovies() {
                 />
               </svg>
               <a href="#" className="hover:text-cyan z-20 duration-200">
-                Movies
+                Series
               </a>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +76,7 @@ export default function RatedMovies() {
                 href="#"
                 className="hover:text-cyan z-20 duration-200 text-white"
               >
-                Watchlist movies
+                Watchlist series
               </a>
             </div>
 
@@ -84,23 +85,23 @@ export default function RatedMovies() {
               <h1 className="font-montserrat text-base xs:text-lg sm:text-2xl text-gray-400">
                 Your
                 <span className="font-bold text-cyan"> Rated </span>
-                Movies
+                Series
               </h1>
               <h4 className="text-gray-500 font-montserrat text-xs sm:text-sm">
-                Total Results : {RatedMovies && RatedMovies.total_results}
+                Total Results : {RatedSeries && RatedSeries.total_results}
               </h4>
             </div>
 
             {/* Movies */}
-            {RatedMovies ? (
-              moviesList.length > 0 ? (
+            {RatedSeries ? (
+              seriesList.length > 0 ? (
                 <>
-                  <MoviesList
-                    moviesList={moviesList}
-                    MovieGenres={MovieGenres}
+                  <SeriesList
+                    seriesList={seriesList}
+                    SerieGenres={SerieGenres}
                   />
 
-                  {RatedMovies.total_pages > page && (
+                  {RatedSeries.total_pages > page && (
                     <button
                       className="text-sm font-montserrat text-white px-4 py-2 bg-cyan rounded-md my-8"
                       onClick={() => setPage(page + 1)}

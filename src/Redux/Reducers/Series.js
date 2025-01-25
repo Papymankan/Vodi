@@ -890,6 +890,9 @@ const slice = createSlice({
       .addCase(fetchRatedSeries.fulfilled, (state, action) => {
         return { ...state, RatedSeries: action.payload };
       })
+      .addCase(fetchRatedSeries.pending, (state, action) => {
+        return { ...state, loadingMore: true };
+      })
       .addCase(fetchIsInFavorites.fulfilled, (state, action) => {
         return { ...state, IsInFavorites: action.payload };
       })
