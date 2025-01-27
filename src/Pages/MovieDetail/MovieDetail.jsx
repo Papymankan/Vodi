@@ -35,12 +35,14 @@ import "yet-another-react-lightbox/plugins/counter.css";
 import { Avatar, Box, Modal, Pagination, Slider } from "@mui/material";
 import FullScreenLoader from "../../Components/FullScreenLoader/FullScreenLoader";
 import MoviesSwiper from "../../Components/MoviesSwiper/MoviesSwiper";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function MovieDetail() {
   const [isMuted, setIsMuted] = useState(true);
   const [LoadingBackdrop, setLoadingBackdrop] = useState(true);
   const [showImagesLightbox, setShowImagesLightbox] = useState(false);
   const [voteModal, setVoteModal] = useState(false);
+  const [listsModal, setListsModal] = useState(false);
   const [vote, setVote] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [CastsRow, setCastsRow] = useState(8);
@@ -240,7 +242,6 @@ export default function MovieDetail() {
     transform: "translate(-50%, -50%)",
     bgcolor: "#131722",
     boxShadow: 24,
-    p: 4,
     outline: 0,
     borderRadius: "10px",
   };
@@ -440,7 +441,7 @@ export default function MovieDetail() {
                   </div>
 
                   {/* Title */}
-                  <h1 className="w-full text-lg xs:text-3xl lg:text-5xl font-bold max-w-4xl pt-4">
+                  <h1 className="w-full line-clamp-1 xs:text-3xl lg:text-5xl font-bold max-w-4xl pt-4">
                     {MovieDetails.title}
                   </h1>
 
@@ -515,7 +516,10 @@ export default function MovieDetail() {
                     </button>
                   )}
 
-                  <button className="py-3 px-5 rounded-full text-white bg-green-400 xs:w-auto w-1/2 xs:text-base text-xs">
+                  <button
+                    className="py-3 px-5 rounded-full text-white bg-green-400 xs:w-auto w-1/2 xs:text-base text-xs"
+                    onClick={() => setListsModal(true)}
+                  >
                     + My Lists
                   </button>
                 </div>
@@ -691,7 +695,7 @@ export default function MovieDetail() {
 
           {/* Recommand */}
           {RecommandMovies &&
-              RecommandMovies.results &&
+            RecommandMovies.results &&
             RecommandMovies.results.length > 0 && (
               <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
                 <div className="container mx-auto">
@@ -785,26 +789,28 @@ export default function MovieDetail() {
           )}
 
           {/* Simillar */}
-          {SimilarMovies && SimilarMovies.results && SimilarMovies.results.length > 0 && (
-            <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
-              <div className="container mx-auto">
-                <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
-                  <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
-                    Similar Movies
-                  </h2>
-                  <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
-                </div>
+          {SimilarMovies &&
+            SimilarMovies.results &&
+            SimilarMovies.results.length > 0 && (
+              <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
+                <div className="container mx-auto">
+                  <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+                    <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+                      Similar Movies
+                    </h2>
+                    <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+                  </div>
 
-                <MoviesSwiper movies={SimilarMovies} low />
+                  <MoviesSwiper movies={SimilarMovies} low />
 
-                <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
-                  <a href="#" className="hover:text-cyan duration-200">
-                    VIEW ALL
-                  </a>
+                  <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+                    <a href="#" className="hover:text-cyan duration-200">
+                      VIEW ALL
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Reviews */}
           {MovieReviews && MovieReviews.results.length > 0 && (
@@ -927,8 +933,8 @@ export default function MovieDetail() {
             onClose={() => setVoteModal(false)}
             sx={{ zIndex: 20 }}
           >
-            <Box sx={voteModalStyle}>
-              <div className="h-full p- text-white font-montserrat sm:w-96 w-[280px] flex flex-col items-start">
+            <Box sx={{ ...voteModalStyle, p: 4 }}>
+              <div className="h-full text-white font-montserrat sm:w-96 w-[280px] flex flex-col items-start">
                 <div className="flex w-full justify-between items-center">
                   <h2 className="text-2xl">Rating</h2>
 
@@ -985,6 +991,64 @@ export default function MovieDetail() {
                   >
                     Submit
                   </button>
+                </div>
+              </div>
+            </Box>
+          </Modal>
+
+          <Modal
+            open={listsModal}
+            onClose={() => setListsModal(false)}
+            sx={{ zIndex: 20 }}
+          >
+            <Box
+              sx={{
+                ...voteModalStyle,
+                height: 350,
+                width: { xs: 280 , sm: 320},
+                overflowY: "auto",
+              }}
+            >
+              <div className=" rounded-md">
+                <div className="w-full p-2">
+                  <div className="w-full p-3 text-white my-1 flex items-center hover:bg-slate-700 duration-200 cursor-pointer">
+                    <div className="flex items-center justify-center">
+                      <span className="p-2 rounded-full bg-slate-700 flex items-center justify-center">
+                        <AddIcon />
+                      </span>
+                    </div>
+                    <div className="flex-1 pl-7">
+                      <h2 className="line-clamp-1">Create New List</h2>
+                    </div>
+                  </div>
+
+                  <div className="w-full p-3 text-white my-1 flex items-center hover:bg-slate-700 duration-200 cursor-pointer">
+                    <div className="flex items-center justify-center">
+                      <span className="p-2 rounded-full bg-slate-700 flex items-center justify-center">
+                        <AddIcon />
+                      </span>
+                    </div>
+                    <div className="flex-1 pl-7">
+                      <h2 className="line-clamp-1">List no. 1</h2>
+                      <h4 className="text-xs font-montserrat text-slate-400">
+                        11 items
+                      </h4>
+                    </div>
+                  </div>
+
+                  <div className="w-full p-3 text-white my-1 flex items-center hover:bg-slate-700 duration-200 cursor-pointer">
+                    <div className="flex items-center justify-center">
+                      <span className="p-2 rounded-full bg-slate-700 flex items-center justify-center">
+                        <AddIcon />
+                      </span>
+                    </div>
+                    <div className="flex-1 pl-7">
+                      <h2 className="line-clamp-1">List no. 1</h2>
+                      <h4 className="text-xs font-montserrat text-slate-400">
+                        11 items
+                      </h4>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Box>
