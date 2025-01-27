@@ -6,9 +6,11 @@ import { useParams } from "react-router-dom";
 import {
   AddToFavorite,
   AddToWatchList,
+  CreateList,
   fetchIsInFavorites,
   fetchIsInRated,
   fetchIsInWatchList,
+  fetchLists,
   fetchMovieCrews,
   fetchMovieDetails,
   fetchMovieImages,
@@ -88,9 +90,13 @@ export default function MovieDetail() {
 
   const IsInRated = useSelector((state) => state.Movies.IsInRated);
 
+  const MovieLists = useSelector((state) => state.Movies.MovieLists);
+
   const fullScreenLoading = useSelector(
     (state) => state.Movies.fullScreenLoading
   );
+
+  console.log(MovieLists);
 
   // -----------------------------------------------
 
@@ -126,7 +132,6 @@ export default function MovieDetail() {
 
   useEffect(() => {
     if (authenticated && MovieDetails && FavoriteMovies) {
-      console.log("fetch");
       Store.dispatch(
         fetchIsInFavorites({
           accountId: AccountDetail.id,
@@ -278,8 +283,18 @@ export default function MovieDetail() {
     }
   };
 
+  const handleCreateList = async (event) => {
+    event.preventDefault();
+
+    await Store.dispatch(CreateList({ name: ListName, desc: ListDesc }));
+    await Store.dispatch(fetchLists({ accountId: AccountDetail.id }));
+
+    setCreateListModal(false);
+    setListsModal(true);
+  };
+
   return (
-    <>
+    <>  
       <NavBar />
       {MovieDetails && (
         <>
@@ -1031,33 +1046,25 @@ export default function MovieDetail() {
                     </div>
                   </div>
 
-                  <div className="w-full p-3 text-white my-1 flex items-center hover:bg-slate-700 duration-200 cursor-pointer">
-                    <div className="flex items-center justify-center">
-                      <span className="p-2 rounded-full bg-slate-700 flex items-center justify-center">
-                        <AddIcon />
-                      </span>
-                    </div>
-                    <div className="flex-1 pl-7">
-                      <h2 className="line-clamp-1">List no. 1</h2>
-                      <h4 className="text-xs font-montserrat text-slate-400">
-                        11 items
-                      </h4>
-                    </div>
-                  </div>
-
-                  <div className="w-full p-3 text-white my-1 flex items-center hover:bg-slate-700 duration-200 cursor-pointer">
-                    <div className="flex items-center justify-center">
-                      <span className="p-2 rounded-full bg-slate-700 flex items-center justify-center">
-                        <AddIcon />
-                      </span>
-                    </div>
-                    <div className="flex-1 pl-7">
-                      <h2 className="line-clamp-1">List no. 1</h2>
-                      <h4 className="text-xs font-montserrat text-slate-400">
-                        11 items
-                      </h4>
-                    </div>
-                  </div>
+                  {MovieLists &&
+                    MovieLists.results.length > 0 &&
+                    MovieLists.results.map((list) => (
+                      <>
+                        <div className="w-full p-3 text-white my-1 flex items-center hover:bg-slate-700 duration-200 cursor-pointer">
+                          <div className="flex items-center justify-center">
+                            <span className="p-2 rounded-full bg-slate-700 flex items-center justify-center">
+                              <AddIcon />
+                            </span>
+                          </div>
+                          <div className="flex-1 pl-7">
+                            <h2 className="line-clamp-1">{list.name}</h2>
+                            <h4 className="text-xs font-montserrat text-slate-400">
+                              {list.item_count} items
+                            </h4>
+                          </div>
+                        </div>
+                      </>
+                    ))}
                 </div>
               </div>
             </Box>
@@ -1069,7 +1076,10 @@ export default function MovieDetail() {
             sx={{ zIndex: 20 }}
           >
             <Box sx={{ ...voteModalStyle, p: 4, width: { xs: 280, sm: 320 } }}>
-              <form className="w-full text-white font-montserrat flex flex-col">
+              <form
+                className="w-full text-white font-montserrat flex flex-col"
+                onSubmit={(e) => handleCreateList(e)}
+              >
                 <h2 className="w-full font-bold font-opensans">
                   Create New List
                 </h2>
@@ -1093,7 +1103,10 @@ export default function MovieDetail() {
                   onChange={(e) => setListDesc(e.target.value)}
                 />
 
-                <button className="text-xs p-2 bg-cyan rounded-md self-end mt-6" type="submit">
+                <button
+                  className="text-xs p-2 bg-cyan rounded-md self-end mt-6"
+                  type="submit"
+                >
                   Create
                 </button>
               </form>

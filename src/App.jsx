@@ -4,6 +4,7 @@ import { useRoutes } from "react-router-dom";
 import Store from "./Redux/Store.js";
 import {
   fetchFavoriteMovies,
+  fetchLists,
   fetchMovieGenres,
   fetchPopularMovie,
   fetchRatedMovies,
@@ -48,14 +49,27 @@ export default function App() {
 
   useEffect(() => {
     if (authenticated) {
-      Store.dispatch(fetchWatchListMovies({ accountId: AccountDetail.id, page:1}));
-      Store.dispatch(fetchWatchListSeries({ accountId: AccountDetail.id, page:1}));
+      Store.dispatch(
+        fetchWatchListMovies({ accountId: AccountDetail.id, page: 1 })
+      );
+      Store.dispatch(
+        fetchWatchListSeries({ accountId: AccountDetail.id, page: 1 })
+      );
 
-      Store.dispatch(fetchFavoriteMovies({ accountId: AccountDetail.id, page:1}));
-      Store.dispatch(fetchFavoriteSeries({ accountId: AccountDetail.id, page:1}));
+      Store.dispatch(
+        fetchFavoriteMovies({ accountId: AccountDetail.id, page: 1 })
+      );
+      Store.dispatch(
+        fetchFavoriteSeries({ accountId: AccountDetail.id, page: 1 })
+      );
 
-      Store.dispatch(fetchRatedMovies({ accountId: AccountDetail.id, page:1}));
-      Store.dispatch(fetchRatedSeries({ accountId: AccountDetail.id, page:1}));
+      Store.dispatch(
+        fetchRatedMovies({ accountId: AccountDetail.id, page: 1 })
+      );
+      Store.dispatch(
+        fetchRatedSeries({ accountId: AccountDetail.id, page: 1 })
+      );
+      Store.dispatch(fetchLists({ accountId: AccountDetail.id }));
     }
   }, [authenticated, AccountDetail]);
 

@@ -561,14 +561,11 @@ export const fetchRatedMovies = createAsyncThunk(
       }
     )
       .then((res) => {
-        console.log(res);
         if (res.ok) {
           return res.json();
         }
       })
       .then((data) => {
-        console.log(data);
-
         return data;
       });
   }
@@ -697,39 +694,106 @@ export const fetchIsInRated = createAsyncThunk(
 export const RateMovie = createAsyncThunk(
   "Movies/RateMovie",
   async ({ movieId, rating }) => {
-        return fetch(
-        BaseUrl +
-          "movie/" +
-          movieId +
-          "/rating?" +
-          ApiKey +
-          "&session_id=" +
-          localStorage.getItem("sessionId"),
-        {
-          method: rating ? "POST" : "DELETE",
-          headers: {
-            accept: "application/json",
-            "content-type": rating ? "application/json" : "",
-          },
-          body: rating
-            ? JSON.stringify({
-                value: rating,
-              })
-            : undefined,
-        }
-      )
-        .then((res) => {
-          console.log(res);
+    return fetch(
+      BaseUrl +
+        "movie/" +
+        movieId +
+        "/rating?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId"),
+      {
+        method: rating ? "POST" : "DELETE",
+        headers: {
+          accept: "application/json",
+          "content-type": rating ? "application/json" : "",
+        },
+        body: rating
+          ? JSON.stringify({
+              value: rating,
+            })
+          : undefined,
+      }
+    )
+      .then((res) => {
+        console.log(res);
 
-          if (res.ok) {
-            window.location.reload();
-            return res.json();
-          }
-        })
-        .then((data) => {
-          return data;
-        });
-    
+        if (res.ok) {
+          window.location.reload();
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data;
+      });
+  }
+);
+
+export const CreateList = createAsyncThunk(
+  "Movies/CreateList",
+  async ({ name, desc }) => {
+    console.log("fetch 1");
+
+    return fetch(
+      BaseUrl +
+        "list?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId"),
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          description: desc,
+          language: "en",
+        }),
+      }
+    )
+      .then((res) => {
+        console.log(res);
+
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
+  }
+);
+
+export const fetchLists = createAsyncThunk(
+  "Movies/fetchLists",
+  async ({ accountId }) => {
+    console.log("fetch 1");
+
+    return fetch(
+      BaseUrl +
+        "account/" +
+        accountId +
+        "/lists?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId")
+    )
+      .then((res) => {
+        console.log(res);
+
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
   }
 );
 
@@ -857,6 +921,22 @@ const slice = createSlice({
         return { ...state, IsInRated: action.payload };
       })
       .addCase(RateMovie.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
+      })
+      .addCase(CreateList.fulfilled, (state, action) => {
+        return { ...state, fullScreenLoading: false };
+      })
+      .addCase(CreateList.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
+      })
+      .addCase(fetchLists.fulfilled, (state, action) => {
+        return {
+          ...state,
+          fullScreenLoading: false,
+          MovieLists: action.payload,
+        };
+      })
+      .addCase(fetchLists.pending, (state, action) => {
         return { ...state, fullScreenLoading: true };
       });
   },
