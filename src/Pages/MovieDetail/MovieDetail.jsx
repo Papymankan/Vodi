@@ -43,12 +43,15 @@ export default function MovieDetail() {
   const [showImagesLightbox, setShowImagesLightbox] = useState(false);
   const [voteModal, setVoteModal] = useState(false);
   const [listsModal, setListsModal] = useState(false);
+  const [createListModal, setCreateListModal] = useState(false);
   const [vote, setVote] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [CastsRow, setCastsRow] = useState(8);
   const [BackdropVideo, setBackdropVideo] = useState(null);
   const [reviewsPage, setReviewsPage] = useState(1);
   const [expandReview, setExpandReview] = useState(0);
+  const [ListName, setListName] = useState("");
+  const [ListDesc, setListDesc] = useState("");
   const playerRef = useRef(null);
 
   const params = useParams();
@@ -1005,13 +1008,19 @@ export default function MovieDetail() {
               sx={{
                 ...voteModalStyle,
                 height: 350,
-                width: { xs: 280 , sm: 320},
+                width: { xs: 280, sm: 320 },
                 overflowY: "auto",
               }}
             >
               <div className=" rounded-md">
                 <div className="w-full p-2">
-                  <div className="w-full p-3 text-white my-1 flex items-center hover:bg-slate-700 duration-200 cursor-pointer">
+                  <div
+                    className="w-full p-3 text-white my-1 flex items-center hover:bg-slate-700 duration-200 cursor-pointer"
+                    onClick={() => {
+                      setCreateListModal(true);
+                      setListsModal(false);
+                    }}
+                  >
                     <div className="flex items-center justify-center">
                       <span className="p-2 rounded-full bg-slate-700 flex items-center justify-center">
                         <AddIcon />
@@ -1051,6 +1060,43 @@ export default function MovieDetail() {
                   </div>
                 </div>
               </div>
+            </Box>
+          </Modal>
+
+          <Modal
+            open={createListModal}
+            onClose={() => setCreateListModal(false)}
+            sx={{ zIndex: 20 }}
+          >
+            <Box sx={{ ...voteModalStyle, p: 4, width: { xs: 280, sm: 320 } }}>
+              <form className="w-full text-white font-montserrat flex flex-col">
+                <h2 className="w-full font-bold font-opensans">
+                  Create New List
+                </h2>
+
+                <p className="mt-6 text-slate-500 text-sm">Name :</p>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className="w-full bg-slate-800 outline-none mt-3 text-xs p-2"
+                  value={ListName}
+                  onChange={(e) => setListName(e.target.value)}
+                  required
+                />
+
+                <p className="mt-8 text-slate-500 text-sm">Description :</p>
+                <input
+                  type="text"
+                  placeholder="Description"
+                  className="w-full bg-slate-800 outline-none mt-3 text-xs p-2"
+                  value={ListDesc}
+                  onChange={(e) => setListDesc(e.target.value)}
+                />
+
+                <button className="text-xs p-2 bg-cyan rounded-md self-end mt-6" type="submit">
+                  Create
+                </button>
+              </form>
             </Box>
           </Modal>
 
