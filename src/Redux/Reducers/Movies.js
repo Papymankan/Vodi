@@ -783,9 +783,45 @@ export const fetchLists = createAsyncThunk(
         localStorage.getItem("sessionId")
     )
       .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        return data;
+      });
+  }
+);
+
+export const AddToList = createAsyncThunk(
+  "Movies/AddToList",
+  async ({ movieId, listId }) => {
+    return fetch(
+      BaseUrl +
+        "list/" +
+        listId +
+        "/add_item?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId"),
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          media_id: movieId,
+        }),
+      }
+    )
+      .then((res) => {
         console.log(res);
 
         if (res.ok) {
+          window.location.reload();
           return res.json();
         }
       })
@@ -937,6 +973,12 @@ const slice = createSlice({
         };
       })
       .addCase(fetchLists.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
+      })
+      .addCase(AddToList.fulfilled, (state, action) => {
+        return { ...state, fullScreenLoading: false };
+      })
+      .addCase(AddToList.pending, (state, action) => {
         return { ...state, fullScreenLoading: true };
       });
   },

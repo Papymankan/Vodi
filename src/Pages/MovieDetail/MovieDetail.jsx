@@ -5,6 +5,7 @@ import BackDrop from "../../Components/BackDrop/BackDrop";
 import { useParams } from "react-router-dom";
 import {
   AddToFavorite,
+  AddToList,
   AddToWatchList,
   CreateList,
   fetchIsInFavorites,
@@ -293,8 +294,12 @@ export default function MovieDetail() {
     setListsModal(true);
   };
 
+  const addToListHandler = (listId) => {
+    Store.dispatch(AddToList({ movieId: params.id, listId }));
+  };
+
   return (
-    <>  
+    <>
       <NavBar />
       {MovieDetails && (
         <>
@@ -1050,7 +1055,10 @@ export default function MovieDetail() {
                     MovieLists.results.length > 0 &&
                     MovieLists.results.map((list) => (
                       <>
-                        <div className="w-full p-3 text-white my-1 flex items-center hover:bg-slate-700 duration-200 cursor-pointer">
+                        <div
+                          className="w-full p-3 text-white my-1 flex items-center hover:bg-slate-700 duration-200 cursor-pointer"
+                          onClick={() => addToListHandler(list.id)}
+                        >
                           <div className="flex items-center justify-center">
                             <span className="p-2 rounded-full bg-slate-700 flex items-center justify-center">
                               <AddIcon />
