@@ -771,8 +771,6 @@ export const CreateList = createAsyncThunk(
 export const fetchLists = createAsyncThunk(
   "Movies/fetchLists",
   async ({ accountId }) => {
-    console.log("fetch 1");
-
     return fetch(
       BaseUrl +
         "account/" +
@@ -828,6 +826,23 @@ export const AddToList = createAsyncThunk(
       .then((data) => {
         console.log(data);
 
+        return data;
+      });
+  }
+);
+
+export const FetchListDetail = createAsyncThunk(
+  "Movies/FetchListDetail",
+  async ({ listId, page }) => {
+    return fetch(BaseUrl + "list/" + listId + "?" + ApiKey + "&page=" + page)
+      .then((res) => {
+        console.log(res);
+
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
         return data;
       });
   }
@@ -979,6 +994,16 @@ const slice = createSlice({
         return { ...state, fullScreenLoading: false };
       })
       .addCase(AddToList.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
+      })
+      .addCase(FetchListDetail.fulfilled, (state, action) => {
+        return {
+          ...state,
+          fullScreenLoading: false,
+          listDetail: action.payload,
+        };
+      })
+      .addCase(FetchListDetail.pending, (state, action) => {
         return { ...state, fullScreenLoading: true };
       });
   },

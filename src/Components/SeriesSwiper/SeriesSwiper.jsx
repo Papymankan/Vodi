@@ -9,6 +9,9 @@ import { useSelector } from "react-redux";
 export default function SeriesSwiper({ series, low }) {
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
 
+  console.log(series);
+  console.log(SerieGenres);
+
   return (
     <div className="w-full">
       <Swiper
@@ -49,10 +52,12 @@ export default function SeriesSwiper({ series, low }) {
                     {SerieGenres &&
                       serie.genre_ids.map((id, index) => {
                         let genre = SerieGenres.find((genre) => genre.id == id);
-                        if (serie.genre_ids.length == index + 1) {
-                          return <span>{genre.name}</span>;
+                        if (genre) {
+                          if (serie.genre_ids.length == index + 1) {
+                            return <span>{genre.name}</span>;
+                          }
+                          return <span>{genre.name}, </span>;
                         }
-                        return <span>{genre.name}, </span>;
                       })}
                   </p>
                   <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">

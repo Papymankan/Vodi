@@ -17,6 +17,9 @@ export default function Login() {
 
   const RatedMovies = useSelector((state) => state.Movies.RatedMovies);
   const RatedSeries = useSelector((state) => state.Series.RatedSeries);
+
+  const MovieLists = useSelector((state) => state.Movies.MovieLists);
+
   return (
     <>
       <NavBar />
@@ -29,7 +32,7 @@ export default function Login() {
                   {AccountDetail.username[0].toUpperCase()}
                 </Avatar>
 
-                <p className="mt-2 text-xl text-cyan">
+                <p className="mt-2 sm:text-xl text-base text-cyan">
                   {AccountDetail.username}
                 </p>
 
@@ -240,6 +243,33 @@ export default function Login() {
                     </a>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full">
+            <div className="container mx-auto pt-4">
+              <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+                <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+                  Your Movie Lists
+                </h2>
+                <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+              </div>
+
+              <div className="w-full grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3 px-4">
+                {MovieLists &&
+                  MovieLists.results.length > 0 &&
+                  MovieLists.results.map((list) => (
+                    <a href={"/list/" + list.id} className="w-full xs:p-3 p-2 rounded-md bg-[#bdbdbd] text-white hover:bg-[#aaaaaa] duration-200 cursor-pointer">
+                      <h2 className="sm:text-xl text-base font-bold">
+                        {list.name}
+                      </h2>
+                      <h3 className="text-xs">{list.item_count} Movies</h3>
+                      <p className="text font-montserrat line-clamp-2 lg:text-sm text-xs my-3">
+                        {list.description}
+                      </p>
+                    </a>
+                  ))}
               </div>
             </div>
           </div>

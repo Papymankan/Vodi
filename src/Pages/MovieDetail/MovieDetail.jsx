@@ -295,7 +295,8 @@ export default function MovieDetail() {
   };
 
   const addToListHandler = (listId) => {
-    Store.dispatch(AddToList({ movieId: params.id, listId }));
+    Store.dispatch(AddToList({ movieId: params.id, listId  }));
+    
   };
 
   return (
