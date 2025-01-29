@@ -23,6 +23,7 @@ import FavoriteMovies from "./Pages/FavoriteMovies/FavoriteMovies.jsx";
 import FavoriteSeries from "./Pages/FavoriteSeries/FavoriteSeries.jsx";
 import RatedMovies from "./Pages/RatedMovies/RatedMovies.jsx";
 import RatedSeries from "./Pages/RatedSeries/RatedSeries.jsx";
+import ListDetail from "./Pages/ListDetail/ListDetail.jsx";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -63,6 +64,8 @@ const routes = [
 
   { path: "/rated/movie", element: <RatedMovies /> },
   { path: "/rated/serie", element: <RatedSeries /> },
+
+  { path: "/list/:id", element: <ListDetail /> },
 ];
 
 export default routes;
