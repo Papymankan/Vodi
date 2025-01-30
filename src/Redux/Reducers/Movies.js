@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BaseUrl, ApiKey } from "../FetchConfigs";
 import { shuffleArray } from "../../Funcs";
+import Store from "../Store";
 
 export const fetchLandingMovies = createAsyncThunk(
   "Movies/fetchLandingMovies",
@@ -848,6 +849,32 @@ export const FetchListDetail = createAsyncThunk(
   }
 );
 
+export const DeleteList = createAsyncThunk(
+  "Movies/DeleteList",
+  async ({ listId, accountId }) => {
+    return fetch(
+      BaseUrl +
+        "list/" +
+        listId +
+        "?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId"),
+      {
+        method: "DELETE",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    ).then((res) => {
+      if (res.ok) {
+        Store.dispatch(fetchLists({ accountId }));
+        res.json();
+      }
+    });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {
@@ -1004,6 +1031,12 @@ const slice = createSlice({
         };
       })
       .addCase(FetchListDetail.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
+      })
+      .addCase(DeleteList.fulfilled, (state, action) => {
+        return { ...state, fullScreenLoading: false };
+      })
+      .addCase(DeleteList.pending, (state, action) => {
         return { ...state, fullScreenLoading: true };
       });
   },

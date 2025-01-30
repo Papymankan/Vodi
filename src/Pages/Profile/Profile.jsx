@@ -1,12 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
-import { Avatar } from "@mui/material";
+import { Avatar, Box, Modal } from "@mui/material";
 import { useSelector } from "react-redux";
 import MoviesSwiper from "../../Components/MoviesSwiper/MoviesSwiper";
 import SeriesSwiper from "../../Components/SeriesSwiper/SeriesSwiper";
+import CloseIcon from "@mui/icons-material/Close";
+import { ApiKey, BaseUrl } from "../../Redux/FetchConfigs";
+import Store from "../../Redux/Store";
+import { DeleteList, fetchLists } from "../../Redux/Reducers/Movies";
+import FullScreenLoader from "../../Components/FullScreenLoader/FullScreenLoader";
 
 export default function Login() {
+  const [DeleteListModal, setDeleteListModal] = useState(false);
+  const [DeleteListId, setDeleteListId] = useState(0);
+
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
   const WatchListMovies = useSelector((state) => state.Movies.WatchListMovies);
@@ -19,6 +27,28 @@ export default function Login() {
   const RatedSeries = useSelector((state) => state.Series.RatedSeries);
 
   const MovieLists = useSelector((state) => state.Movies.MovieLists);
+
+  const fullScreenLoading = useSelector(
+    (state) => state.Movies.fullScreenLoading
+  );
+
+  const voteModalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "#131722",
+    boxShadow: 24,
+    outline: 0,
+    borderRadius: "10px",
+  };
+
+  const deleteListHandler = () => {
+    setDeleteListModal(false);
+    Store.dispatch(
+      DeleteList({ listId: DeleteListId, accountId: AccountDetail.id })
+    );
+  };
 
   return (
     <>
@@ -260,15 +290,31 @@ export default function Login() {
                 {MovieLists &&
                   MovieLists.results.length > 0 &&
                   MovieLists.results.map((list) => (
-                    <a href={"/list/" + list.id} className="w-full xs:p-3 p-2 rounded-md bg-[#bdbdbd] text-white hover:bg-[#aaaaaa] duration-200 cursor-pointer">
-                      <h2 className="sm:text-xl text-base font-bold">
-                        {list.name}
-                      </h2>
-                      <h3 className="text-xs">{list.item_count} Movies</h3>
-                      <p className="text font-montserrat line-clamp-2 lg:text-sm text-xs my-3">
-                        {list.description}
-                      </p>
-                    </a>
+                    <>
+                      <a
+                        href={"/list/" + list.id}
+                        className="relative w-full xs:p-3 p-2 rounded-md bg-[#bdbdbd] text-white hover:bg-[#aaaaaa] duration-200 cursor-pointer"
+                      >
+                        <h2 className="sm:text-xl text-base font-bold">
+                          {list.name}
+                        </h2>
+                        <h3 className="text-xs">{list.item_count} Movies</h3>
+                        <p className="text font-montserrat line-clamp-2 lg:text-sm text-xs my-3">
+                          {list.description}
+                        </p>
+
+                        <button
+                          className="absolute top-2 right-2 p-1 rounded-full bg-[#aaaaaa] flex justify-center items-center"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setDeleteListModal(true);
+                            setDeleteListId(list.id);
+                          }}
+                        >
+                          <CloseIcon />
+                        </button>
+                      </a>
+                    </>
                   ))}
               </div>
             </div>
@@ -320,6 +366,36 @@ export default function Login() {
         </>
       )}
       <Footer />
+
+      <Modal
+        open={DeleteListModal}
+        onClose={() => setDeleteListModal(false)}
+        sx={{ zIndex: 20 }}
+      >
+        <Box sx={{ ...voteModalStyle, p: 4 }}>
+          <div className="w-96">
+            <h2 className="text-white text-xl font-bold">
+              Are You Sure You Want to Delete a Movie List ?
+            </h2>
+            <div className="w-full flex items-center space-x-2 mt-3">
+              <button
+                className="font-montserrat p-2 rounded-md bg-red-600 text-sm text-white"
+                onClick={() => deleteListHandler()}
+              >
+                Delete
+              </button>
+              <button
+                className="font-montserrat p-2 rounded-md bg-slate-500 text-sm text-white"
+                onClick={() => setDeleteListModal(false)}
+              >
+                Cancle
+              </button>
+            </div>
+          </div>
+        </Box>
+      </Modal>
+
+      {fullScreenLoading && <FullScreenLoader />}
     </>
   );
 }
