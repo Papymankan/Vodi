@@ -875,6 +875,34 @@ export const DeleteList = createAsyncThunk(
   }
 );
 
+export const DeleteMovieInList = createAsyncThunk(
+  "Movies/DeleteMovieInList",
+  async ({ listId, movieId }) => {
+    return fetch(
+      BaseUrl +
+        "list/" +
+        listId +
+        "/remove_item?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId"),
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          media_id: movieId,
+        }),
+      }
+    ).then((res) => {
+      if (res.ok) {
+        window.location.reload();
+      }
+    });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {
@@ -1037,6 +1065,12 @@ const slice = createSlice({
         return { ...state, fullScreenLoading: false };
       })
       .addCase(DeleteList.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
+      })
+      .addCase(DeleteMovieInList.fulfilled, (state, action) => {
+        return { ...state, fullScreenLoading: false };
+      })
+      .addCase(DeleteMovieInList.pending, (state, action) => {
         return { ...state, fullScreenLoading: true };
       });
   },

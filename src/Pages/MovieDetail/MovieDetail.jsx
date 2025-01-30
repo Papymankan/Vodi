@@ -97,8 +97,6 @@ export default function MovieDetail() {
     (state) => state.Movies.fullScreenLoading
   );
 
-  console.log(MovieLists);
-
   // -----------------------------------------------
 
   useEffect(() => {

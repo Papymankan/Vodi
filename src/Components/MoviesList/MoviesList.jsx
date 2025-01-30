@@ -1,14 +1,20 @@
 import React from "react";
 import { ImageLowQualityUrl } from "../../Redux/FetchConfigs";
+import CloseIcon from "@mui/icons-material/Close";
+import Store from "../../Redux/Store";
+import { DeleteMovieInList } from "../../Redux/Reducers/Movies";
+import { useParams } from "react-router-dom";
 
-export default function MoviesList({moviesList , MovieGenres}) {
+export default function MoviesList({ moviesList, MovieGenres, RemoveAble }) {
+  const params = useParams();
+
   return (
     <div className="mt-16 w-full grid lg:grid-cols-6 md:grid-cols-5 xs:grid-cols-4 grid-cols-3 lg:gap-4 gap-3">
       {moviesList.length > 0 &&
         moviesList.map((movie) => {
           if (movie.poster_path) {
             return (
-              <div className="w-full">
+              <div className="relative w-full">
                 <a
                   href={"/movie/" + movie.id}
                   className="relative w-full h-full"
@@ -35,7 +41,23 @@ export default function MoviesList({moviesList , MovieGenres}) {
                     </p>
                   </div>
                 </a>
-                
+
+                {RemoveAble && (
+                  <button
+                    className="absolute top-2 right-2 p-1 rounded-full hover:bg-[#aaaaaa] bg-[#dfdfdf] duration-200 flex justify-center items-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      Store.dispatch(
+                        DeleteMovieInList({
+                          listId: params.id,
+                          movieId: movie.id,
+                        })
+                      );
+                    }}
+                  >
+                    <CloseIcon />
+                  </button>
+                )}
               </div>
             );
           }

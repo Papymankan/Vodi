@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Store from "../../Redux/Store";
 import { FetchListDetail } from "../../Redux/Reducers/Movies";
+import FullScreenLoader from "../../Components/FullScreenLoader/FullScreenLoader";
 
 export default function ListDetail() {
   const [page, setPage] = useState(1);
@@ -29,6 +30,10 @@ export default function ListDetail() {
       setMoviesList([...moviesList, ...listDetail.items]);
     }
   }, [listDetail]);
+
+  const fullScreenLoading = useSelector(
+    (state) => state.Movies.fullScreenLoading
+  );
 
   return (
     <>
@@ -92,7 +97,11 @@ export default function ListDetail() {
             {/* Movies */}
             {moviesList && moviesList.length > 0 ? (
               <>
-                <MoviesList moviesList={moviesList} MovieGenres={MovieGenres} />
+                <MoviesList
+                  moviesList={moviesList}
+                  MovieGenres={MovieGenres}
+                  RemoveAble
+                />
 
                 {listDetail.total_pages > page && (
                   <button
@@ -114,6 +123,9 @@ export default function ListDetail() {
           <Loader />
         </div>
       )}
+
+      {fullScreenLoading && <FullScreenLoader />}
+      
       <Footer />
     </>
   );
