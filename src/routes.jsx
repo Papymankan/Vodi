@@ -25,6 +25,7 @@ import RatedMovies from "./Pages/RatedMovies/RatedMovies.jsx";
 import RatedSeries from "./Pages/RatedSeries/RatedSeries.jsx";
 import ListDetail from "./Pages/ListDetail/ListDetail.jsx";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute.jsx";
+import CastDetail from "./Pages/CastDetail/CastDetail.jsx";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -74,6 +75,8 @@ const routes = [
   { path: "/rated/serie", element: <RatedSeries /> },
 
   { path: "/list/:id", element: <ListDetail /> },
+
+  { path: "/cast/:id", element: <CastDetail /> },
 ];
 
 export default routes;
