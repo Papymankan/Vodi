@@ -293,8 +293,7 @@ export default function MovieDetail() {
   };
 
   const addToListHandler = (listId) => {
-    Store.dispatch(AddToList({ movieId: params.id, listId  }));
-    
+    Store.dispatch(AddToList({ movieId: params.id, listId }));
   };
 
   return (
@@ -382,9 +381,7 @@ export default function MovieDetail() {
                       viewBox="0 0 24 24"
                       className="cursor-pointer"
                       onClick={() => {
-                        if (IsInFavorites == false) {
-                          addToFavoriteHandler();
-                        }
+                        addToFavoriteHandler();
                       }}
                     >
                       <path
@@ -448,9 +445,7 @@ export default function MovieDetail() {
                           viewBox="0 0 24 24"
                           className="cursor-pointer"
                           onClick={() => {
-                            if (IsInFavorites == false) {
-                              addToFavoriteHandler();
-                            }
+                            addToFavoriteHandler();
                           }}
                         >
                           <path
@@ -515,7 +510,7 @@ export default function MovieDetail() {
               {/* Landing Actions */}
               <div className="w-full flex items-center py-0 sm:py-4 justify-between z-20">
                 <div className="flex items-center space-x-4 w-full xs:w-auto font-montserrat z-20">
-                  {IsInWatchList == undefined ? (
+                  {IsInWatchList == undefined && authenticated ? (
                     <button
                       className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2 xs:text-base text-xs"
                       disabled
@@ -540,7 +535,13 @@ export default function MovieDetail() {
 
                   <button
                     className="py-3 px-5 rounded-full text-white bg-green-400 xs:w-auto w-1/2 xs:text-base text-xs"
-                    onClick={() => setListsModal(true)}
+                    onClick={() => {
+                      if (authenticated) {
+                        setListsModal(true);
+                      } else {
+                        alert("Login please");
+                      }
+                    }}
                   >
                     + My Lists
                   </button>

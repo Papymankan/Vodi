@@ -116,11 +116,11 @@ export default function RatedMovies() {
                     No movies found !! 😥
                   </h1>
                   <h1 className="text-white sm:text-2xl font-semibold px-10 w-full text-center sm:text-left">
-                    unfortunately There is no movies in your watchlist
+                    unfortunately There is no movies in your rated movies list
                   </h1>
                   <p className="text-slate-300 mt-6 sm:text-lg text-sm font-semibold px-10 w-full text-center sm:text-left">
                     But do not worry you can add any movie you like to your
-                    watchlist 😊
+                    rated movies list 😊
                   </p>
                 </div>
               )

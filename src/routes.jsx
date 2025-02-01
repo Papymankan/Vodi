@@ -24,6 +24,7 @@ import FavoriteSeries from "./Pages/FavoriteSeries/FavoriteSeries.jsx";
 import RatedMovies from "./Pages/RatedMovies/RatedMovies.jsx";
 import RatedSeries from "./Pages/RatedSeries/RatedSeries.jsx";
 import ListDetail from "./Pages/ListDetail/ListDetail.jsx";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute.jsx";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -54,7 +55,14 @@ const routes = [
   { path: "/series/airing-today", element: <AirTodaySeries /> },
   { path: "/series/on-air", element: <OnAirSeries /> },
 
-  { path: "/profile", element: <Profile /> },
+  {
+    path: "/profile",
+    element: (
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
+    ),
+  },
 
   { path: "/watchlist/movie", element: <WatchListMovies /> },
   { path: "/watchlist/serie", element: <WatchListSeries /> },
