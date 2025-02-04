@@ -930,6 +930,24 @@ export const DeleteMovieInList = createAsyncThunk(
   }
 );
 
+export const FetchCastDetail = createAsyncThunk(
+  "Movies/FetchCastDetail",
+  async ({ castId }) => {
+    return fetch(BaseUrl + "person/" + castId + "?" + ApiKey)
+      .then((res) => {
+        console.log(res);
+        
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {
@@ -1104,6 +1122,12 @@ const slice = createSlice({
         return { ...state, fullScreenLoading: false };
       })
       .addCase(ClearList.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
+      })
+      .addCase(FetchCastDetail.fulfilled, (state, action) => {
+        return { ...state, fullScreenLoading: false , CastDetail : action.payload };
+      })
+      .addCase(FetchCastDetail.pending, (state, action) => {
         return { ...state, fullScreenLoading: true };
       });
   },
