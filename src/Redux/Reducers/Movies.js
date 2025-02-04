@@ -936,7 +936,25 @@ export const FetchCastDetail = createAsyncThunk(
     return fetch(BaseUrl + "person/" + castId + "?" + ApiKey)
       .then((res) => {
         console.log(res);
-        
+
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  }
+);
+
+export const FetchCastMovieCredits = createAsyncThunk(
+  "Movies/FetchCastMovieCredits",
+  async ({ castId }) => {
+    return fetch(BaseUrl + "person/" + castId + "/movie_credits?" + ApiKey)
+      .then((res) => {
+        console.log(res);
+
         if (res.ok) {
           return res.json();
         }
@@ -1125,9 +1143,23 @@ const slice = createSlice({
         return { ...state, fullScreenLoading: true };
       })
       .addCase(FetchCastDetail.fulfilled, (state, action) => {
-        return { ...state, fullScreenLoading: false , CastDetail : action.payload };
+        return {
+          ...state,
+          fullScreenLoading: false,
+          CastDetail: action.payload,
+        };
       })
       .addCase(FetchCastDetail.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
+      })
+      .addCase(FetchCastMovieCredits.fulfilled, (state, action) => {
+        return {
+          ...state,
+          fullScreenLoading: false,
+          CastMovies: action.payload,
+        };
+      })
+      .addCase(FetchCastMovieCredits.pending, (state, action) => {
         return { ...state, fullScreenLoading: true };
       });
   },
