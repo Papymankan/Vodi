@@ -11,19 +11,27 @@ import { useSelector } from "react-redux";
 import { ImageBaseUrl } from "../../Redux/FetchConfigs";
 import { shuffleArray } from "../../Funcs";
 import MoviesSwiper from "../../Components/MoviesSwiper/MoviesSwiper";
+import SeriesSwiper from "../../Components/SeriesSwiper/SeriesSwiper";
+import Loader from "../../Components/Loader/Loader";
+import { FetchCastSerieCredits } from "../../Redux/Reducers/Series";
 
 export default function CastDetail() {
   const [castMoviesList, setCastMoviesList] = useState({ results: [] });
+  const [castSeriesList, setCastSeriesList] = useState({ results: [] });
 
   const params = useParams();
 
   const CastDetail = useSelector((state) => state.Movies.CastDetail);
   const CastMovies = useSelector((state) => state.Movies.CastMovies);
+  const CastSeries = useSelector((state) => state.Series.CastSeries);
+
+  console.log(CastSeries);
 
   useEffect(() => {
     if (params.id) {
       Store.dispatch(FetchCastDetail({ castId: params.id }));
       Store.dispatch(FetchCastMovieCredits({ castId: params.id }));
+      Store.dispatch(FetchCastSerieCredits({ castId: params.id }));
     }
   }, [params]);
 
@@ -33,7 +41,7 @@ export default function CastDetail() {
       let arr2 = [];
       arr = shuffleArray(CastMovies.cast);
 
-      for (let i = 0; arr2.length <= 20; i++) {
+      for (let i = 0; arr2.length <= 20 && i < arr.length; i++) {
         if (arr[i].backdrop_path) {
           arr2.push(arr[i]);
         }
@@ -44,11 +52,28 @@ export default function CastDetail() {
     }
   }, [CastMovies]);
 
+  useEffect(() => {
+    if (CastSeries) {
+      let arr = [];
+      let arr2 = [];
+      arr = shuffleArray(CastSeries.cast);
+
+      for (let i = 0; arr2.length <= 20 && i < arr.length; i++) {
+        if (arr[i].backdrop_path) {
+          arr2.push(arr[i]);
+        }
+        console.log("pushed");
+      }
+
+      setCastSeriesList({ results: arr2 });
+    }
+  }, [CastSeries]);
+
   return (
     <>
       <NavBar />
 
-      {CastDetail && (
+      {CastDetail ? (
         <>
           <div className="container mx-auto">
             <div className="w-full flex">
@@ -111,7 +136,34 @@ export default function CastDetail() {
                 </div>
               </div>
             )}
+
+          {castSeriesList &&
+            castSeriesList.results &&
+            castSeriesList.results.length > 0 && (
+              <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
+                <div className="container mx-auto">
+                  <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
+                    <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
+                      {CastDetail.name} Series
+                    </h2>
+                    <div className="flex-1 border-t-2 border-[#394253] mx-4 hidden xs:block"></div>
+                  </div>
+
+                  <SeriesSwiper series={castSeriesList} low />
+
+                  <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
+                    <a href="#" className="hover:text-cyan duration-200">
+                      VIEW ALL
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
         </>
+      ) : (
+        <div className="h-svh">
+          <Loader />
+        </div>
       )}
 
       <Footer />

@@ -762,6 +762,24 @@ export const fetchIsInWatchList = createAsyncThunk(
   }
 );
 
+export const FetchCastSerieCredits = createAsyncThunk(
+  "Series/FetchCastSerieCredits",
+  async ({ castId }) => {
+    return fetch(BaseUrl + "person/" + castId + "/tv_credits?" + ApiKey)
+      .then((res) => {
+        console.log(res);
+
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Series",
   initialState: {
@@ -898,6 +916,12 @@ const slice = createSlice({
       })
       .addCase(fetchIsInWatchList.fulfilled, (state, action) => {
         return { ...state, IsInWatchList: action.payload };
+      })
+      .addCase(FetchCastSerieCredits.fulfilled, (state, action) => {
+        return { ...state, CastSeries: action.payload, loading: false };
+      })
+      .addCase(FetchCastSerieCredits.pending, (state, action) => {
+        return { ...state, loading: true };
       });
   },
 });
