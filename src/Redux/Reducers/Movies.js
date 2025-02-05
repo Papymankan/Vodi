@@ -966,6 +966,24 @@ export const FetchCastMovieCredits = createAsyncThunk(
   }
 );
 
+export const FetchCastImages = createAsyncThunk(
+  "Movies/FetchCastImages",
+  async ({ castId }) => {
+    return fetch(BaseUrl + "person/" + castId + "/images?" + ApiKey)
+      .then((res) => {
+        console.log(res);
+
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  }
+);
+
 const slice = createSlice({
   name: "Movies",
   initialState: {
@@ -1160,6 +1178,16 @@ const slice = createSlice({
         };
       })
       .addCase(FetchCastMovieCredits.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
+      })
+      .addCase(FetchCastImages.fulfilled, (state, action) => {
+        return {
+          ...state,
+          fullScreenLoading: false,
+          CastImages: action.payload,
+        };
+      })
+      .addCase(FetchCastImages.pending, (state, action) => {
         return { ...state, fullScreenLoading: true };
       });
   },
