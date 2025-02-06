@@ -731,11 +731,7 @@ export default function MovieDetail() {
 
                   <MoviesSwiper movies={RecommandMovies} low />
 
-                  <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
-                    <a href="#" className="hover:text-cyan duration-200">
-                      VIEW ALL
-                    </a>
-                  </div>
+                  
                 </div>
               </div>
             )}
@@ -826,11 +822,7 @@ export default function MovieDetail() {
 
                   <MoviesSwiper movies={SimilarMovies} low />
 
-                  <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
-                    <a href="#" className="hover:text-cyan duration-200">
-                      VIEW ALL
-                    </a>
-                  </div>
+                  
                 </div>
               </div>
             )}
@@ -1120,12 +1112,11 @@ export default function MovieDetail() {
               </form>
             </Box>
           </Modal>
-
-          {fullScreenLoading && <FullScreenLoader />}
-
-          <Footer />
         </>
       )}
+      {fullScreenLoading && <FullScreenLoader />}
+
+      <Footer />
     </>
   );
 }

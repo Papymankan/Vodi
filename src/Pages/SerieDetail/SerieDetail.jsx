@@ -303,9 +303,7 @@ export default function SerieDetail() {
                       viewBox="0 0 24 24"
                       className="cursor-pointer"
                       onClick={() => {
-                        if (IsInFavorites == false) {
                           addToFavoriteHandler();
-                        }
                       }}
                     >
                       <path
@@ -369,9 +367,7 @@ export default function SerieDetail() {
                           viewBox="0 0 24 24"
                           className="cursor-pointer"
                           onClick={() => {
-                            if (IsInFavorites == false) {
                               addToFavoriteHandler();
-                            }
                           }}
                         >
                           <path
@@ -450,7 +446,7 @@ export default function SerieDetail() {
               {/* Landing Actions */}
               <div className="w-full flex items-center py-0 sm:py-4 justify-between z-20">
                 <div className="flex items-center space-x-4 w-full xs:w-auto font-montserrat z-20">
-                  {IsInWatchList == undefined ? (
+                  {IsInWatchList == undefined && authenticated ? (
                     <button
                       className="py-3 px-5 rounded-full text-white bg-cyan xs:w-auto w-1/2 xs:text-base text-xs"
                       disabled
@@ -472,10 +468,6 @@ export default function SerieDetail() {
                       + WatchList
                     </button>
                   )}
-
-                  <button className="py-3 px-5 rounded-full text-white bg-green-400 xs:w-auto w-1/2">
-                    + My Lists
-                  </button>
                 </div>
 
                 {/* Votes */}

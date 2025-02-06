@@ -101,22 +101,32 @@ export default function CastDetail() {
                     {CastDetail.gender == 2 ? "Male" : "Female"}
                   </span>
                 </p>
-                <p className="my-3 sm:text-base text-sm">
-                  Known For :{" "}
-                  <span className="font-montserrat">
-                    {CastDetail.known_for_department}
-                  </span>
-                </p>
-                <p className="my-3 sm:text-base text-sm">
-                  Birthday :{" "}
-                  <span className="font-montserrat">{CastDetail.birthday}</span>
-                </p>
-                <p className="my-3 sm:text-base text-sm">
-                  BirthPlace :{" "}
-                  <span className="font-montserrat">
-                    {CastDetail.place_of_birth}
-                  </span>
-                </p>
+                {CastDetail.known_for_department && (
+                  <p className="my-3 sm:text-base text-sm">
+                    Known For :{" "}
+                    <span className="font-montserrat">
+                      {CastDetail.known_for_department}
+                    </span>
+                  </p>
+                )}
+
+                {CastDetail.birthday && (
+                  <p className="my-3 sm:text-base text-sm">
+                    Birthday :{" "}
+                    <span className="font-montserrat">
+                      {CastDetail.birthday}
+                    </span>
+                  </p>
+                )}
+
+                {CastDetail.place_of_birth && (
+                  <p className="my-3 sm:text-base text-sm">
+                    BirthPlace :{" "}
+                    <span className="font-montserrat">
+                      {CastDetail.place_of_birth}
+                    </span>
+                  </p>
+                )}
               </div>
             </div>
 

@@ -247,12 +247,6 @@ export default function Home() {
                         >
                           Explore
                         </a>
-                        <button
-                          className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:text-black  hover:bg-white duration-200 shadow-xl"
-                          style={{ textShadow: "1px 1px 2px #000000" }}
-                        >
-                          + Watchlist
-                        </button>
                       </div>
                     </div>
                   </div>
@@ -440,9 +434,6 @@ export default function Home() {
                   >
                     Explore
                   </a>
-                  <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:opacity-60 duration-200">
-                    + PlayList
-                  </button>
                 </div>
               </div>
             </div>
@@ -618,9 +609,6 @@ export default function Home() {
                   >
                     Explore
                   </a>
-                  <button className="px-9 text-center text-sm md_text-md py-2 md:py-4 border-white border-2 rounded-md hover:opacity-60 duration-200">
-                    + PlayList
-                  </button>
                 </div>
               </div>
             </div>

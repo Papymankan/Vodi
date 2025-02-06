@@ -1046,7 +1046,10 @@ const slice = createSlice({
       })
 
       .addCase(fetchMovieDetails.fulfilled, (state, action) => {
-        return { ...state, MovieDetails: action.payload };
+        return { ...state, MovieDetails: action.payload, fullScreenLoading: false  };
+      })
+      .addCase(fetchMovieDetails.pending, (state, action) => {
+        return { ...state, fullScreenLoading: true };
       })
       .addCase(fetchMovieVideos.fulfilled, (state, action) => {
         return { ...state, MovieVideos: action.payload };
