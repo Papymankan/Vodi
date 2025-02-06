@@ -23,7 +23,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import Lightbox from "yet-another-react-lightbox";
 import { Counter } from "yet-another-react-lightbox/plugins";
-import { Avatar } from "@mui/material";
+import { Avatar, Box, Modal, Slider } from "@mui/material";
 import Footer from "../../Components/Footer/Footer";
 import Loader from "../../Components/Loader/Loader";
 import EpisodeSection from "../../Components/EpisodeSection/EpisodeSection";
@@ -39,6 +39,9 @@ export default function SerieDetail() {
   const [reviewsPage, setReviewsPage] = useState(1);
   const [expandReview, setExpandReview] = useState(0);
   const [selectedSeason, setSelectedSeason] = useState("1");
+  const [voteModal, setVoteModal] = useState(false);
+  const [vote, setVote] = useState(0);
+
   const playerRef = useRef(null);
 
   const params = useParams();
@@ -218,6 +221,18 @@ export default function SerieDetail() {
       );
     } else alert("Login please");
   };
+
+  const voteModalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "#131722",
+    boxShadow: 24,
+    outline: 0,
+    borderRadius: "10px",
+  };
+
   return (
     <>
       <NavBar />
@@ -303,7 +318,7 @@ export default function SerieDetail() {
                       viewBox="0 0 24 24"
                       className="cursor-pointer"
                       onClick={() => {
-                          addToFavoriteHandler();
+                        addToFavoriteHandler();
                       }}
                     >
                       <path
@@ -367,7 +382,7 @@ export default function SerieDetail() {
                           viewBox="0 0 24 24"
                           className="cursor-pointer"
                           onClick={() => {
-                              addToFavoriteHandler();
+                            addToFavoriteHandler();
                           }}
                         >
                           <path
@@ -471,14 +486,15 @@ export default function SerieDetail() {
                 </div>
 
                 {/* Votes */}
-                <div className="hidden xs:flex items-center w-28 justify-end  z-20">
+                <div className="hidden xs:flex items-center w-28 justify-end z-20">
                   <svg
-                    className="vodi-svg scale-75"
+                    className="vodi-svg scale-75 cursor-pointer"
                     width="40px"
                     height="39px"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 40 39"
                     fill="cyan"
+                    onClick={() => setVoteModal(true)}
                   >
                     <title>play</title>
                     <path
@@ -833,9 +849,77 @@ export default function SerieDetail() {
             </div>
           )}
 
-          <Footer />
+          <Modal
+            open={voteModal}
+            onClose={() => setVoteModal(false)}
+            sx={{ zIndex: 20 }}
+          >
+            <Box sx={{ ...voteModalStyle, p: 4 }}>
+              <div className="h-full text-white font-montserrat sm:w-96 w-[280px] flex flex-col items-start">
+                <div className="flex w-full justify-between items-center">
+                  <h2 className="text-2xl">Rating</h2>
+
+                  <div className="flex items-center w-28 justify-end  z-20">
+                    <svg
+                      className="vodi-svg scale-75 cursor-pointer"
+                      width="40px"
+                      height="39px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 40 39"
+                      fill="cyan"
+                      onClick={() => setVoteModal(true)}
+                    >
+                      <title>play</title>
+                      <path
+                        fill-rule="evenodd"
+                        d="M19.633,-0.000 C21.509,0.035 21.530,1.174 22.167,2.414 C23.329,4.679 24.406,7.067 25.572,9.338 C25.853,9.886 26.431,11.640 26.918,11.834 C27.486,12.203 29.345,12.109 30.165,12.316 C32.170,12.825 34.489,12.860 36.500,13.364 C37.516,13.618 38.689,13.413 39.430,13.927 C39.689,14.107 39.770,14.504 39.984,14.732 C40.047,16.499 39.096,16.843 38.163,17.792 C36.473,19.509 34.784,21.227 33.095,22.944 C32.585,23.462 31.092,24.543 31.036,25.359 C31.423,25.951 31.307,27.455 31.511,28.258 C32.138,30.727 32.213,33.522 32.857,35.987 C33.142,37.078 33.016,38.241 32.303,38.724 C31.108,39.533 29.632,38.193 28.819,37.758 C26.695,36.623 24.601,35.624 22.483,34.457 C21.979,34.179 20.607,33.178 20.108,33.088 C19.748,33.023 18.163,34.107 17.812,34.296 C15.557,35.505 13.340,36.640 11.080,37.839 C10.548,38.120 9.180,39.226 8.309,38.966 C6.955,38.558 6.874,36.993 7.280,35.423 C7.716,33.733 7.697,31.880 8.151,30.109 C8.527,28.642 8.907,26.529 9.022,24.957 C8.092,24.344 7.202,23.107 6.408,22.300 C4.760,20.625 3.059,18.990 1.340,17.389 C0.646,16.742 -0.578,15.515 0.311,14.249 C0.915,13.388 2.364,13.656 3.557,13.364 C6.678,12.599 10.114,12.468 13.298,11.834 C14.186,9.747 15.306,7.711 16.307,5.716 C16.954,4.426 17.496,3.163 18.128,1.931 C18.334,1.531 18.358,1.093 18.603,0.724 C18.845,0.362 19.299,0.273 19.633,-0.000 Z"
+                      ></path>
+                    </svg>
+
+                    <p className="text-xl font-bold">
+                      {SerieDetails.vote_average.toFixed(1)}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-slate-400 text-xs mt-4">
+                  What did you think of{" "}
+                  <span className="font-bold">{SerieDetails.name}</span>?
+                </p>
+
+                <Slider
+                  defaultValue={0}
+                  value={vote ? vote : 0}
+                  valueLabelDisplay="auto"
+                  shiftStep={3}
+                  step={1}
+                  marks
+                  min={0}
+                  max={10}
+                  className="mt-5"
+                  sx={{ color: "#24baef" }}
+                  onChange={(e) => setVote(e.target.value)}
+                />
+
+                {/* <div
+                  className={`w-full flex ${
+                    IsInRated != undefined ? "justify-between" : "justify-end"
+                  } items-center`}
+                >
+                  {IsInRated != undefined && <h2>Your vote : {IsInRated}</h2>}
+                  <button
+                    className="bg-cyan rounded-lg p-2 mt-5 self-end"
+                    onClick={ratingHandler}
+                  >
+                    Submit
+                  </button>
+                </div> */}
+              </div>
+            </Box>
+          </Modal>
         </>
       )}
+
+      <Footer />
     </>
   );
 }
