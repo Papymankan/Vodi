@@ -693,7 +693,7 @@ export default function MovieDetail() {
                             crew.profile_path && (
                               <a
                                 className="text-sm mr-4 my-1 space-x-4 flex items-center"
-                                href="#"
+                                href={"/cast/" + crew.id}
                               >
                                 <img
                                   src={ImageLowQualityUrl + crew.profile_path}
