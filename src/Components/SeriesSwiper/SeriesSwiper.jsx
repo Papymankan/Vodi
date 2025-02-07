@@ -9,9 +9,6 @@ import { useSelector } from "react-redux";
 export default function SeriesSwiper({ series, low }) {
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
 
-  console.log(series);
-  console.log(SerieGenres);
-
   return (
     <div className="w-full">
       <Swiper

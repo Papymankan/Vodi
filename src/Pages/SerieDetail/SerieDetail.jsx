@@ -5,6 +5,7 @@ import {
   AddToFavorite,
   AddToWatchList,
   fetchIsInFavorites,
+  fetchIsInRated,
   fetchIsInWatchList,
   fetchRecommandSeries,
   fetchSerieCrews,
@@ -13,6 +14,7 @@ import {
   fetchSerieReviews,
   fetchSerieSeason,
   fetchSerieVideos,
+  RateSerie,
 } from "../../Redux/Reducers/Series";
 import Store from "../../Redux/Store";
 import { useSelector } from "react-redux";
@@ -28,6 +30,7 @@ import Footer from "../../Components/Footer/Footer";
 import Loader from "../../Components/Loader/Loader";
 import EpisodeSection from "../../Components/EpisodeSection/EpisodeSection";
 import SeriesSwiper from "../../Components/SeriesSwiper/SeriesSwiper";
+import FullScreenLoader from "../../Components/FullScreenLoader/FullScreenLoader";
 
 export default function SerieDetail() {
   const [isMuted, setIsMuted] = useState(true);
@@ -46,45 +49,26 @@ export default function SerieDetail() {
 
   const params = useParams();
 
-  useEffect(() => {
-    Store.dispatch(fetchSerieDetails({ id: params.id }));
-  }, [params]);
-
   const SerieDetails = useSelector((state) => state.Series.SerieDetails);
-
-  useEffect(() => {
-    if (SerieDetails) {
-      Store.dispatch(fetchSerieVideos({ id: params.id }));
-      Store.dispatch(fetchSerieImages({ id: params.id }));
-      Store.dispatch(fetchRecommandSeries({ id: params.id }));
-      Store.dispatch(fetchSerieCrews({ id: params.id }));
-    }
-  }, [SerieDetails]);
-
   const SerieVideos = useSelector((state) => state.Series.SerieVideos);
   const SerieImages = useSelector((state) => state.Series.SerieImages);
   const RecommandSeries = useSelector((state) => state.Series.RecommandSeries);
   const SerieCrews = useSelector((state) => state.Series.SerieCrews);
   const SerieGenres = useSelector((state) => state.Series.SerieGenres);
-
-  useEffect(() => {
-    if (SerieDetails && reviewsPage) {
-      Store.dispatch(fetchSerieReviews({ id: params.id, page: reviewsPage }));
-    }
-  }, [SerieDetails, reviewsPage]);
-
+  const IsInRated = useSelector((state) => state.Series.IsInRated);
+  const RatedSeries = useSelector((state) => state.Series.RatedSeries);
   const SerieReviews = useSelector((state) => state.Series.SerieReviews);
   const loading = useSelector((state) => state.Series.loading);
-
-  useEffect(() => {
-    if (SerieDetails && selectedSeason) {
-      Store.dispatch(
-        fetchSerieSeason({ id: params.id, season: selectedSeason })
-      );
-    }
-  }, [SerieDetails, selectedSeason]);
-
   const SerieSeason = useSelector((state) => state.Series.SerieSeason);
+  const authenticated = useSelector((state) => state.Auth.authenticated);
+  const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
+  const FavoriteSeries = useSelector((state) => state.Series.FavoriteSeries);
+  const WatchListSeries = useSelector((state) => state.Series.WatchListSeries);
+  const IsInFavorites = useSelector((state) => state.Series.IsInFavorites);
+  const IsInWatchList = useSelector((state) => state.Series.IsInWatchList);
+
+  console.log(IsInRated);
+  console.log(RatedSeries);
 
   const toggleMute = () => {
     if (playerRef.current) {
@@ -110,16 +94,6 @@ export default function SerieDetail() {
     playerRef.current.mute(); // Start muted
   };
 
-  useEffect(() => {
-    if (SerieVideos) {
-      SerieVideos.some((video) => {
-        if (video.type == "Trailer") {
-          setBackdropVideo(video);
-        }
-      });
-    }
-  }, [SerieVideos]);
-
   const CheckWidth = () => {
     if (window.innerWidth > 1486) {
       setCastsRow(7);
@@ -137,16 +111,45 @@ export default function SerieDetail() {
       setCastsRow(5);
     }
   };
+
+  useEffect(() => {
+    Store.dispatch(fetchSerieDetails({ id: params.id }));
+  }, [params]);
+
+  useEffect(() => {
+    if (SerieDetails) {
+      Store.dispatch(fetchSerieVideos({ id: params.id }));
+      Store.dispatch(fetchSerieImages({ id: params.id }));
+      Store.dispatch(fetchRecommandSeries({ id: params.id }));
+      Store.dispatch(fetchSerieCrews({ id: params.id }));
+    }
+  }, [SerieDetails]);
   window.addEventListener("resize", CheckWidth);
   useEffect(CheckWidth, []);
 
-  const authenticated = useSelector((state) => state.Auth.authenticated);
+  useEffect(() => {
+    if (SerieDetails && reviewsPage) {
+      Store.dispatch(fetchSerieReviews({ id: params.id, page: reviewsPage }));
+    }
+  }, [SerieDetails, reviewsPage]);
 
-  const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
+  useEffect(() => {
+    if (SerieDetails && selectedSeason) {
+      Store.dispatch(
+        fetchSerieSeason({ id: params.id, season: selectedSeason })
+      );
+    }
+  }, [SerieDetails, selectedSeason]);
 
-  const FavoriteSeries = useSelector((state) => state.Series.FavoriteSeries);
-
-  const WatchListSeries = useSelector((state) => state.Series.WatchListSeries);
+  useEffect(() => {
+    if (SerieVideos) {
+      SerieVideos.some((video) => {
+        if (video.type == "Trailer") {
+          setBackdropVideo(video);
+        }
+      });
+    }
+  }, [SerieVideos]);
 
   useEffect(() => {
     if (authenticated && SerieDetails && FavoriteSeries) {
@@ -174,9 +177,21 @@ export default function SerieDetail() {
     }
   }, [authenticated, SerieDetails, WatchListSeries]);
 
-  const IsInFavorites = useSelector((state) => state.Series.IsInFavorites);
+  useEffect(() => {
+    if (authenticated && SerieDetails && RatedSeries) {
+      Store.dispatch(
+        fetchIsInRated({
+          accountId: AccountDetail.id,
+          movieId: SerieDetails.id,
+          totalPages: RatedSeries.total_pages,
+        })
+      );
+    }
+  }, [authenticated, SerieDetails, RatedSeries]);
 
-  const IsInWatchList = useSelector((state) => state.Series.IsInWatchList);
+  useEffect(() => {
+    setVote(IsInRated);
+  }, [IsInRated]);
 
   const addToWatchListHandler = () => {
     if (authenticated) {
@@ -231,6 +246,11 @@ export default function SerieDetail() {
     boxShadow: 24,
     outline: 0,
     borderRadius: "10px",
+  };
+
+  const ratingHandler = () => {
+    if (authenticated)
+      Store.dispatch(RateSerie({ movieId: params.id, rating: vote }));
   };
 
   return (
@@ -494,7 +514,10 @@ export default function SerieDetail() {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 40 39"
                     fill="cyan"
-                    onClick={() => setVoteModal(true)}
+                    onClick={() => {
+                      if (authenticated) setVoteModal(true);
+                      else alert("Login Please");
+                    }}
                   >
                     <title>play</title>
                     <path
@@ -900,7 +923,7 @@ export default function SerieDetail() {
                   onChange={(e) => setVote(e.target.value)}
                 />
 
-                {/* <div
+                <div
                   className={`w-full flex ${
                     IsInRated != undefined ? "justify-between" : "justify-end"
                   } items-center`}
@@ -912,10 +935,18 @@ export default function SerieDetail() {
                   >
                     Submit
                   </button>
-                </div> */}
+                </div>
               </div>
             </Box>
           </Modal>
+        </>
+      )}
+
+      {loading && (
+        <>
+          <div className="w-full h-dvh">
+            <FullScreenLoader/>
+          </div>
         </>
       )}
 

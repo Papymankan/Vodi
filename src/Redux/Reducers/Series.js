@@ -725,8 +725,6 @@ export const fetchIsInWatchList = createAsyncThunk(
     let page = 1;
     let isThere = false;
 
-    console.log(serieId, totalPages);
-
     while (totalPages >= page) {
       const response = await fetch(
         BaseUrl +
@@ -759,6 +757,84 @@ export const fetchIsInWatchList = createAsyncThunk(
     }
 
     return isThere;
+  }
+);
+
+export const fetchIsInRated = createAsyncThunk(
+  "Series/fetchIsInRated",
+  async ({ accountId, movieId, totalPages }) => {
+    let page = 1;
+    let rate = undefined;
+
+    while (totalPages >= page) {
+      const response = await fetch(
+        BaseUrl +
+          "account/" +
+          accountId +
+          "/rated/tv?" +
+          ApiKey +
+          "&session_id=" +
+          localStorage.getItem("sessionId") +
+          "&page=" +
+          page,
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+
+        data.results.some((movie) => {
+          if (movie.id === movieId) rate = movie.rating;
+        });
+      }
+
+      page++;
+    }
+
+    return rate;
+  }
+);
+
+export const RateSerie = createAsyncThunk(
+  "Series/RateSerie",
+  async ({ movieId, rating }) => {
+    return fetch(
+      BaseUrl +
+        "tv/" +
+        movieId +
+        "/rating?" +
+        ApiKey +
+        "&session_id=" +
+        localStorage.getItem("sessionId"),
+      {
+        method: rating ? "POST" : "DELETE",
+        headers: {
+          accept: "application/json",
+          "content-type": rating ? "application/json" : "",
+        },
+        body: rating
+          ? JSON.stringify({
+              value: rating,
+            })
+          : undefined,
+      }
+    )
+      .then((res) => {
+        console.log(res);
+
+        if (res.ok) {
+          window.location.reload();
+          return res.json();
+        }
+      })
+      .then((data) => {
+        return data;
+      });
   }
 );
 
@@ -844,7 +920,10 @@ const slice = createSlice({
       })
 
       .addCase(fetchSerieDetails.fulfilled, (state, action) => {
-        return { ...state, SerieDetails: action.payload };
+        return { ...state, SerieDetails: action.payload, loading: false };
+      })
+      .addCase(fetchSerieDetails.pending, (state, action) => {
+        return { ...state, loading: true };
       })
       .addCase(fetchSerieVideos.fulfilled, (state, action) => {
         return { ...state, SerieVideos: action.payload };
@@ -921,6 +1000,12 @@ const slice = createSlice({
         return { ...state, CastSeries: action.payload, loading: false };
       })
       .addCase(FetchCastSerieCredits.pending, (state, action) => {
+        return { ...state, loading: true };
+      })
+      .addCase(fetchIsInRated.fulfilled, (state, action) => {
+        return { ...state, IsInRated: action.payload };
+      })
+      .addCase(RateSerie.pending, (state, action) => {
         return { ...state, loading: true };
       });
   },
