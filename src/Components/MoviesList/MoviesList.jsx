@@ -36,7 +36,7 @@ export default function MoviesList({ moviesList, MovieGenres, RemoveAble }) {
                           return <span>{genre.name}, </span>;
                         })}
                     </p>
-                    <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
+                    <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start md:text-base text-sm">
                       {movie.title}
                     </p>
                   </div>

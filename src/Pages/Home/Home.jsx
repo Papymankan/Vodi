@@ -322,7 +322,7 @@ export default function Home() {
                     href={"/movie/" + TrendingMoviesRandom[0].id}
                     className="w-full h-full flex flex-col justify-end"
                   >
-                    <p className="text-sm text-slate-300">
+                    <p className="md:text-sm text-xs text-slate-300">
                       {MovieGenres &&
                         TrendingMoviesRandom[0].genre_ids.map((id, index) => {
                           let genre = MovieGenres.find(
@@ -337,7 +337,7 @@ export default function Home() {
                           return <span>{genre.name}, </span>;
                         })}
                     </p>
-                    <p className="group-hover:text-cyan duration-200">
+                    <p className="group-hover:text-cyan duration-200 md:text-base text-sm">
                       {TrendingMoviesRandom[0].title}
                     </p>
                   </a>
@@ -367,7 +367,7 @@ export default function Home() {
                           href={"/movie/" + movie.id}
                           className="w-full h-full flex justify-end flex-col"
                         >
-                          <p className="text-sm text-slate-300 line-clamp-1">
+                          <p className="md:text-sm text-xs text-slate-300 line-clamp-1">
                             {MovieGenres &&
                               movie.genre_ids.map((id, index) => {
                                 let genre = MovieGenres.find(
@@ -379,7 +379,7 @@ export default function Home() {
                                 return <span>{genre.name}, </span>;
                               })}
                           </p>
-                          <p className="group-hover:text-cyan duration-200">
+                          <p className="group-hover:text-cyan duration-200 md:text-base text-sm">
                             {movie.title}
                           </p>
                         </a>
@@ -498,7 +498,7 @@ export default function Home() {
                     href={"/serie/" + TrendingSeriesRandom[0].id}
                     className="w-full h-full flex flex-col justify-end"
                   >
-                    <p className="text-sm text-slate-300">
+                    <p className="md:text-sm text-xs text-slate-300">
                       {SerieGenres &&
                         TrendingSeriesRandom[0].genre_ids.map((id, index) => {
                           let genre = SerieGenres.find(
@@ -513,7 +513,7 @@ export default function Home() {
                           return <span>{genre.name}, </span>;
                         })}
                     </p>
-                    <p className="group-hover:text-cyan duration-200">
+                    <p className="group-hover:text-cyan duration-200 md:text-base text-sm">
                       {TrendingSeriesRandom[0].name}
                     </p>
                   </a>
@@ -542,7 +542,7 @@ export default function Home() {
                           href={"/serie/" + serie.id}
                           className="w-full h-full flex flex-col justify-end"
                         >
-                          <p className="text-sm text-slate-300 line-clamp-1">
+                          <p className="md:text-sm text-slate-300 line-clamp-1 text-xs">
                             {SerieGenres &&
                               serie.genre_ids.map((id, index) => {
                                 let genre = SerieGenres.find(
@@ -554,7 +554,7 @@ export default function Home() {
                                 return <span>{genre.name}, </span>;
                               })}
                           </p>
-                          <p className="group-hover:text-cyan duration-200 line-clamp-2">
+                          <p className="group-hover:text-cyan duration-200 line-clamp-2 md:text-base text-sm">
                             {serie.name}
                           </p>
                         </a>

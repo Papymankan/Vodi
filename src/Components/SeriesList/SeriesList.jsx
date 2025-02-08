@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function SeriesList({seriesList , SerieGenres}) {
+export default function SeriesList({ seriesList, SerieGenres }) {
   return (
     <div className="mt-16 w-full grid lg:grid-cols-6 md:grid-cols-5 xs:grid-cols-4 grid-cols-3 lg:gap-4 gap-3">
       {seriesList.length > 0 &&
@@ -29,7 +29,7 @@ export default function SeriesList({seriesList , SerieGenres}) {
                           return <span>{genre.name}, </span>;
                         })}
                     </p>
-                    <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start">
+                    <p className="group-hover:text-cyan duration-200 line-clamp-1 w-full text-start  md:text-base text-sm">
                       {serie.name}
                     </p>
                   </div>

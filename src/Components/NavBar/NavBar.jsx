@@ -148,16 +148,28 @@ export default function NavBar() {
                   <div className="flex-1 border-b-2 border-gray-200"></div>
                 </div>
                 <div className="flex flex-col">
-                  <a href="/series/top-rated" className="text-white my-2 hover:text-cyan">
+                  <a
+                    href="/series/top-rated"
+                    className="text-white my-2 hover:text-cyan"
+                  >
                     Top Rated Series
                   </a>
-                  <a href="/series/popular" className="text-white my-2 hover:text-cyan">
+                  <a
+                    href="/series/popular"
+                    className="text-white my-2 hover:text-cyan"
+                  >
                     Most Popular Series
                   </a>
-                  <a href="/series/airing-today" className="text-white my-2 hover:text-cyan">
+                  <a
+                    href="/series/airing-today"
+                    className="text-white my-2 hover:text-cyan"
+                  >
                     Airing Today
                   </a>
-                  <a href="/series/on-air" className="text-white my-2 hover:text-cyan">
+                  <a
+                    href="/series/on-air"
+                    className="text-white my-2 hover:text-cyan"
+                  >
                     On the Air
                   </a>
                 </div>
@@ -276,14 +288,16 @@ export default function NavBar() {
             {AccountDetail ? (
               <>
                 {/* Profile */}
-                <a
-                  href="/profile"
+                <div
                   className="flex items-center space-x-1 cursor-pointer relative py-4"
                   onMouseEnter={() => {
                     setSubMenu("profile");
                   }}
                   onMouseLeave={() => {
                     setSubMenu("");
+                  }}
+                  onClick={() => {
+                    setSubMenu("profile");
                   }}
                 >
                   <Avatar sx={{ width: 32, height: 32 }}>
@@ -302,7 +316,7 @@ export default function NavBar() {
                       d="M1 1l8 8 8-8"
                     />
                   </svg>
-                </a>
+                </div>
               </>
             ) : (
               <>
@@ -328,9 +342,9 @@ export default function NavBar() {
                 }}
               >
                 <div className="profile-dropdown rotate-45 absolute w-4 h-4 border-2 border-[#f6f7f9] bg-[#f6f7f9] right-1 -top-2"></div>
-                <button className="w-full text-black text-left hover:bg-slate-200 duration-200 p-2">
-                  Watchlist
-                </button>
+                <a href="/profile" className="w-full text-black text-left hover:bg-slate-200 duration-200 p-2">
+                  Profile
+                </a>
                 <button
                   className="w-full text-red-600 text-left hover:bg-slate-200 duration-200 p-2"
                   onClick={() => {
