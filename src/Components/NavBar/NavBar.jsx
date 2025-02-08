@@ -905,7 +905,7 @@ export default function NavBar() {
         )}
       </div>
 
-      {loading && <FullScre enLoader />}
+      {loading && <FullScreenLoader />}
     </>
   );
 }
