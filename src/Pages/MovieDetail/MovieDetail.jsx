@@ -579,7 +579,7 @@ export default function MovieDetail() {
 
             {BackdropVideo && BackdropVideo.key && (
               <BackDrop
-                // videoKey={BackdropVideo.key}
+                videoKey={BackdropVideo.key}
                 onReady={onReady}
                 onStateChange={onStateChange}
                 isLoading={LoadingBackdrop}

@@ -53,32 +53,6 @@ export default function NavBar() {
     await Store.dispatch(fetchRequestToken());
   };
 
-  const RequestToken = useSelector((state) => state.Auth.RequestToken);
-
-  useEffect(() => {
-    if (RequestToken) {
-      window.location.href = `https://www.themoviedb.org/authenticate/${RequestToken}?redirect_to=http://localhost:5173`;
-    }
-  }, [RequestToken]);
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const approved = urlParams.get("approved");
-    const token = urlParams.get("request_token");
-
-    if (approved === "true" && token) {
-      Store.dispatch(fetchSessionId({ requestToken: token }));
-    }
-  }, []);
-
-  useEffect(() => {
-    let sessionId = localStorage.getItem("sessionId");
-
-    if (sessionId) {
-      Store.dispatch(fetchAccountDetail({ SessionId: sessionId }));
-    }
-  }, []);
-
   const AccountDetail = useSelector((state) => state.Auth.AccountDetail);
 
   const loading = useSelector((state) => state.Auth.loading);

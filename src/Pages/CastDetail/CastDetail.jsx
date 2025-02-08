@@ -136,7 +136,7 @@ export default function CastDetail() {
           {castMoviesList &&
             castMoviesList.results &&
             castMoviesList.results.length > 0 && (
-              <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
+              <div className="w-full bg-[#0e0d12] xs:pt-0 py-6">
                 <div className="container mx-auto">
                   <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
                     <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
@@ -147,11 +147,6 @@ export default function CastDetail() {
 
                   <MoviesSwiper movies={castMoviesList} low />
 
-                  <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
-                    <a href="#" className="hover:text-cyan duration-200">
-                      VIEW ALL
-                    </a>
-                  </div>
                 </div>
               </div>
             )}
@@ -229,7 +224,7 @@ export default function CastDetail() {
           {castSeriesList &&
             castSeriesList.results &&
             castSeriesList.results.length > 0 && (
-              <div className="w-full bg-[#0e0d12] xs:pt-0 pt-6">
+              <div className="w-full bg-[#0e0d12] xs:pt-0 py-6">
                 <div className="container mx-auto">
                   <div className="w-full flex  flex-col xs:flex-row  items-center justify-between px-4 text-white">
                     <h2 className="text-2xl xs:py-7 mb-8 xs:mb-0 font-semibold">
@@ -240,11 +235,6 @@ export default function CastDetail() {
 
                   <SeriesSwiper series={castSeriesList} low />
 
-                  <div className="border-t-2 border-[#394253] text-end text-white py-3 mt-4 font-montserrat text-sm mx-4">
-                    <a href="#" className="hover:text-cyan duration-200">
-                      VIEW ALL
-                    </a>
-                  </div>
                 </div>
               </div>
             )}
