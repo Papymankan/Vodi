@@ -1,6 +1,10 @@
 export const BaseUrl = 'https://api.themoviedb.org/3/'
 
-export const ApiKey= 'api_key=80497f2a6736628e03be8e27324e5ce2'
+let key = import.meta.env.VITE_TMDB_API_KEY
+export const ApiKey= 'api_key=' + key
+
+console.log(ApiKey);
+
 
 export const ImageBaseUrl= 'https://image.tmdb.org/t/p/original'
 export const ImageLowQualityUrl= "https://image.tmdb.org/t/p/w300"
