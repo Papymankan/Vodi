@@ -61,7 +61,7 @@ export const fetchSessionId = createAsyncThunk(
       })
       .then((data) => {
         localStorage.setItem("sessionId", data.session_id);
-        window.location.href = `http://localhost:5173`;
+        window.location.href = `https://vodi.liara.run/`;
         return data.session_id;
       });
   }
@@ -78,7 +78,7 @@ const slice = createSlice({
     logout: (state) => {
       state.authenticated = false;
       localStorage.removeItem("sessionId")
-      window.location.href = `http://localhost:5173`;
+      window.location.href = `https://vodi.liara.run`;
     },
   },
   extraReducers: (builder) => {
