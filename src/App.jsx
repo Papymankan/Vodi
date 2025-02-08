@@ -78,7 +78,7 @@ export default function App() {
   
     useEffect(() => {
       if (RequestToken) {
-        window.location.href = `https://www.themoviedb.org/authenticate/${RequestToken}?redirect_to=http://localhost:5173`;
+        window.location.href = `https://www.themoviedb.org/authenticate/${RequestToken}?redirect_to=https://vodi.liara.run/`;
       }
     }, [RequestToken]);
   
